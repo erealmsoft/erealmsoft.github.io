@@ -548,7 +548,6 @@ blockquote {
   padding: 0;
   display: inline-block;
   vertical-align: top;
-  border-radius: 70px;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -1644,7 +1643,6 @@ footer {
   padding: 0;
   display: inline-block;
   vertical-align: top;
-  border-radius: 70px;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
