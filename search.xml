@@ -1,0 +1,1689 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>写一个函数把下划线命名转化为小驼峰命名</title>
+    <url>/2019/09/28/purefunc/purefunc-small-hump/</url>
+    <content><![CDATA[<p>如：输入字符串<code>a_bc_de</code>，返回字符串<code>aBcDe</code></p>
+<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num.replace(<span class="regexp">/_(\w)/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">all, letter</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> letter.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">underscore2upper</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> words = str.split(<span class="string">'_'</span>);</span><br><span class="line">    <span class="keyword">let</span> newWords = words.map(<span class="function">(<span class="params">element, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> index === <span class="number">0</span> ? element : element[<span class="number">0</span>].toUpperCase() + element.substring(<span class="number">1</span>, element.length)</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> newWords.join(<span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.找到_位置，如果_后一位为字母，大写</span></span><br><span class="line"><span class="comment">// b.将多余的_去除</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">camelCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = str.replace(<span class="regexp">/_([a-zA-Z])/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">regValue, groupValue</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> groupValue.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> outStr.replace(<span class="regexp">/_/g</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(camelCase(<span class="string">'_____a_bc_de__________w___'</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item.replace(<span class="regexp">/_([a-zA-Z])/g</span>, (a, b) =&gt; b.toUpperCase())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">"_"</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item, i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> item.replace(item[<span class="number">0</span>],item[<span class="number">0</span>].toUpperCase());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f2(<span class="string">"a_bc_de"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toString</span>(<span class="params">foo</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> arr = foo.split(<span class="string">'_'</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">		arr[i]=arr[i].charAt(<span class="number">0</span>).toUpperCase()+arr[i].substr(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr.join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>purefunc</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>写一个函数，实现千分位</title>
+    <url>/2019/09/28/purefunc/purefunc-achieve-thousandth-place/</url>
+    <content><![CDATA[<p>如：输入数字<code>13829364</code>，返回字符串<code>13,829,364</code></p>
+<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arr = [],</span><br><span class="line">        str = num + <span class="string">''</span>,</span><br><span class="line">        count = str.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (count &gt;= <span class="number">3</span>) &#123;</span><br><span class="line">        arr.unshift(str.slice(count - <span class="number">3</span>, count));</span><br><span class="line">        count -= <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果是不是3的倍数就另外追加到上去</span></span><br><span class="line">    str.length % <span class="number">3</span> &amp;&amp; arr.unshift(str.slice(<span class="number">0</span>, str.length % <span class="number">3</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">comma</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> num === <span class="string">'number'</span>) &#123;</span><br><span class="line">        num = num.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (num.length &lt; <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> comma(num.substring(<span class="number">0</span>, num.length - <span class="number">3</span>)) + <span class="string">','</span> + num.substring(num.length - <span class="number">3</span>, num.length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.判断字符串长度余3是否有余数</span></span><br><span class="line"><span class="comment">// b.如有，记录下来</span></span><br><span class="line"><span class="comment">// c.剩余部分分组放入数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dealNum</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> str = num.toString(),</span><br><span class="line">        overNum = str.length % <span class="number">3</span>, <span class="comment">// 超出长度</span></span><br><span class="line">        overStr = overNum === <span class="number">0</span> ? <span class="string">''</span> : str.slice(<span class="number">0</span>, overNum); <span class="comment">// 超出内容</span></span><br><span class="line">    <span class="keyword">let</span> dealStr = str.slice(overNum), <span class="comment">// 分组内容</span></span><br><span class="line">        outArr = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; dealStr.length; i += <span class="number">3</span>) &#123;</span><br><span class="line">        outArr.push(dealStr.substr(i, <span class="number">3</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (overStr &amp;&amp; overStr + <span class="string">','</span>) + outArr.join(<span class="string">','</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(dealNum(<span class="number">1234567890</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> b = <span class="string">''</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">thousands</span>(<span class="params">number, n = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    b = <span class="string">`<span class="subst">$&#123;number % n&#125;</span><span class="subst">$&#123;b ? <span class="string">','</span> + b : <span class="string">''</span>&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(number / n) ? thousands(<span class="built_in">parseInt</span>(number / n), n) : b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(thousands(<span class="number">13829364</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = num.toString();</span><br><span class="line">    <span class="keyword">var</span> count = str.length/<span class="number">3</span>;<span class="comment">//2</span></span><br><span class="line">    <span class="keyword">var</span> first = str.length%<span class="number">3</span>;<span class="comment">//2</span></span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    arr.push(str.substr(<span class="number">0</span>,first));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i&lt;count;i++)&#123;</span><br><span class="line">        arr.push(str.substr(first+i*<span class="number">3</span>, <span class="number">3</span>));<span class="comment">//2,3  //5,3</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr.join(<span class="string">","</span>).slice(<span class="number">0</span>,<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1(<span class="number">13829364</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    num=num+<span class="string">''</span>;</span><br><span class="line">    <span class="keyword">let</span> str=<span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=num.length- <span class="number">1</span>,j=<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--,j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j % <span class="number">3</span> == <span class="number">0</span> &amp;&amp; i != <span class="number">0</span>)&#123;</span><br><span class="line">            str+=num[i]+<span class="string">","</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        str += num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">''</span>).reverse().join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>purefunc</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>给出两个长度相等的字符串，找出相同索引处字符值相同的字符</title>
+    <url>/2019/09/28/purefunc/purefunc-find-same-character/</url>
+    <content><![CDATA[<p>如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// do ur logic</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> result = find(<span class="string">'abdiec'</span>,<span class="string">'doaiac'</span>); <span class="comment">// result = ic</span></span><br></pre></td></tr></table></figure>
+
+<p>如：输入字符串<code>aBcD</code>，返回字符串<code>AbCd</code></p>
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> str1Arr = str1.split(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">const</span> result = str1Arr.map(<span class="function">(<span class="params">alpha, index</span>) =&gt;</span> str2[index] === alpha ? alpha : <span class="string">''</span>).filter(<span class="function"><span class="params">a</span> =&gt;</span> a!== <span class="string">''</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(find('abdiec','doaiac'))</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findSame</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = <span class="string">''</span>,</span><br><span class="line">        strLength = str1.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> index = <span class="number">0</span>; index &lt; strLength; index++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str1[index] === str2[index])&#123;</span><br><span class="line">            outStr += str1[index];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> outStr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(findSame(<span class="string">'abdiec'</span>, <span class="string">'doaiac'</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> str1) &#123;</span><br><span class="line">        str2.indexOf(str1[i]) === <span class="built_in">parseInt</span>(i) ? result += str1[i] : <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> result = find(<span class="string">'abdiec'</span>, <span class="string">'doaiac'</span>); <span class="comment">// result = ic</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str;</span><br><span class="line">    <span class="keyword">return</span> str1.split(<span class="string">''</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item, i</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(item === str2[i]) <span class="keyword">return</span> item;</span><br><span class="line">        &#125;)</span><br><span class="line">        .join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> result = find(<span class="string">'abdiec'</span>,<span class="string">'doaiac'</span>); <span class="comment">// result = ic</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findSame</span>(<span class="params">str1, str2</span>)</span>&#123;</span><br><span class="line">    str1.split(<span class="string">""</span>);</span><br><span class="line">    <span class="keyword">let</span> sameStr = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;str1.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str1[i] === str2[i])&#123;</span><br><span class="line">            sameStr += str1[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sameStr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>purefunc</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>反转一个字符串里面的大小写，其它字符不变</title>
+    <url>/2019/09/28/purefunc/purefunc-reverse-string/</url>
+    <content><![CDATA[<p>如：输入字符串<code>aBcD</code>，返回字符串<code>AbCd</code></p>
+<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A-Z 65-90</span></span><br><span class="line"><span class="comment">// a-z 97-122</span></span><br><span class="line"><span class="comment">//A - a = 32</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseStr</span> (<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i&lt;str.length;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> temp = str.charAt(i);</span><br><span class="line">        <span class="keyword">var</span> code = temp.charCodeAt();</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">'a'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code<span class="number">-32</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'A'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'Z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code+<span class="number">32</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result += temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(parseStr(<span class="string">'aBcD'</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> charCodeStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> lowerStart = <span class="string">'a'</span>;</span><br><span class="line">    <span class="keyword">const</span> upperStart = <span class="string">'A'</span></span><br><span class="line">    <span class="keyword">const</span> diff = <span class="built_in">Math</span>.abs(lowerStart.charCodeAt(<span class="number">0</span>) - upperStart.charCodeAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> index = <span class="number">0</span>; index &lt; str.length; index++) &#123;</span><br><span class="line">        <span class="keyword">let</span> currentChartCode = str.charCodeAt(index);</span><br><span class="line">        <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">65</span> &amp;&amp; currentChartCode &lt; <span class="number">91</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode + diff;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">97</span> &amp;&amp; currentChartCode &lt; <span class="number">123</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode - diff;</span><br><span class="line">        &#125;</span><br><span class="line">        charCodeStr += <span class="built_in">String</span>.fromCharCode(currentChartCode);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> charCodeStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(reverseCase('abcIasd'))</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.先判断是大写还是小写，再做相应改变</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> str) &#123;</span><br><span class="line">        <span class="keyword">let</span> item = str[key];</span><br><span class="line">        /[a-z]/.test(item) &amp;&amp; (outStr += item.toUpperCase());</span><br><span class="line">        /[A-Z]/.test(item) &amp;&amp; (outStr += item.toLowerCase());</span><br><span class="line">        /[^a-zA-Z]/.test(item) &amp;&amp; (outStr += item);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> outStr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reverseCase(<span class="string">'aBcDeeeeeeeEDS'</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item</span><br><span class="line">        .split(<span class="string">''</span>)</span><br><span class="line">        .map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> item.charCodeAt(<span class="number">0</span>) &lt; <span class="number">90</span> ? item.toLowerCase() : item.toUpperCase())</span><br><span class="line">        .join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">""</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item,i</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> charCode = item.charCodeAt();</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">            <span class="keyword">if</span>(charCode&lt;<span class="number">91</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toLowerCase();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toUpperCase();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f3(<span class="string">"aBcD"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeStr</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>(str.split(<span class="string">""</span>)</span><br><span class="line">        .map(</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">index</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">let</span> outStr = index.charCodeAt();</span><br><span class="line">                <span class="keyword">if</span>(outStr &lt; <span class="number">91</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toLowerCase()</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toUpperCase()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ).join(<span class="string">""</span>)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>purefunc</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React中propsTypes类型检测的用法</title>
+    <url>/2019/09/27/react/react-props-type/</url>
+    <content><![CDATA[<h3 id="propsTypes的作用"><a href="#propsTypes的作用" class="headerlink" title="propsTypes的作用"></a>propsTypes的作用</h3><ul>
+<li>在React中，propsType是用来对组件props做类型检查的</li>
+</ul>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ol>
+<li>引入校验模块 <code>prop-types</code></li>
+<li>定义Component，然后给Component上面挂propsType属性</li>
+</ol>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Greeting extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Greeting.propTypes = &#123;</span><br><span class="line">    name: PropTypes.string</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>props</tag>
+        <tag>类型检测</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>了解React中的合成事件及原生事件</title>
+    <url>/2019/09/27/react/react-native-event-and-synthetic-event/</url>
+    <content><![CDATA[<h3 id="先简单了解一下原生事件"><a href="#先简单了解一下原生事件" class="headerlink" title="先简单了解一下原生事件"></a>先简单了解一下原生事件</h3><ul>
+<li>DOM事件流的三个阶段<ol>
+<li>事件捕获阶段：<ul>
+<li>事件从文档的根节点出发，随着DOM树的结构向事件的目标节点流去。途中经过各个层次的DOM节点，并在各节点上触发捕获事件，直到到达事件的目标节点。捕获阶段的主要任务是建立传播路径，在冒泡阶段，事件会通过路径回溯到文档根节点。</li>
+</ul>
+</li>
+<li>目标阶段：<ul>
+<li>当事件到达了目标节点，就进入了目标阶段，然后会逆向回流，知道传播至最外层的文档节点</li>
+</ul>
+</li>
+<li>冒泡阶段：<ul>
+<li>事件在目标元素上触发后，并不在这个元素上终止。它会随着DOM树一层一层向上冒泡，直到到达最外层的根节点。也就是说，同一个事件会依次在目标节点的父节点，父节点的父节点…直到最外层的节点上被触发</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="为什么会有合成事件"><a href="#为什么会有合成事件" class="headerlink" title="为什么会有合成事件"></a>为什么会有合成事件</h3><ul>
+<li>如果DOM上绑定了过多的事件处理函数，整个页面响应以及内存占用可能都会受到影响。React为了避免这类DOM事件滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层 —— SyntheticEvent</li>
+<li>合成事件时浏览器原生事件的跨浏览器包装器，兼容所有浏览器，并拥有和浏览器原生事件相同的接口</li>
+</ul>
+<h3 id="合成事件的原理"><a href="#合成事件的原理" class="headerlink" title="合成事件的原理"></a>合成事件的原理</h3><ul>
+<li>React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面，在document上监听所有支持的事件</li>
+<li>当事件发生并冒泡至document处时，React将事件内容封装并交由真正的处理函数运行</li>
+</ul>
+<h3 id="react中使用事件与原生DOM事件的区别"><a href="#react中使用事件与原生DOM事件的区别" class="headerlink" title="react中使用事件与原生DOM事件的区别"></a>react中使用事件与原生DOM事件的区别</h3><ul>
+<li>React事件使用驼峰命名，而不是全部小写</li>
+<li>通过JSX，要传递一个函数作为事件处理程序而不是一个字符串</li>
+<li>在React中你不能通过返回false来阻止默认行为，必须明确调用preventDefault</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://juejin.im/post/5c092ad36fb9a049bc4c754e#comment" target="_blank" rel="noopener">JS事件那些事儿 一次整明白</a></li>
+<li><a href="https://reactjs.org/docs/events.html" target="_blank" rel="noopener">React Events</a></li>
+<li><a href="http://zhenhua-lee.github.io/react/react-event.html" target="_blank" rel="noopener">React源码解读系列 – 事件机制</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>事件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>为什么React Router v4中使用 switch 关键字</title>
+    <url>/2019/09/26/react/react-router-switch/</url>
+    <content><![CDATA[<ul>
+<li>由于router和switch对于路由的渲染策略不同，对router来说，如果有的链接既可以被路由A匹配，又可以被路由B匹配，那么Router会同时渲染它们</li>
+<li>对于switch来说，它只会渲染符合条件的第一个路径，避免重复匹配</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>switch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是React Router？它有哪些优点</title>
+    <url>/2019/09/26/react/react-router/</url>
+    <content><![CDATA[<h3 id="什么是React路由？有什么优点？"><a href="#什么是React路由？有什么优点？" class="headerlink" title="什么是React路由？有什么优点？"></a>什么是React路由？有什么优点？</h3><ul>
+<li><p>什么是React路由</p>
+<ul>
+<li>React Router 是一组 React 的导航组件，用来处理路由跳转</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>不需要手动设置路由历史，直接将程序包在BrowserRouter组件中即可</li>
+<li>在低版本的浏览器中使用HashHistory即可</li>
+<li>在非dom环境中也有对应的组件，即MemoryHistory</li>
+<li>可以通过组件、配置对象来配置组件</li>
+<li>可以通过link、redirect来进行路由切换</li>
+<li>可以很方便的完成按需加载</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用的路由"><a href="#常用的路由" class="headerlink" title="常用的路由"></a>常用的路由</h3><ul>
+<li><a href="https://reacttraining.com/react-router/web/api/Switch" target="_blank" rel="noopener">Switch</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/BrowserRouter" target="_blank" rel="noopener">BrowserRouter</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/NavLink" target="_blank" rel="noopener">NavLink</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/Route" target="_blank" rel="noopener">Route</a></li>
+<li><a href="https://reacttraining.com/react-router/web/api/Redirect" target="_blank" rel="noopener">Redirect</a></li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://reacttraining.com/react-router/" target="_blank" rel="noopener">REACT ROUTER</a></li>
+<li><a href="https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/Switch.md" target="_blank" rel="noopener">React Router Switch(官方代码库的Switch readme)</a></li>
+<li><a href="https://github.com/xitu/gold-miner/blob/master/TODO/all-about-react-router-4.md" target="_blank" rel="noopener">关于 React Router 4 的一切</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>a链接与 router 中 link 有什么区别？</title>
+    <url>/2019/09/26/react/react-router-a-link/</url>
+    <content><![CDATA[<ul>
+<li>a 链接实现页面跳转时整个页面会重新渲染</li>
+<li>link组件实现页面跳转时只会重新渲染数据发生改变的部分，<code>只更新变化的部分从而减少DOM性能消耗</code></li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://blog.csdn.net/sinat_17775997/article/details/66967854" target="_blank" rel="noopener">【react-router】从Link组件和a标签的区别说起，react-router如何实现导航并优化DOM性能？</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React高阶组件简单了解</title>
+    <url>/2019/09/25/react/react-high-order-components/</url>
+    <content><![CDATA[<h3 id="什么是高阶组件"><a href="#什么是高阶组件" class="headerlink" title="什么是高阶组件"></a>什么是高阶组件</h3><ul>
+<li>官网介绍说，高阶组件（HOC）是 React 中用于复用组件逻辑的一种高级技巧。HOC 自身不是 React API 的一部分，它是一种基于 React 的组合特性而形成的设计模式。具体而言，<strong>高阶组件是参数为组件，返回值为新组件的函数</strong>。</li>
+<li>简单点说，高阶组件其实就是处理react组件的函数</li>
+</ul>
+<h3 id="怎么使用高阶组件"><a href="#怎么使用高阶组件" class="headerlink" title="怎么使用高阶组件"></a>怎么使用高阶组件</h3><ul>
+<li>实现高阶组件的方法有两种<ol>
+<li>属性代理（这种方法是最常见的实现方式，将被处理的props和新的props一起传递给新组件）</li>
+<li>反向继承</li>
+</ol>
+</li>
+</ul>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><ul>
+<li>属性代理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">function HOC(WrapperComponent)&#123;</span><br><span class="line">    return class HOC extends Component &#123;</span><br><span class="line">        render() &#123;</span><br><span class="line">            const newProps = &#123; type:&apos;HOC&apos; &#125;;</span><br><span class="line">            return (</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                    &lt;WrapperComponent &#123;...this.props&#125; &#123;...newProps&#125; /&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default HOC</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;</span><br><span class="line">import HOC from &apos;./HOC&apos;</span><br><span class="line"></span><br><span class="line">class Child extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                子组件</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default HOC(Child)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;</span><br><span class="line">import Child from &apos;./Child&apos;</span><br><span class="line"></span><br><span class="line">export default class App extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;Child name=&apos;Helen&apos; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>页面上渲染出来的结构为<br><img alt data-src="//erealmsoft.github.io/2019/09/25/react/react-high-order-components/20190925_1.jpg" class="lozad"></p>
+</li>
+<li><p>反向继承</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function HOC(WrapperComponent)&#123;</span><br><span class="line">    return class HOC extends WrapperComponent &#123;</span><br><span class="line">        getIt() &#123;</span><br><span class="line">            this.getMe();</span><br><span class="line">            console.log(&apos;Catch You!&apos;)</span><br><span class="line">        &#125;</span><br><span class="line">        componentDidMount() &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                name: &apos;change Helen&apos;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render() &#123;</span><br><span class="line">            return super.render();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default HOC</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;</span><br><span class="line">// import Child from &apos;./Child&apos;</span><br><span class="line">import HOC from &apos;./HOC&apos;</span><br><span class="line"></span><br><span class="line">class App extends Component &#123;</span><br><span class="line">    constructor(props)&#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            name: &apos;Helen&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    getMe() &#123;</span><br><span class="line">        console.log(&apos;Get me?&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &#123;this.state.name&#125;</span><br><span class="line">                &#123;this.getIt()&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default HOC(App)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看页面显示结果<br><img alt data-src="//erealmsoft.github.io/2019/09/25/react/react-high-order-components/20190925_2.jpg" class="lozad"><ul>
+<li>App中可以访问到getIt方法的原因是：在HOC中，<code>super.render()</code> super作为对象调用父类方法时，绑定的是子类的this，而getIt方法中之所以能访问到getMe是因为该类继承了App类，所以能使用App的所有属性和方法</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>应该在React组件的何处发起Ajax请求？</title>
+    <url>/2019/09/25/react/react-where-use-ajax/</url>
+    <content><![CDATA[<ul>
+<li>应该在componentDidMount函数中发起Ajax请求</li>
+<li>原因<ul>
+<li>它在整个生命周期中只执行一次，避免了重复请求数据的情况</li>
+<li>如果在挂载组件之前获取到了数据请求结果，并在该组件上调用setState，这将不起作用，在componentDidMount中发起网络请求将保证这个组件可以更新</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>Ajax请求</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>render在什么时候会被触发？如何避免不必要的render？</title>
+    <url>/2019/09/25/react/react-render/</url>
+    <content><![CDATA[<h3 id="render触发的条件"><a href="#render触发的条件" class="headerlink" title="render触发的条件"></a>render触发的条件</h3><ul>
+<li>第一次挂载</li>
+<li>state改变</li>
+<li>props改变</li>
+</ul>
+<h3 id="避免不必要的render"><a href="#避免不必要的render" class="headerlink" title="避免不必要的render"></a>避免不必要的render</h3><ul>
+<li>利用shouldComponentUpdate钩子函数，通过它的返回值react会决定要不要render，返回false不会渲染</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>render</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何给组件添加默认props</title>
+    <url>/2019/09/24/react/react-add-default-props/</url>
+    <content><![CDATA[<h3 id="defaultProps-的作用："><a href="#defaultProps-的作用：" class="headerlink" title="defaultProps 的作用："></a><code>defaultProps</code> 的作用：</h3><ul>
+<li><code>defaultProps</code> 可以为 <code>Class</code> 组件添加默认 <code>props</code></li>
+<li>这一般用于 <code>props</code> 未赋值，但又不能为 <code>null</code> 的情况</li>
+</ul>
+<h3 id="添加-defaultProps-的两种方法"><a href="#添加-defaultProps-的两种方法" class="headerlink" title="添加 defaultProps 的两种方法"></a>添加 <code>defaultProps</code> 的两种方法</h3><ol>
+<li><p>在类中声明静态属性 <code>static defaultProps</code> ，这种方法只有浏览器编译以后才会生效。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static defaultProps = &#123;</span><br><span class="line">    age: 18</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">render()&#123;</span><br><span class="line">    return(</span><br><span class="line">        &lt;h1&gt;Hello, &#123;this.props.name&#125;. and  my age is &#123;this.props.age&#125;&lt;/h1&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在类外为类追加 <code>defaultProps</code> 属性，这种方式会一直生效。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class App extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &#123;this.props.name&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">App.defaultProps=&#123;</span><br><span class="line">    name:&quot;jack&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zh-hans.reactjs.org/docs/react-component.html#defaultprops" target="_blank" rel="noopener">React 官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>props</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简述create react app的用法</title>
+    <url>/2019/09/24/react/react-create-react-app/</url>
+    <content><![CDATA[<h3 id="详细用法"><a href="#详细用法" class="headerlink" title="详细用法"></a>详细用法</h3><ol>
+<li><p>全局安装</p>
+<p> <code>npm i create-react-app -g</code></p>
+</li>
+<li><p>创建应用（以下其一即可）</p>
+<ul>
+<li><code>npx create-react-app my-app</code></li>
+<li><code>yarn create create-react-app my-app</code></li>
+<li><code>npm i create-react-app my-app</code></li>
+</ul>
+</li>
+<li><p>将封装在 <code>create-react-app</code> 中的配置全部反编译到当前项目中，使用户完全取得 <code>webpack</code> 文件的控制权</p>
+<p> <code>npm run eject</code> 或 <code>yarn eject</code></p>
+<p> <strong>你不会想要用到这个命令的</strong></p>
+</li>
+<li><p>运行测试</p>
+<p> <code>npm run test</code> 或 <code>yarn test</code></p>
+</li>
+<li><p>编译</p>
+<p> <code>npm run build</code> 或 <code>yarn build</code></p>
+</li>
+<li><p>运行程序</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> my-app</span><br><span class="line">npm/yarn start</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://create-react-app.dev" target="_blank" rel="noopener">官方网站</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>认识一下Controlled Component 与 Uncontrolled Component</title>
+    <url>/2019/09/23/react/react-controlled-component-and-uncontrolled-component/</url>
+    <content><![CDATA[<h3 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h3><ul>
+<li>React的state为唯一数据源，并且每个state突变都有一个相关的处理函数，这使得修改或验证用户输入变得简单。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;value: &apos;&apos;&#125;;</span><br><span class="line"></span><br><span class="line">        this.handleChange = this.handleChange.bind(this);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleChange(event) &#123;</span><br><span class="line">        this.setState(&#123;value: event.target.value&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;提交的名字: &apos; + this.state.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    名字:</span><br><span class="line">                    &lt;input type=&quot;text&quot; value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="非受控组件"><a href="#非受控组件" class="headerlink" title="非受控组件"></a>非受控组件</h3><ul>
+<li>将真实数据存储在DOM节点中，所以在使用非受控组件时，有时候反而更容易同时集成React和非React代码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">        this.input = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;A name was submitted: &apos; + this.input.current.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    Name:</span><br><span class="line">                    &lt;input type=&quot;text&quot; ref=&#123;this.input&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000011004617" target="_blank" rel="noopener">受控组件(Controlled Components)和不受控组件</a></li>
+<li><a href="https://reactjs.org/docs/forms.html#controlled-components" target="_blank" rel="noopener">controlled components</a></li>
+<li><a href="https://stackoverflow.com/questions/42522515/what-are-controlled-components-and-uncontrolled-components" target="_blank" rel="noopener">stack over flow</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>getDerivedStateFromError() 和 componentDidCatch() 有什么区别</title>
+    <url>/2019/09/23/react/react-getDerivedStateFromError-and-componentDidCatch/</url>
+    <content><![CDATA[<h3 id="这两个函数是什么"><a href="#这两个函数是什么" class="headerlink" title="这两个函数是什么"></a>这两个函数是什么</h3><ul>
+<li>它们是React16引入的一个新概念 —— <code>错误边界</code><ul>
+<li>过去，组件内的 JavaScript 错误会导致 React 的内部状态被破坏，并且在下一次渲染时产生可能无法追踪的错误。这些错误基本上是由较早的其他代码（非 React 组件代码）错误引起的，但 React 并没有提供一种在组件中优雅处理这些错误的方式，也无法从错误中恢复。</li>
+<li>错误边界是一种 React 组件，这种组件<code>可以捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且，它会渲染出备用 UI</code>，而不是渲染那些崩溃了的子组件树。错误边界在渲染期间、生命周期方法和整个组件树的构造函数中捕获错误。</li>
+<li>需要注意以下几点：<ol>
+<li>错误边界<code>无法</code>捕获以下场景中产生的错误<ul>
+<li>事件处理</li>
+<li>异步代码</li>
+<li>服务端渲染</li>
+<li>它自身抛出来的错误</li>
+</ul>
+</li>
+<li>只有class组件才可以成为错误边界组件</li>
+<li>错误边界仅可以捕获其子组件的错误，它无法捕获自身错误。如果一个错误边界无法渲染错误信息，则错误会冒泡至最近的上层错误边界</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="它们分别的作用是什么"><a href="#它们分别的作用是什么" class="headerlink" title="它们分别的作用是什么"></a>它们分别的作用是什么</h3><ul>
+<li><code>getDerivedStateFromError()</code> ：渲染备用UI</li>
+<li><code>componentDidCatch()</code> ：打印错误信息</li>
+</ul>
+<h3 id="触发场景"><a href="#触发场景" class="headerlink" title="触发场景"></a>触发场景</h3><ul>
+<li>如果一个 class 组件中定义了 static getDerivedStateFromError() 或 componentDidCatch() 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界。当抛出错误后，使用 static getDerivedStateFromError() 渲染备用 UI ，componentDidCatch() 打印错误信息</li>
+</ul>
+<h3 id="它们的区别"><a href="#它们的区别" class="headerlink" title="它们的区别"></a>它们的区别</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>getDerivedStateFromError</th>
+<th>componentDidCatch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>调用时间</td>
+<td>渲染阶段调用</td>
+<td>会在“提交”阶段被调用</td>
+</tr>
+<tr>
+<td>执行其它操作</td>
+<td>不可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>err</td>
+<td>err,info</td>
+</tr>
+</tbody></table>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://stackoverflow.com/questions/52962851/whats-the-difference-between-getderivedstatefromerror-and-componentdidcatch" target="_blank" rel="noopener">whats-the-difference-between-getderivedstatefromerror-and-componentdidcatch</a></li>
+<li><a href="https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromerror" target="_blank" rel="noopener">官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>错误处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 中 Element 与 Component 的区别？</title>
+    <url>/2019/09/23/react/react-element-and-Component/</url>
+    <content><![CDATA[<h3 id="React-中-Element-与-Component分别是什么"><a href="#React-中-Element-与-Component分别是什么" class="headerlink" title="React 中 Element 与 Component分别是什么"></a>React 中 Element 与 Component分别是什么</h3><ul>
+<li>React Element 是 React 实现界面内容的最小单元</li>
+<li>React Component 是由React Element 构成的小的代码片段</li>
+</ul>
+<h3 id="它们有什么区别"><a href="#它们有什么区别" class="headerlink" title="它们有什么区别"></a>它们有什么区别</h3><ul>
+<li>一个是元素，一个是组件</li>
+<li>Element具体描述了你在屏幕上想看到的内容，而Component则是将这些内容根据不同的逻辑分组得到的代码片段</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://stackoverflow.com/questions/30971395/difference-between-react-component-and-react-element" target="_blank" rel="noopener">stack over flow</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>开始使用Hook吧</title>
+    <url>/2019/09/20/react/react-use-hook/</url>
+    <content><![CDATA[<h3 id="Hook是什么"><a href="#Hook是什么" class="headerlink" title="Hook是什么"></a>Hook是什么</h3><ul>
+<li>Hook是React16.8的新增特性，提供内置钩子函数（也可自定义），它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性</li>
+<li>在以函数声名的组件中使用，不可以在class声名的组件中使用</li>
+</ul>
+<h3 id="如何使用Hook（以使用state为例）"><a href="#如何使用Hook（以使用state为例）" class="headerlink" title="如何使用Hook（以使用state为例）"></a>如何使用Hook（以使用state为例）</h3><ul>
+<li><p>引用</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义及使用</p>
+<ul>
+<li><p>使用useState会返回两个对象</p>
+<ol>
+<li>经过初始化的state</li>
+<li>改变state的方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function Example() &#123;</span><br><span class="line">    // 声明一个新的叫做 “count” 的 state 变量</span><br><span class="line">    const [count, setCount] = useState(0);</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;p&gt;You clicked &#123;count&#125; times&lt;/p&gt;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;</span><br><span class="line">                    Click me</span><br><span class="line">            &lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Hook有哪些优势呢？"><a href="#Hook有哪些优势呢？" class="headerlink" title="Hook有哪些优势呢？"></a>Hook有哪些优势呢？</h3><ol>
+<li><p>避免编写重复代码</p>
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;<span class="keyword">this</span>.state.count&#125;</span> times`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentDidUpdate() &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;<span class="keyword">this</span>.state.count&#125;</span> times`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将紧密性强的代码放到一起执行，逻辑就会更好理解</p>
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">    ChatAPI.subscribeToFriendStatus(</span><br><span class="line">        <span class="keyword">this</span>.props.friend.id,</span><br><span class="line">        <span class="keyword">this</span>.handleStatusChange</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">        <span class="keyword">this</span>.props.friend.id,</span><br><span class="line">        <span class="keyword">this</span>.handleStatusChange</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">handleStatusChange(status) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        isOnline: status.isOnline</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">        setIsOnline(status.isOnline);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">    <span class="comment">// Specify how to clean up after this effect:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">cleanup</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p> <code>useEffect返回的函数会在组件卸载时执行</code></p>
+</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zh-hans.reactjs.org/docs/hooks-intro.html" target="_blank" rel="noopener">hook文档，从一到八建议全读</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>Hook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单谈一下React Diff算法</title>
+    <url>/2019/09/20/react/react-diff/</url>
+    <content><![CDATA[<h3 id="在谈React-Diff之前，先看看传统的diff算法"><a href="#在谈React-Diff之前，先看看传统的diff算法" class="headerlink" title="在谈React Diff之前，先看看传统的diff算法"></a>在谈React Diff之前，先看看传统的diff算法</h3><p><img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_1.jpg" class="lozad"></p>
+<ul>
+<li>如果要计算上图两个树形结构的差异并进行转换，传统diff算法会递归每一个节点，以a节点为例，会进行如下比较<br>  <code>a-&gt;e，a-&gt;d，a-&gt;b，a-&gt;c，a-&gt;a</code></li>
+<li>左侧树节点b，c，d，e比较过程与节点a相同，这时算法复杂度能达到O(n^2)，查找完差异后，还需计算最小转换方式，最终达到的复杂度为O(n^3)</li>
+</ul>
+<h3 id="React-Diff策略"><a href="#React-Diff策略" class="headerlink" title="React Diff策略"></a>React Diff策略</h3><ul>
+<li>传统diff算法的复杂度为O(n^3)，显然这是无法满足性能要求的，React通过制定大胆的策略，将复杂度从O(n^3)降低到了O(n)，它的diff策略主要集中在三个点上<ol>
+<li>Web UI中DOM节点跨层级的移动操作特别少，可以忽略不计，<code>所以react实现的diff是同层级比较</code><br> <img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_2.jpg" class="lozad"><ul>
+<li>React只会对相同颜色方框内的DOM节点进行比较，即同一个父节点下的所有子节点。当发现节点已经不存在，则该节点及其子节点会被完全删除掉，不会用于进一步比较。这样只需要对树进行一次遍历，便能完成整个DOM树的比较</li>
+</ul>
+</li>
+<li>拥有相同类的两个组件将会生成类似的树形节点，拥有不同类的两个组件将会生成不同的树形结构</li>
+<li>对于同一层级的一组子节点，它们可以通过唯一id进行区分</li>
+</ol>
+</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/20346379" target="_blank" rel="noopener">知乎：React 源码剖析系列 － 不可思议的 react diff</a></li>
+<li><a href="https://www.jianshu.com/p/a2cc22779ec8" target="_blank" rel="noopener">React diff算法</a></li>
+<li>英文原文 <a href="https://calendar.perfplanet.com/2013/diff/" target="_blank" rel="noopener">React’s diff algorithm</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React有哪些生命周期</title>
+    <url>/2019/09/19/react/react-life-cycle/</url>
+    <content><![CDATA[<h3 id="React生命周期的四个阶段"><a href="#React生命周期的四个阶段" class="headerlink" title="React生命周期的四个阶段"></a>React生命周期的四个阶段</h3><ol>
+<li><p><code>组件初始化阶段</code> ：也就是以下代码中类的构造方法 <code>constructor()</code> ，可以用来用来<code>初始化state属性</code>，Test类继承了react Component这个基类，也就继承这个react的基类，才能有render()、生命周期等方法可以使用，这也说明为什么函数组件不能使用这些方法的原因。</p>
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">     <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">         <span class="keyword">super</span>(props);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>组件的挂载阶段</code>: 此阶段分为 <code>componentWillMount</code>，<code>render</code>，<code>componentDidMount</code> 三个时期。</p>
+<ul>
+<li><code>componentWillMount()</code> 在组件挂载到DOM前调用，且只会被调用一次，在这边调用this.setState不会引起组件重新渲染，也可以把写在这边的内容提前到constructor()中(很少使用)，<code>依赖于 DOM 节点的初始化应该放在这里,也可以在这里通过网络请求数据， 并且可以在这里添加事件</code>。</li>
+<li><code>render()</code> 根据组件的props和state, return 一个React元素, 不负责组件实际渲染工作，之后由React自身根据此元素去渲染出页面DOM。 <code>注意：render是纯函数,不能在里面执行this.setState,会有改变组件状态的副作用</code></li>
+<li><code>componentDidMount()</code> 组件挂载到DOM后调用，且只会被调用一次</li>
+</ul>
+</li>
+<li><p><code>组件的更新阶段</code>: 此阶段分为<code>componentWillReceiveProps</code>，<code>shouldComponentUpdate</code>，<code>componentWillUpdate</code>，<code>render</code>，<code>componentDidUpdate</code></p>
+<ul>
+<li><code>componentWillReceiveProps(nextProps)</code> 此方法只调用于props引起的组件更新过程中, 此方法中根据nextProps和this.props来查明重传的props是否改变</li>
+<li><code>shouldComponentUpdate(nextProps, nextState)</code> 此方法通过比较nextProps, nextState和 this.props, this.State; 当返回True时调用render()重新渲染组件; 返回false则当前组件更新停止,通常用来优化组件性能</li>
+<li><code>componentWillUpdate(nextProps, nextState)</code> 此方法在调用render方法前执行, 这里可执行一些组件更新发生前的工作</li>
+<li><code>render()</code> 与组件挂载阶段的render()函数相同, 只是重新调用了一次<br>componentDidUpdate(prevProps, prevState) 组件更新后被调用, 可以操作组件更新的DOM, prevProps和prevState这两个参数指的是组件更新前的props和state</li>
+</ul>
+</li>
+<li><p>组件的卸载阶段: <code>componentWillUnmount()</code></p>
+<ul>
+<li>此方法在组件被卸载前调用, 可以在这里执行一些清理工作, 比如清楚组件中使用的定时器, 清除componentDidMount中手动创建的DOM元素等, 以避免引起内存泄漏.</li>
+</ul>
+</li>
+</ol>
+<h3 id="16版本之前的生命周期图谱-amp-当下生命周期图谱"><a href="#16版本之前的生命周期图谱-amp-当下生命周期图谱" class="headerlink" title="16版本之前的生命周期图谱 &amp; 当下生命周期图谱"></a>16版本之前的生命周期图谱 &amp; 当下生命周期图谱</h3><ul>
+<li>16版本之前的生命周期图谱<br><img alt data-src="//erealmsoft.github.io/2019/09/19/react/react-life-cycle/20190919_1.jpg" class="lozad"></li>
+<li>现在的生命周期图谱<br><img alt data-src="//erealmsoft.github.io/2019/09/19/react/react-life-cycle/20190919_2.jpg" class="lozad"></li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/" target="_blank" rel="noopener">react lifecycle methods diagram</a></li>
+<li><a href="https://zh-hans.reactjs.org/docs/react-component.html" target="_blank" rel="noopener">React.Component</a></li>
+<li><a href="https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html" target="_blank" rel="noopener">Update on Async Rendering</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>生命周期</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Class类型的组件内部函数为什么需要bind(this)？</title>
+    <url>/2019/09/18/react/react-bind-this/</url>
+    <content><![CDATA[<h3 id="bind-this-的原因"><a href="#bind-this-的原因" class="headerlink" title="bind(this)的原因"></a>bind(this)的原因</h3><ul>
+<li>在<code>JavaScript</code>中，<code>class</code>内定义的方法默认情况下不会绑定<code>this</code>，所以我们要使用bind()手动绑定this，使this时刻指向组件本身</li>
+</ul>
+<h3 id="其他绑定this的方法"><a href="#其他绑定this的方法" class="headerlink" title="其他绑定this的方法"></a>其他绑定this的方法</h3><ol>
+<li><p>定义时绑定</p>
+ <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此语法确保 `handleClick` 内的 `this` 已被绑定。</span></span><br><span class="line"><span class="comment">// 注意: 这是 *实验性* 语法。</span></span><br><span class="line">handleClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'this is:'</span>, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用时绑定</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    // 此语法确保 `handleClick` 内的 `this` 已被绑定。</span><br><span class="line">    return (</span><br><span class="line">        &lt;button onClick=&#123;(e) =&gt; this.handleClick(e)&#125;&gt;</span><br><span class="line">            Click me</span><br><span class="line">        &lt;/button&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="noopener">MDN bind 文档</a></li>
+<li><a href="https://reactjs.org/docs/handling-events.html" target="_blank" rel="noopener">React handle event</a></li>
+<li><a href="https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/" target="_blank" rel="noopener">Understanding JavaScript Bind ()</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>this</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React中的Ref是什么？</title>
+    <url>/2019/09/18/react/react-ref/</url>
+    <content><![CDATA[<h3 id="ref是什么"><a href="#ref是什么" class="headerlink" title="ref是什么"></a>ref是什么</h3><ul>
+<li>ref是React提供的<code>用来操纵React组件实例</code>或者<code>DOM元素</code>的接口</li>
+</ul>
+<h3 id="如何使用ref"><a href="#如何使用ref" class="headerlink" title="如何使用ref"></a>如何使用ref</h3><ul>
+<li><code>你不能在函数组件上使用 ref 属性，因为他们没有实例</code></li>
+<li>使用：<ol>
+<li>使用 <code>React.createRef()</code> 创建</li>
+<li>将ref属性附加到React元素上<pre><code>class MyComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+    render() {
+        return &lt;div ref={this.myRef} /&gt;;
+    }
+}</code></pre></li>
+<li>使用current属性来访问DOM上绑定的对象<ul>
+<li>当 <code>ref</code> 属性用于 HTML 元素时，构造函数中使用 <code>React.createRef()</code> 创建的 <code>ref</code> 接收底层 DOM 元素作为其 <code>current</code> 属性。</li>
+<li>当 <code>ref</code> 属性用于自定义 class 组件时，<code>ref</code> 对象接收组件的挂载实例作为其 <code>current</code> 属性。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="ref的应用场景"><a href="#ref的应用场景" class="headerlink" title="ref的应用场景"></a>ref的应用场景</h3><ul>
+<li>管理焦点，选择文本或媒体播放。</li>
+<li>触发式动画。</li>
+<li>与第三方DOM库集成。</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zh-hans.reactjs.org/docs/refs-and-the-dom.html" target="_blank" rel="noopener">React refs and dom</a></li>
+<li><a href="https://segmentfault.com/a/1190000015113359" target="_blank" rel="noopener">React 重温之 Refs</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/40462264" target="_blank" rel="noopener">React ref 的前世今生</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>ref</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在setState中传递对象和传递函数有什么区别？</title>
+    <url>/2019/09/17/react/react-set-state/</url>
+    <content><![CDATA[<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li>因为 <code>this.props</code> 和 <code>this.state</code> 可能会异步更新，所以不能在<code>setState</code>中通过传递对象方式来更新状态</li>
+<li>传递对象<ul>
+<li>批处理，对相同变量进行的多次处理会合并为一个，并以最后一次的处理结果为准</li>
+</ul>
+</li>
+<li>传递函数<ul>
+<li>链式调用，React 会把我们更新 state 的函数加入到一个队列里面，然后，按照函数的顺序依次调用。同时，为每个函数传入 state 的前一个状态，这样，就能更合理的来更新我们的 state 了</li>
+<li>该函数有两个参数<ul>
+<li>prevState</li>
+<li>props</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Test extends Component&#123;</span><br><span class="line"></span><br><span class="line">    state = &#123;</span><br><span class="line">        age: 0</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Click1 = () =&gt; &#123;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            age: this.state.age + 1</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        if (true) &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                age: this.state.age + 1</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Click2 = () =&gt; &#123;</span><br><span class="line">        this.setState((prevState, props) =&gt; &#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                age: prevState.age + 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        if (true) &#123;</span><br><span class="line">            this.setState((prevState, props) =&gt; &#123;</span><br><span class="line">                return &#123;</span><br><span class="line">                    age: prevState.age + 1</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View&gt;</span><br><span class="line">                &lt;button onClick=&#123;() =&gt; &#123;this.Click1&#125;&#125;&gt;pass in an object&lt;/button&gt;</span><br><span class="line">                &lt;button onClick=&#123;() =&gt; &#123;this.Click2&#125;&#125;&gt;pass in a function&lt;/button&gt;</span><br><span class="line">                &lt;p&gt;age: &#123;this.state.age&#125;&lt;/p&gt;</span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当点击pass in an object时age的结果为1</li>
+<li>当点击pass in a function时age的结果为2</li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+        <tag>state</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浏览器中的重绘和重排是什么？</title>
+    <url>/2019/09/16/dom/reflow-and-repaint/</url>
+    <content><![CDATA[<h3 id="浏览器是如何被渲染的"><a href="#浏览器是如何被渲染的" class="headerlink" title="浏览器是如何被渲染的"></a>浏览器是如何被渲染的</h3><ul>
+<li>浏览器下载完所有页面资源后，会解析并生成两个内部数据结构<ol>
+<li>DOM树（页面层次结构）</li>
+<li>渲染树（样式，布局）</li>
+</ol>
+</li>
+<li>当浏览器渲染完一次之后，由于内容或者样式的改变，浏览器重新计算后发现元素的几何属性发生了变化（比如<code>宽高发生了变化</code>，<code>位置产生了偏移</code>），所以需要重新构建渲染树，这个过程称为重排</li>
+<li>完成重排后，浏览器会重新绘制受影响的部分到屏幕中，这个过程称为重绘</li>
+</ul>
+<h3 id="重排和重绘的触发条件"><a href="#重排和重绘的触发条件" class="headerlink" title="重排和重绘的触发条件"></a>重排和重绘的触发条件</h3><ul>
+<li>通俗点讲，页面元素的删除、添加、尺寸变化都会引起重排，页面元素的颜色，透明度等变化都会引起重绘</li>
+<li>在内容改变，但并不影响元素几何属性的情况下不会触发重排，所以重排必然带来重绘，但是重绘未必带来重排</li>
+<li>相比较重绘，重排更加消耗性能</li>
+<li>由于重绘或者重排比较消耗性能，频繁的重绘和重排更是如此，react中的virtual dom也就应运而生了</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://stackoverflow.com/questions/2549296/whats-the-difference-between-reflow-and-repaint" target="_blank" rel="noopener">whats-the-difference-between-reflow-and-repaint</a></li>
+<li><a href="http://www.stubbornella.org/content/2009/03/27/reflows-repaints-css-performance-making-your-javascript-slow/" target="_blank" rel="noopener">reflows-repaints-css-performance-making-your-javascript-slow</a></li>
+<li><a href="https://csstriggers.com/" target="_blank" rel="noopener">各个浏览器中各个css属性重绘重排情况</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>dom</category>
+      </categories>
+      <tags>
+        <tag>渲染</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>react中优化性能的周期函数是什么？</title>
+    <url>/2019/09/16/react/react-optimize-performance/</url>
+    <content><![CDATA[<h3 id="react中优化性能的周期函数"><a href="#react中优化性能的周期函数" class="headerlink" title="react中优化性能的周期函数"></a>react中优化性能的周期函数</h3><ul>
+<li><code>shouldComponentUpdate(nextProps, nextState)</code></li>
+<li>它是决定react组件什么时候能够不重新渲染的函数，默认返回值为true。也就是说，默认每次更新的时候都要调用所有的生命周期函数，包括render函数，重新渲染。</li>
+</ul>
+<h3 id="如何使用它"><a href="#如何使用它" class="headerlink" title="如何使用它"></a>如何使用它</h3><ul>
+<li>可以通过对新旧props及state的比较来返回true/false，参与决定该组件是否需要被重新渲染（官方文档中提到<code>shouldComponentUpdate</code>不是决定是否渲染组件的唯一条件，还与返回的 React 元素是否相同有关）</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://react-1251415695.cos-website.ap-chengdu.myqcloud.com/docs/optimizing-performance.html" target="_blank" rel="noopener">官方文档（避免调停）</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>生命周期</tag>
+        <tag>性能优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是Real DOM什么是Virtual DOM？</title>
+    <url>/2019/09/13/dom/real-dom-vs-virtual-dom/</url>
+    <content><![CDATA[<h3 id="Real-DOM"><a href="#Real-DOM" class="headerlink" title="Real DOM"></a>Real DOM</h3><ul>
+<li>文档对象模型（Document Object Model，简称DOM），是W3C组织推荐的处理可扩展标志语言的标准编程接口。在网页上，组织页面（或文档）的对象被组织在一个树形结构中，用来表示文档中对象的标准模型就称为DOM.</li>
+<li>DOM实际上是以面向对象方式描述的文档模型。DOM定义了表示和修改文档所需的对象、这些对象的行为和属性以及这些对象之间的关系。可以把DOM认为是页面上数据和结构的一个树形表示，不过页面当然可能并不是以这种树的方式具体实现。</li>
+</ul>
+<h3 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h3><ul>
+<li>指的是对真实DOM的一种模拟。相对于直接操作真实的DOM结构，我们构建一棵虚拟的树，将各种数据和操作直接应用在这棵虚拟的树上，然后再将对虚拟的树的修改应用到真实的DOM结构上。</li>
+<li>Virtual DOM只是一个简单的JS对象，并且最少包含tag、props和children三个属性。不同的框架对这三个属性的命名会有点差别，但表达的意思是一致的。它们分别是标签名（tag）、属性（props）和子元素对象（children）。</li>
+</ul>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    tag: <span class="string">"div"</span>,</span><br><span class="line">    props: &#123;&#125;,</span><br><span class="line">    children: [</span><br><span class="line">        <span class="string">"Hello World"</span>, </span><br><span class="line">        &#123;</span><br><span class="line">            tag: <span class="string">"ul"</span>,</span><br><span class="line">            props: &#123;&#125;,</span><br><span class="line">            children: [&#123;</span><br><span class="line">                tag: <span class="string">"li"</span>,</span><br><span class="line">                props: &#123;</span><br><span class="line">                    id: <span class="number">1</span>,</span><br><span class="line">                    class: "li-1"</span><br><span class="line">                &#125;,</span><br><span class="line">                children: [<span class="string">"第"</span>, <span class="number">1</span>]</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>上边的例子等同于</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    Hello World</span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"li-1"</span>&gt;</span></span><br><span class="line">            第1</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Real-DOM-和-Virtual-Dom的区别"><a href="#Real-DOM-和-Virtual-Dom的区别" class="headerlink" title="Real DOM 和 Virtual Dom的区别"></a>Real DOM 和 Virtual Dom的区别</h3><ul>
+<li>如果要获取页面上dom节点的值，Real DOM需要通过get…方法来获取，而Virtual Dom可以直接在js对象上拿到值，设置值也是这个道理，所以Vitrual DOM相比于Real DOM<ul>
+<li>更新更快</li>
+<li>操作简单</li>
+<li>内存消耗少</li>
+</ul>
+</li>
+<li>如果没有Vitrual DOM，元素改变所引起的浏览器的重绘/重排压力会很大，引起页面卡顿等现象，借助Virtual DOM，DOM 元素的改变可以在内存中进行比较，再结合框架的事务机制将多次比较的结果合并后一次性更新到页面，从而有效地减少页面渲染的次数</li>
+</ul>
+]]></content>
+      <categories>
+        <category>dom</category>
+      </categories>
+      <tags>
+        <tag>渲染</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 中 keys 的作用是什么？</title>
+    <url>/2019/09/12/react/react-keys/</url>
+    <content><![CDATA[<h3 id="了解React中的keys"><a href="#了解React中的keys" class="headerlink" title="了解React中的keys"></a>了解React中的keys</h3><ul>
+<li>keys是React在进行列表操作（修改，添加或者删除）的辅助标识，类似于数据库中所使用的索引或者id，可以快速找到list中改变的元素，节省开销</li>
+<li>它是一个特殊的属性，不是给开发者使用的，而是给react自己用的</li>
+<li>在同一个列表中，key值不能重复出现</li>
+<li>对keys的设计有点像是空间换时间，多写了一点代码，但是大幅提升了性能，触类旁通，在平时编程的其它方面也可以使用类似的做法，比如有时候我们需要给对象数组的对象上添加一些额外的属性以提高某些操作的性能以及便捷性</li>
+</ul>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ol>
+<li>key是React中使用的一种特殊的属性（除此之外还有ref属性），当元素被创建的时候,React会将元素的key值和对应元素绑定存储起来。</li>
+<li>尽管key看起来像是props的一部分,可是事实上我们无法通过this.props.key获取到key的值，React会在判断元素更新的时候自动使用key，而组件自己是无法获取到key的。</li>
+<li>当一个列表被重新渲染时,React会根据较新的元素内容依据相应的key值来匹配之前的元素内容。</li>
+<li>当一个新的key值添加到列表中时,表示有一个组件被创建;被删除时表示有一个组件被销毁。</li>
+<li>Key值可以让React明确标识每个组件,这样在重新渲染的时候保有对应的状态数据。</li>
+<li>如果你去改变某个组件的key值的话,它会在下次渲染的时候被销毁并当作新的组件重新渲染进来。</li>
+</ol>
+<h3 id="Key的使用场景"><a href="#Key的使用场景" class="headerlink" title="Key的使用场景"></a>Key的使用场景</h3><ol>
+<li>在列表中更新（增删查改）列表项的时候,React需要知道到底是哪一个列表项进行了改变。</li>
+<li>在动态创建React元素的时候,而且React元素内包含数量或顺序不确定的子元素时,就需要提供key这个特殊的属性。</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zh-hans.reactjs.org/docs/lists-and-keys.html#keys" target="_blank" rel="noopener">官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>keys</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React中有哪些构建组件的方式？</title>
+    <url>/2019/09/11/react/react-build-components/</url>
+    <content><![CDATA[<h3 id="React中有哪些构建组件的方式"><a href="#React中有哪些构建组件的方式" class="headerlink" title="React中有哪些构建组件的方式"></a>React中有哪些构建组件的方式</h3><ol>
+<li><p>函数定义的无状态组件</p>
+<ul>
+<li><p>语法：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function Component(props, /* context */) &#123;</span><br><span class="line">    return &lt;div&gt;Hello &#123;props.name&#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Component name=&quot;Jack&quot; /&gt;, mountNode)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>组件不会实例化，无法访问到组件内的this对象，但整体渲染性能提升</li>
+<li>无法访问生命周期方法，不能参与各个生命周期的管理</li>
+<li>无状态，所以不涉及state的操作，只能根据传入的props进行展示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>es6形式的React.Component定义的组件</p>
+<ul>
+<li><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Component extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">    &#125;	</span><br><span class="line"></span><br><span class="line">    handleClick() &#123;</span><br><span class="line">        console.log(&apos;hello world&apos;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div onClick=&#123;() =&gt; &#123;this.handleClick()&#125;&#125;&gt;React Component&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>有状态，会被实例化，可以访问组件生命周期</li>
+<li>成员函数不会自动绑定this，需要开发者手动绑定，否则this不能获取到当前组件实例对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>es5原生方式React.createClass定义组件</p>
+<ul>
+<li><p>语法：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var Component = React.createClass(&#123;</span><br><span class="line">    render: function()&#123;</span><br><span class="line">        &lt;div&gt;React Component&lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>有状态，会被实例化，可以访问组件生命周期</li>
+<li>会自动绑定this，导致不必要的性能开销</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="这几种构建方法的区别"><a href="#这几种构建方法的区别" class="headerlink" title="这几种构建方法的区别"></a>这几种构建方法的区别</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>React.createClass</th>
+<th>Function</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>State</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Life Cycle</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>This</td>
+<td>Auto Bind</td>
+<td>Can’t access this: no instance</td>
+<td>Manual Bind</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Low</td>
+<td>Hight(stateless)</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Deprecated?</td>
+<td>In Use</td>
+<td>In Use</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>react定义组件时有什么规定？</title>
+    <url>/2019/09/10/react/react-define-components/</url>
+    <content><![CDATA[<h3 id="规则-amp-约定"><a href="#规则-amp-约定" class="headerlink" title="规则&amp;约定"></a>规则&amp;约定</h3><ul>
+<li>组件命名必须以大写字母开头</li>
+<li>制定这个规则的原因<ol>
+<li>区分内置组件和用户自定义的组件</li>
+<li>首字母大写的组件在定义时它的type会是React.Compontent类型，而小写字母开头的组件会被视为原生的DOM标签，type为’simple’</li>
+<li>我们写的react组件使用的都是JSX语法，需要编译后在浏览器上运行，使用JSX创建元素时，会触发组件内部的<code>React.cteateElement()</code><ul>
+<li>如果是以小写字母开头的，会被React当作HTML内置组件（比如 <code>&lt;div&gt;</code> 或者 <code>&lt;span&gt;</code> 会生成相应的字符串 <code>&#39;div&#39;</code> 或者 <code>&#39;span&#39;</code> 传递给 <code>React.createElement</code>（作为参数)），这样会无法正常解析自定义组件内部的其他标签</li>
+<li>大写字母开头的元素则对应着在 JavaScript 引入或自定义的组件，如 <code>&lt;Foo /&gt;</code> 会编译为 <code>React.createElement(Foo)</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zh-hans.reactjs.org/docs/components-and-props.html" target="_blank" rel="noopener">官方文档1</a></li>
+<li><a href="https://zh-hans.reactjs.org/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized" target="_blank" rel="noopener">官方文档2</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RESTful API的基本设计原则</title>
+    <url>/2014/11/17/others/restful-api/</url>
+    <content><![CDATA[<p>　　RESTful API的架构，是现在比较流行的一种设计思想。它在符合互联网标准的前提下，以用户容易理解，软件开发人员易于扩展的方式来构建软件结构，正受到越来越多的公司去采用。</p>
+<p>　　自己在学习RESTful API设计的时候，也参阅了很多前辈们的文章，站在巨人的肩膀上学习了RESTful架构后，在此谈一谈自己的感受和心得，希望能作为一个入门级的向导吧。</p>
+<p>　　API是连接你和用户的一个桥梁。设计一个API不难，你可以根据自己的喜好，根据自己的程序逻辑定义一串符合标准的字符就可以了，用户通过该API可以取得他们想要的数据或者资源。但是，设计一个好的API很难。设计API要尽可能做到让用户见名知意，以较短的字符串表达出这个API想要提供的是什么功能；同时，在API的设计上，要为以后的扩展做好准备。</p>
+<h2 id="理解RESTful的含义"><a href="#理解RESTful的含义" class="headerlink" title="理解RESTful的含义"></a>理解RESTful的含义</h2><p>　　设计者将其定名为REST，是Representational State Transfer的缩写。要理解RESTful架构，最好的方法就是去理解Representational State Transfer这个词组到底是什么意思，它的每一个词代表了什么涵义。</p>
+<h3 id="资源-Resources"><a href="#资源-Resources" class="headerlink" title="资源(Resources)"></a>资源(Resources)</h3><p>　　REST（Representational State Transfer）省略了主语，表现层（Representational）的主语其实指的是资源（Resources）。资源就是网络上的一个实体，或者说是网络上的一个具体信息。它可以是一段文本、一张图片、一首歌曲、一种服务，总之就是一个具体的实体。你可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的URI就可以，因此URI就成了每一个资源的地址或独一无二的识别符。</p>
+<p>　　所谓”上网”，就是与互联网上一系列的”资源”互动，调用它的URI。</p>
+<h3 id="表现层（Representation）"><a href="#表现层（Representation）" class="headerlink" title="表现层（Representation）"></a>表现层（Representation）</h3><p>　　“资源”是一种信息实体，它可以有多种外在表现形式。我们把”资源”具体呈现出来的形式，叫做它的”表现层”（Representation）。例如文本可以用txt来表现也可以用XML、JSON、MARKDOWN的格式来表现等。</p>
+<h3 id="状态转化-State-Tranfer"><a href="#状态转化-State-Tranfer" class="headerlink" title="状态转化(State Tranfer)"></a>状态转化(State Tranfer)</h3><p>　　上网，就代表了客户端和服务器端的一个交互过程。在这个过程中就会涉及到数据和状态的改变。客户端想从服务器端得到某种服务，就需要通过使用HTTP协议。HTTP协议时无状态协议，，所有的状态都保存在服务器端。HTTP中的四个基本的动词涵盖了用户的所有操作类型。对应的四个基本操作是：GET用来获取资源，POST用来新建资源（也可以用于更新资源），PUT用来更新资源，DELETE用来删除资源。</p>
+<p>　　<strong>综上，URI代表一种资源（Resources），客户端和服务器间传递的是资源的表现层（Representation），再通过四个基本的HTTP动词来实现表现层的状态转化（State Transfer）。</strong></p>
+<h2 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h2><p>　　在HTTP动词中，有“四个半”重要的动词经常用到。之所以说“半个”，是因为动词“PATCH”的功能与动词“PUT”非常相似，我们完全可以用动词PUT来取代PATCH的功能。这“四个半”动词为（括号中为对应的数据库操作）：</p>
+<ul>
+<li>GET（SELECT）：从服务器端取得一个特定的资源，或者整个资源列表。</li>
+<li>POST（CREATE）：在服务器端创建一个新的资源。</li>
+<li>PUT（UPDATE）：更新服务器端的资源（客户端提供改变后的完整资源）。</li>
+<li>PATCH（UPDATE）：更新服务器端的资源（客户端只提供改变的属性）。</li>
+<li>DELETE（DELETE）：从服务器端移除某个资源。</li>
+</ul>
+<p>　　除此之外，还有两个不经常用到的动词：</p>
+<ul>
+<li>HEAD：取得一个资源的元数据，如数据的哈希。</li>
+<li>OPTIONS：获取用户操作资源的权限信息。</li>
+</ul>
+<p>　　下面是一些例子：</p>
+<ul>
+<li>GET /zoos：列出所有动物园</li>
+<li>POST /zoos：新建一个动物园</li>
+<li>GET /zoos/ID：获取某个指定动物园的信息</li>
+<li>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</li>
+<li>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</li>
+<li>DELETE /zoos/ID：删除某个动物园</li>
+<li>GET /zoos/ID/animals：列出某个指定动物园的所有动物</li>
+<li>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</li>
+</ul>
+<h2 id="应该注意的问题"><a href="#应该注意的问题" class="headerlink" title="应该注意的问题"></a>应该注意的问题</h2><h3 id="URI中不能包含动词"><a href="#URI中不能包含动词" class="headerlink" title="URI中不能包含动词"></a>URI中不能包含动词</h3><p>　　一个好的RESTful API，会让第三方开发者利用以上的“四个半”动词就能获取到他们想要的数据。但是，在URI的字段中<strong>不能包含动词</strong>。因为“资源”是一种实体，所以应该是名词，动词的语义应该用上面介绍到的HTTP的“四个半”动词来表示。</p>
+<p>　　例如，某个URI是/posts/show/1,show是动词，这个设计就是错的。正确的写法应该是/posts/1，然后用GET方法来表示“show”的动作语义。</p>
+<h3 id="将版本号放在URI中"><a href="#将版本号放在URI中" class="headerlink" title="将版本号放在URI中"></a>将版本号放在URI中</h3><p>　　一个API是用户和服务器之间的桥梁。如果对服务器端的API作了改动，而这些改动影响到了向后兼容性的话，用户就会不满意，甚至会放弃对程序的应用。所以，为了确保API的合理进化，在用户使用旧版本的同时，应该不定期地想用户介绍新版本的API，让他们及早适应新的变化。</p>
+<p>　　一个好的RESTful API设计应该在URL上跟踪版本信息，还有一个常用的解决方式是将版本号放在HTTP请求的头信息中。但是很多第三方开发者更乐意将版本号放在URL上，这样更加方便直观。</p>
+<h3 id="URL的根入口点"><a href="#URL的根入口点" class="headerlink" title="URL的根入口点"></a>URL的根入口点</h3><p>　　API的根入口点越简单越好，复杂的URL看起来让人枯燥繁琐，只会让用户减少。常用的两种URL根有下面两种形式：</p>
+<ul>
+<li><a href="https://example.org/api/v1/" target="_blank" rel="noopener">https://example.org/api/v1/</a></li>
+<li><a href="https://api.example.com/v1/" target="_blank" rel="noopener">https://api.example.com/v1/</a></li>
+</ul>
+<p>　　如果应用程序设计的很大，将来还可能会进一步扩展的话，采用第二种的形式，将api写在主域名前面；如果程序的API很简单，不会有进一步的扩展，就采用第一种形式，将api放在主域名下。</p>
+<h3 id="路径（Endpoint）"><a href="#路径（Endpoint）" class="headerlink" title="路径（Endpoint）"></a>路径（Endpoint）</h3><p>　　在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的<strong>名词也应该使用复数</strong>。</p>
+<p>　　举例来说，有一个API提供动物园（zoo）的信息，还包括各种动物和雇员的信息，则它的路径应该设计成下面这样：</p>
+<ul>
+<li><a href="https://api.example.com/v1/zoos" target="_blank" rel="noopener">https://api.example.com/v1/zoos</a></li>
+<li><a href="https://api.example.com/v1/animals" target="_blank" rel="noopener">https://api.example.com/v1/animals</a></li>
+<li><a href="https://api.example.com/v1/employees" target="_blank" rel="noopener">https://api.example.com/v1/employees</a></li>
+</ul>
+<h2 id="状态码（Status-Codes）"><a href="#状态码（Status-Codes）" class="headerlink" title="状态码（Status Codes）"></a>状态码（Status Codes）</h2><p>　　服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）：</p>
+<ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功。</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器内部错误，用户将无法判断发出的请求是否成功。</li>
+</ul>
+<p><em>参考资料：<a href="http://codeplanet.io/principles-good-restful-api-design/" target="_blank" rel="noopener">Principles of good RESTful API Design</a>　　　　<a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="noopener">理解RESTful架构</a></em></p>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>RESTful</tag>
+        <tag>Design</tag>
+        <tag>API</tag>
+        <tag>Principle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>运用Jekyll在Github上搭建个人博客</title>
+    <url>/2014/11/17/others/jekyll-in-github/</url>
+    <content><![CDATA[<p>&emsp;&emsp;2010年开始，有一些程序员开始在<code>github</code>网站上搭建 <code>blog</code> 。因为github提供无限流量，免费各地访问速度都比较理想，他们对<code>blog</code>拥有绝对管理权，这样不管何时何地，只要向主机提交 <code>commit</code> ，就能发布新文章。   </p>
+<p>&emsp;&emsp;我们的网站博客就借鉴了这一技术，下面我简单介绍一下如何用<code>jekyll</code>集成<code>github</code>搭建个人博客。   </p>
+<h2 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h2><p>&emsp;&emsp;<code>Github</code>是现在最流行的代码仓库，有时候为使项目更方便的被人理解，项目必须要有介绍页面。<code>Github</code> 就提供了<code>Github Pages</code>的服务，不仅可以方便的为项目建立介绍站点，也可以用来建立个人博客。<br>&emsp;&emsp;<code>Github Pages</code> 是一个具有版本管理功能的代码仓库，每个项目都有一个主页，列出项目的源文件。以下为我们网站博客<code>Github Pages</code>的源文件：</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img alt data-src="http://i.imgur.com/lgb52YE.png" class="lozad">  </p>
+<p>&emsp;&emsp;Pages功能，允许用户自定义项目首页，用来替代默认的源码列表。所以，<code>Github Pages</code> 可以被认为是用户编写的、托管在<code>github</code> 上的静态网页。它允许站内生成网页，但也允许用户自己编写网页上传，但上传网页必须经过<code>Jekyll</code> 程序处理。<br>&emsp;&emsp;<code>Github Pages</code> 有以下几个优点：<br>&emsp;&emsp;&emsp;&emsp;- 使用标记语言，比如<code>Markdown</code><br>&emsp;&emsp;&emsp;&emsp;- 轻量级的博客系统，没有麻烦的配置<br>&emsp;&emsp;&emsp;&emsp;- 无需自己搭建服务器<br>&emsp;&emsp;&emsp;&emsp;- 根据<code>Github</code> 的限制，对应的每个站有300MB空间<br>&emsp;&emsp;&emsp;&emsp;- 可以绑定自己的域名   </p>
+<h2 id="建立Github-Pages"><a href="#建立Github-Pages" class="headerlink" title="建立Github Pages"></a>建立Github Pages</h2><p>&emsp;&emsp;我在这里用到了<code>Github</code> 提供的<code>Github pages generator</code> 的功能，减少了使用的命令数量，也绕开了远程代码库这个概念。通过<code>SSH Keys</code> 配置好<code>github</code> 之后，在<code>github.com</code> 上创建代码库。<code>GitHub Pages</code> 分两种，一种是你的<code>GitHub</code> 用户名建立的<code>username.github.io</code> 这样的用户&amp;组织页（站），另一种是依附项目的<code>pages</code> 。而我们网站博客采用的是第一种，登录到自己的<code>Github</code> 账户，选择“<code>New repository</code> ”，新建一个名为<code>erealm.github.io</code> 的代码库，每个用户名下面只能建立一个。创建之后点击<code>Admin</code> 进入项目管理，可以看到是这样的界面：<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img alt data-src="http://i.imgur.com/5Ty6vOn.png" class="lozad"><br>&emsp;&emsp;因为我们网站的二级域名免费，所以在<code>erealm</code> 的二级域名下添加一条A记录，地址就是<code>Github Pages</code> 的服务<code>IP</code> 地址：<code>207.97.227.245</code> 。<br>&emsp;&emsp;建立好代码库之后，提交一个<code>index.html</code> 文件，然后<code>push</code> 到<code>GitHub</code> 的<code>master</code> 分支（也就是普通意义上的主干）。第一次页面生效需要一些时间，大概10分钟左右。生效之后，访问<code>erealm.github.io</code> 就可以看到我们上传的页面了，erealm.github.com就是我们的博客。如果我们需要通过自己的域名来访问，需要在项目的根目录下新建一个名为CNAME的文件，文件内容为：<a href="http://blog.erealm.cn/" title="blog.erealm.cn" target="_blank" rel="noopener">blog.erealm.cn</a>即可。</p>
+<h2 id="Jekyll模版系统"><a href="#Jekyll模版系统" class="headerlink" title="Jekyll模版系统"></a>Jekyll模版系统</h2><p>&emsp;&emsp;<code>Jekyll（发音/&#39;dʒiːk əl/，&quot;杰克尔&quot;）</code> 是一个简洁的、特别针对博客平台的静态站点生成器，它会根据网页源码生成静态文件。它使用一个模板目录作为网站布局的基础框架，并在其上运行 <code>Textile 、 Markdown 或 Liquid</code>  标记语言的转换器，最终生成一个完整的静态Web站点，可以被放置在任何Web服务器上。它同时也是<code>GitHub Pages</code> ，在后台所运行的引擎。<br>&emsp;&emsp;<code>Jekyll</code> 完全推翻了传统网站的维护方式，它直接回到了“原点”——作者只需要维护文本文件，每一篇日志就是一个文件，程序会根据模板设置自动把这些文本文件翻译为网页。这些文本文件不用HTML，而是用简化版本的<code>Markdown（MD）</code> 或者其它可最终翻译为<code>HTML</code> 的伪标记语言。<br>&emsp;&emsp;对于个人博客，<code>Jekyll</code> 有几个明显的优势：<br>&emsp;&emsp;-快速访问和弱服务器需求<br>&emsp;&emsp;-高安全性<br>&emsp;&emsp;-版本控制<br>&emsp;&emsp;-简单部署<br>&emsp;&emsp;-文本编辑器和自由格式书写          </p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><p>&emsp;&emsp;我们将之前建立的代码库<code>clone</code> 下来至前端开发神器<code>Webstorm</code> 里。因为<code>Jekyll</code> 使用动态脚本语言<a href="http://zh.wikipedia.org/wiki/Ruby" title="Ruby" target="_blank" rel="noopener"> Ruby </a>写成。所以首先我们需先下载并安装<a href="https://www.ruby-lang.org/zh_cn/downloads/" title="Ruby(中文)" target="_blank" rel="noopener">Ruby(中文)</a>。   </p>
+<p>&emsp;&emsp;安装<code>Jekyll的</code> 最好方式是通过<code>RubyGems</code> ，所以我们在<code>Webstorm</code> 终端里输入：    </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;<code>Jekyll</code> 依赖以下的<code>gems</code> 模块： <code>liquid 、 fast-stemmer 、 classifier 、 directory_watcher 、 syntax 、 maruku 、 kramdown 、 posix-spawn 和 albino</code>。它们会被<code>gem install</code>命令自动安装。如果你在<code>gem</code>的安装过程中遇到了问题，你可能需要安装用于在<code>Ruby 1.8</code> 上编译扩展模块的头文件。<br>我们在安装时<code>Windows</code> 平台上看到如下错误提示信息： <code>Failed to build gem native extension</code>  ，则需要安装 <a href="https://github.com/oneclick/rubyinstaller/wiki/development-kit" title="RubyInstaller Devkit" target="_blank" rel="noopener">RubyInstaller Devkit</a>。  </p>
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2. 使用"></a>2. 使用</h3><h4 id="1-Jekyll博客站点搭建步骤"><a href="#1-Jekyll博客站点搭建步骤" class="headerlink" title="(1)Jekyll博客站点搭建步骤"></a>(1)Jekyll博客站点搭建步骤</h4><p>&emsp;&emsp;一旦<code>Jekyll</code> 安装成功后，搭建一个<code>Jekyll</code> 博客站点通常包括下面几步：<br>&emsp;&emsp;&emsp;&emsp;1.设定站点的基本结构，使用<code>HTML和Liquid</code> 模板语言创建网页布局;<br>&emsp;&emsp;&emsp;&emsp;2.创建一些帖子，或者从以前的博客平台导入;<br>&emsp;&emsp;&emsp;&emsp;3.在本地测试站点，查看效果;<br>&emsp;&emsp;&emsp;&emsp;4.部署网站;    </p>
+<p>&emsp;&emsp;<code>Jekyll</code> 从核心上来说是一个文本转换引擎。该系统内部的工作原理是：输入一些用自己喜爱的标记语言格式书写的文本，可以是<code>Markdown、Textile或纯粹的HTML</code> ，它将这些文本混合后放入一个或一整套页面布局当中。<br>我们的的<code>Jekyll</code> 博客站点通常具有如下结构：<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img alt data-src="http://i.imgur.com/YnvhCXA.jpg" class="lozad">   </p>
+<h4 id="2-各个文件夹及文件作用"><a href="#2-各个文件夹及文件作用" class="headerlink" title="(2)各个文件夹及文件作用"></a>(2)各个文件夹及文件作用</h4><p><code>_config.yml</code> 文件<br>配置文件，用来定义想要的效果；</p>
+<p><code>_includes/</code><br>该目录存放可以与<code>_layouts和_posts</code> 混合、匹配并重用的文件。</p>
+<p><code>_layouts/</code><br>该目录存放用来插入帖子的网页布局模板。页面布局基于类似博客平台的“一个帖子接一个帖子”的原则，通过YAML前置数据定义。<code>Liquid</code> 标签用于在页面上插入帖子的文本内容。</p>
+<p><code>_posts/</code><br>该目录下存放的可以说成是你的“动态内容”。这些文件的格式很重要，它们的命名模式必须遵循 <code>YEAR-MONTH-DATE-title.MARKUP</code>  。每一个帖子的固定链接<code>URL</code> 可以作弹性的调整，但帖子的发布日期和转换所使用的标记语言会根据且仅根据文件名中的相应部分来识别。</p>
+<p><code>_site</code><br>这个是<code>Jekyll</code> 生成的最终的文档   </p>
+<p><code>index.html和其他HTML/Markdown/Textile文件</code><br>如果一个文件的头部存在YAML前置数据的部分，那么<code>Jekyll</code> 将会自动处理转换该文件并传送到站点路径下。这对于站点的根目录或其他任意子目录下的所有<code>.html 、 .markdown 、 .textile</code> 文件都适用。</p>
+<p><code>其他文件/目录</code><br>除了以上提到的文件之外，每一个其他的、不以下划线_开头的目录和文件都会被照原样传送到站点路径下。<br>下图为网站博客中个目录及文件：<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img alt data-src="http://i.imgur.com/d4AAKU7.png" class="lozad">         </p>
+<h3 id="3-Jekyll的配置"><a href="#3-Jekyll的配置" class="headerlink" title="3.Jekyll的配置"></a>3.Jekyll的配置</h3><p>&emsp;&emsp;博客中配置文件<code>_config.yml</code> 内容如下：   </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">paginate:</span> <span class="number">10</span> <span class="comment"># pagination based on number of posts   </span></span><br><span class="line"><span class="attr">paginate_path:</span> <span class="string">"page:num"</span>   </span><br><span class="line"><span class="attr">highlighter:</span> <span class="literal">true</span>   </span><br><span class="line"><span class="attr">markdown:</span> <span class="string">kramdown</span>   </span><br><span class="line"></span><br><span class="line"><span class="attr">defaults:</span></span><br><span class="line"><span class="bullet"> -</span></span><br><span class="line"><span class="attr">scope:</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">""</span> <span class="comment"># empty string for all files</span></span><br><span class="line"><span class="attr">values:</span></span><br><span class="line"><span class="attr">  title:</span> <span class="string">eRealm</span> <span class="string">Info</span> <span class="string">&amp;</span> <span class="string">Tech</span></span><br><span class="line"></span><br><span class="line"><span class="attr">description:</span> <span class="string">eRealm</span> <span class="string">Info</span> <span class="string">&amp;</span> <span class="string">Tech</span></span><br><span class="line"><span class="attr">author:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">erealm</span></span><br><span class="line"><span class="attr">  email:</span> <span class="string">hello@erealm.cn</span></span><br><span class="line"><span class="attr">  github:</span> <span class="string">erealm</span></span><br><span class="line"><span class="attr">  weibo:</span> <span class="string">erealm2014</span></span><br><span class="line"><span class="attr">  bio:</span> <span class="string">SOLVING</span> <span class="string">YOUR</span> <span class="string">PROBLEMS</span> <span class="string">BY</span> <span class="string">MAKING</span> <span class="string">YOUR</span> <span class="string">OWN</span> <span class="string">SOFTWARE!</span></span><br><span class="line"><span class="attr">  email_md5:</span> <span class="string">d7500acdff95da1b6a98acac373cae8b</span></span><br><span class="line"><span class="attr">writer:</span></span><br><span class="line"><span class="attr">  don:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">薛栋</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="number">594296827</span><span class="string">ff9539ded708e45ec92d528</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">xuedong369@gmail.com</span></span><br><span class="line"><span class="attr">  emma:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">李晋</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="string">af6bee6db31ae79eee100c5031156561</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">emma@erealm.cn</span></span><br><span class="line"><span class="attr">  guo:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">郭建刚</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="number">1</span><span class="string">a8482e680b0ccd153b724e831956562</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">hoveagle@gmail.com</span></span><br><span class="line"><span class="attr">  zhang:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">张加帅</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="string">c715af96177682bd359e307742016f24</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">jiashuai1215@gmail.com</span></span><br><span class="line"><span class="attr">  dang:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">党建</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="number">396</span><span class="string">f98e19be58c81f25060b4108595bd</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">hunterdang@gmail.com</span></span><br><span class="line"><span class="attr">  erealm:</span></span><br><span class="line"><span class="attr">    display_name:</span> <span class="string">瑞木</span></span><br><span class="line"><span class="attr">    gravatar:</span> <span class="string">d7500acdff95da1b6a98acac373cae8b</span></span><br><span class="line"><span class="attr">    email:</span> <span class="string">hello@erealm.cn</span></span><br><span class="line"><span class="attr">rss_path:</span> <span class="string">feed.xml</span></span><br><span class="line"><span class="attr">categories_path:</span> <span class="string">categories.html</span></span><br><span class="line"><span class="attr">tags_path:</span> <span class="string">tags.html</span></span><br><span class="line"></span><br><span class="line"><span class="attr">BASE_PATH:</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;分别配置了博客的<code>分页功能、高亮显示和Markdown</code> 标记语言转换引擎。<br>&emsp;&emsp;主页中用以下代码实现文章分页： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">    &#123;% for post in paginator.posts %&#125;</span><br><span class="line">        &lt;a href=&quot;&#123;&#123; post.url &#125;&#125;&quot;&gt;&#123;&#123; post.title &#125;&#125;&lt;/a&gt;</span><br><span class="line">    &#123;% endfor %&#125; </span><br><span class="line">```   </span><br><span class="line">&amp;emsp;&amp;emsp;设定`kramdown为Markdown`标记语言转换引擎。也可以使用 `RDiscount 取代 kramdown` 作为你的`Markdown` 标记语言转换引擎，只需确认安装：</span><br><span class="line">```bash</span><br><span class="line">    $ gem install rdiscount</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;并通过以下命令行参数执行<code>Jekyll</code> ：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ jekyll --rdiscount</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;或者也可以在你站点下的 <code>_config.yml</code>  文件中markdown的参数变为<code>rdiscount</code> 。</p>
+<h3 id="4-YAML-Front-Matter和模板变量"><a href="#4-YAML-Front-Matter和模板变量" class="headerlink" title="4.YAML Front Matter和模板变量"></a>4.YAML Front Matter和模板变量</h3><p>&emsp;&emsp;对于使用<code>YAML</code> 定义格式的文章，<code>Jekyll</code> 会特别对待，他的格式要求比较严格，例如博客文章中：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">layout: post</span><br><span class="line">title: 初涉Grunt心得</span><br><span class="line">author: don</span><br><span class="line">categories: [home]</span><br><span class="line">tags: [Grunt,自动化,package,gruntfile,压缩,合并,配置,插件]</span><br><span class="line">fullview: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;前后的—不能省略，在这之间，可以定一些需要的变量，<code>layout</code> 就是调用<code>_layouts</code> 下面的某一个模板，他还有一些其他的变量可以使用：<br>&emsp;&emsp;permalink：可以对某一篇文章使用通用设置之外的永久链接<br>&emsp;&emsp;published：可以单独设置某一篇文章是否需要发布<br>&emsp;&emsp;category：设置文章的分类<br>&emsp;&emsp;tags：设置文章的<code>tag</code><br>&emsp;&emsp;上面的<code>title</code> 就是自定义的内容，你也可以设置其他的内容，在文章中可以通过<code></code> 这样的形式调用。   </p>
+<h3 id="5-博客文章作者及头像的添加"><a href="#5-博客文章作者及头像的添加" class="headerlink" title="5.博客文章作者及头像的添加"></a>5.博客文章作者及头像的添加</h3><h4 id="1-Jekyll模板全局变量"><a href="#1-Jekyll模板全局变量" class="headerlink" title="(1)Jekyll模板全局变量"></a>(1)Jekyll模板全局变量</h4><p><code>site</code> :<code>全站的信息</code> +<code>_config.yml</code> 文件中的配置选项;<br><code>page</code> :这个变量中包含<code>YAML</code> 前置数据,另外加上两个额外的变量值:<code>url和content</code> ;<br><code>content</code> :在布局模板文件中，这里变量包含了页面的子视图。这个变量将会把渲染后的内容插入到模板文件中。这个变量不能在文章和页面文件中使用;<br><code>paginator</code> :一旦<code>paginate</code> 配置选项被设置了，这个变量才能被使用;       </p>
+<h4 id="2-Jekyll模板Site变量"><a href="#2-Jekyll模板Site变量" class="headerlink" title="(2)Jekyll模板Site变量"></a>(2)Jekyll模板Site变量</h4><p><code>site.time</code> :当前的时间(当你运行<code>Jekyll</code> 时的时间);<br><code>site.posts</code> :一个按时间逆序的文章列表;    </p>
+<p><code>site.related_posts</code> :如果当前被处理的页面是一个文章文件，那这个变量是一个包含了最多10篇相关文章的列表。默认来说，这些相关文章是低质量但计算快的。为了得到高质量但计算慢的结果，运行<code>Jekyll</code> 命令时可以加上<code>--lsi</code> 选项。(潜在语意索引)   </p>
+<p><code>site.categories.CATEGORY</code> :所有在<code>CATEGORY</code> 分类中的文章列表<br><code>site.tags.TAG</code> :所有拥有<code>TAG</code> 标签的文章的列表   </p>
+<p><code>site.[CONFIGURATION_DATA]</code> :截止0.5.2版本，所有在<code>_config.yml</code> 中的数据都能够通过site变量调用。举例来说，如果你有一个这样的选项在你的配置文件中:<code>url: http://higrid.net</code> ，那在文章和页面文件中可以这样调用<code>{ { site.url } }</code> 。<code>Jekyll</code> 并不会自动解析修改过的<code>_config.yml</code> 文件，你想要启用新的设置选项，你需要重启<code>Jekyll</code>        </p>
+<h4 id="3-Jekyll模板Page变量"><a href="#3-Jekyll模板Page变量" class="headerlink" title="(3)Jekyll模板Page变量"></a>(3)Jekyll模板Page变量</h4><p><code>page.content</code>:页面中未渲染的内容<br><code>page.title</code>:文章的标题<br><code>page.url</code>:除去域名以外的URL<br><code>page.date</code>:指定每一篇文章的时间，这个选项能够覆盖一篇文章中前置数据设置的时间，它的格式是这样的:YYYY-MM-DD HH:MM:SS<br><code>page.id</code>:每一篇文章的唯一标示符(在RSS中非常有用)<br><code>page.categories</code>:这篇文章隶属的分类的一个列表，分类是通过在_post目录中的目录结构推导而来的。这个变量也能在YAML前置数据中被指定<br><code>page.tags</code>:这篇文章的标签的列表。这些数据能够在YAML前置数据中指定<br><code>page.next</code>:按时间序的下一篇文章<br><code>page.content</code>:按时间序的上一篇文章             </p>
+<h4 id="4-Jekyll模板Paginator变量"><a href="#4-Jekyll模板Paginator变量" class="headerlink" title="(4)Jekyll模板Paginator变量"></a>(4)Jekyll模板Paginator变量</h4><p><code>paginator.per_page</code>:每一个页面上文章的数量<br><code>paginator.posts</code>:当前页面上可用的文章<br><code>paginator.total_posts</code>:所有文章的数量<br><code>paginator.total_pages</code>:所有页面的数量<br><code>paginator.page</code>:当前页面的数量<br><code>paginator.previous_page</code>:前面的页面的数量<br><code>paginator.next_page</code>:接下来的的页面的数量          </p>
+<h4 id="5-作者名及头像加载"><a href="#5-作者名及头像加载" class="headerlink" title="(5)作者名及头像加载"></a>(5)作者名及头像加载</h4><p>&emsp;&emsp;我们在网站博客<code>_config.yml</code> 文件中写入如下等文章作者代码：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">writer:</span>   </span><br><span class="line"><span class="attr">      don:</span>   </span><br><span class="line"><span class="attr">        display_name:</span> <span class="string">薛栋</span>   </span><br><span class="line"><span class="attr">        gravatar:</span> <span class="number">594296827</span><span class="string">ff9539ded708e45ec92d528</span>   </span><br><span class="line"><span class="attr">        email:</span> <span class="string">xuedong369@gmail.com</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;通过向主页以及每个文章模版里最开始加入以下<code>Liquid</code> 代码：</p>
+<pre><code>{% assign author = site.writer[post.author] %}</code></pre><p>&emsp;&emsp;我们将文章最开始—内<code>YAML</code> 中的作者名和<code>_config.yml</code> 中全局的<code>writer</code> 里的<code>author</code> 名对应并赋给全局变量<code>author</code> 。<br>&emsp;&emsp;主页中我们使用如下代码进行调用对应<code>author</code> 中的<code>display_name</code> 和头像属性：   </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img alt=&quot;&#123;&#123; author.display_name &#125;&#125;&quot; src=&quot;http://www.gravatar.com/avatar/&#123;&#123; author.gravatar &#125;&#125;?s=40&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;其中<a href="http://en.gravatar.com/" title="gravatar" target="_blank" rel="noopener">gravatar</a>为第三方头像存储网站，它能针对每个头像生成唯一的<code>ID</code>。   </p>
+<p>&emsp;&emsp;现在本地环境就基本搭建完成了，进入之前我们建立的博客目录，运行下面的命令：```bash<br>    $ jekyll serve   </p>
+<pre><code>&amp;emsp;&amp;emsp;这个时候，你就可以通过`localhost:4000` 来访问了。      
+&amp;emsp;&amp;emsp;以上为个人学习`Jekyll在github` 搭建静态个人博客总结经验，初次学习，如有错误还望指出~</code></pre>]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Jekyll</tag>
+        <tag>Github</tag>
+        <tag>Github Pages</tag>
+        <tag>blog</tag>
+        <tag>博客</tag>
+        <tag>markdown</tag>
+        <tag>ruby</tag>
+        <tag>rubyrem</tag>
+        <tag>author</tag>
+        <tag>site</tag>
+        <tag>page</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSS布局之position</title>
+    <url>/2014/11/17/others/css-position/</url>
+    <content><![CDATA[<p>&emsp;&emsp;CSS中的<code>position</code>规定元素的定位类型， 把浏览器窗口想象成一个坐标系统，你可以将一个元素精确地放在页面上你所指定的地方。。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">position</span>: static;&#125;   </span><br><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">position</span>: relative;&#125;    </span><br><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">position</span>: absolute;&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">position</span>: fixed;&#125;  </span><br><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">position</span>: inherit;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>&emsp;&emsp;<code>position</code>属性有五个值，实际上最常用的只有三种，static和inherit不常用。</p>
+<h2 id="Static"><a href="#Static" class="headerlink" title="Static"></a>Static</h2><p>&emsp;&emsp;每一个元素默认的position都为static，也就是没有定位，元素出现在正常的流中，left/right/bottom/top对static定位的元素没有影响。</p>
+<h2 id="Relative"><a href="#Relative" class="headerlink" title="Relative"></a>Relative</h2><p>相对定位，它是相对元素<code>自身</code>在<code>正常文档流</code>中的位置，是相对它自己的。 </p>
+<blockquote>
+<p>很多时候，我们定位某元素为relative是为了它的子元素定位为absolute。</p>
+</blockquote>
+<p><code>需注意：</code> 如果你设置了某元素的position的值为relative,而没有设置其他属性(top, left, bottom or right),那么对该元素将不产生任何影响，就跟设置static是一个效果。但是，如果你除了position为relative外，还设置了其他定位属性，比如top： 10px,那么该元素将相对于它本身在正常文档流中向上偏离10px。 这里有两个问题需要思考：  </p>
+<ol>
+<li><p>它还在普通流中吗？也就是它原来的位置会被紧跟着的元素占据吗？ </p>
+</li>
+<li><p>它移动后会覆盖其它元素吗？ </p>
+</li>
+</ol>
+<p>首先，其它元素不会调整位置来弥补它偏离后剩下的位置。  </p>
+<p>其次，它不仅会覆盖其它元素，而且即使对position值是static，即没有定位的其它元素设置z-index更高的值，这个定位的元素也始终会覆盖其它未被定位的元素。  </p>
+<p>当你设置元素position为relative时，有两件事会发生：  </p>
+<ul>
+<li><p>你可以设置这个元素的z-index属性，它主要设置元素的堆叠顺序。而没有定位的元素，使用这个属性是没有意义的。  </p>
+</li>
+<li><p>它限制了绝对定位的子元素的范围。任何绝对定位的元素，如果祖先元素position为relative，那么这个子元素是在祖先元素内以祖先元素为参考的。这一点下面理解了绝对定位之后就清楚是什么意思了！</p>
+</li>
+</ul>
+<h2 id="Absolute"><a href="#Absolute" class="headerlink" title="Absolute"></a>Absolute</h2><p>绝对定位，它是<code>相对最近positioned</code>，也就是已经设置<code>position</code>为<code>absolute</code>或<code>relative</code>的<code>祖先元素</code>。注意<code>最近</code>两个字，指的是一层一层往上找，如果没有，那么它是相对于body元素。 同样的两个问题：  </p>
+<ol>
+<li><p>它还在普通流中吗？也就是它原来的位置会被紧跟着的元素占据吗？ </p>
+</li>
+<li><p>它移动后会覆盖其它元素吗？  </p>
+</li>
+</ol>
+<p><img alt="图1" data-src="http://i.imgur.com/W2ikffF.png" class="lozad"></p>
+<p>每个网页都可以看成是由一层层页面堆叠起来的，元素被设置为<code>absolute</code>或<code>fixed</code>后，会发生三件事情：  </p>
+<ul>
+<li><p>相当于把元素往z轴移动了一层，元素脱离了原来正常的文档流了。 。其它的元素表现的就像是它不存在一样，会占据它原来的位置。如果不想覆盖其它元素，可以通过设置z-index。  </p>
+</li>
+<li><p>该元素变为块级元素。相当于给元素设置了<code>display： none</code>，内联元素也可以设置它的高度了。  </p>
+</li>
+<li><p>如果该元素是块级元素，元素由原来的占据一行，变成了auto。  </p>
+</li>
+</ul>
+<p>上面讲相对定位的时候提过，设置元素position为relative时，它限制了绝对定位的子元素的范围。具体是什么意思呢？  </p>
+<blockquote>
+<p>一般我们设置某个元素position为relative，然后设置它的子元素为absolute，这样这个子元素就始终在这个父元素范围内进行定位。  </p>
+</blockquote>
+<p><img alt="图1" data-src="http://i.imgur.com/XOuP7am.png" class="lozad">  </p>
+<p>这是<a href="http://www.erealm.cn" target="_blank" rel="noopener">http://www.erealm.cn</a> contact页面上的部分截图。  </p>
+<p>less代码如下：  </p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">background-color</span>: @white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.contact-details</span> &#123;</span><br><span class="line">  <span class="attribute">text-align</span>: left;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">3%</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">3em</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">99</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#39a9a4</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgb</span>(57,169,164);</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(57,169,164, 0.95);</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">1.5em</span>;  </span><br><span class="line">  .................  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>html页面代码为：  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"contact-details"</span>&gt;</span></span><br><span class="line">    .......................</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;可以看到，父元素div的position为relative，子元素div为absolute。子元素相对于父元素进行定位:<code>right: 3%</code>,在父元素偏离于它的右边距3% 。</p>
+<p>&emsp;&emsp;<code>再一次，需要记住：相对定位相对元素在文档流中的本来位置，而绝对定位是相对于最近的已定位祖先元素，如果不存在已定位的祖先元素，那么“相对于”body。</code>  </p>
+<h2 id="Fixed"><a href="#Fixed" class="headerlink" title="Fixed"></a>Fixed</h2><p>&emsp;&emsp;跟absolute定位很相似，唯一不同的是，它是相对于浏览器窗口进行定位的，无论窗口滚动与否，元素都会留在那个位置。相当于一种特殊的absolute。</p>
+<p><img alt="图2" data-src="http://i.imgur.com/TglXIkt.png" class="lozad">  </p>
+<p>&emsp;&emsp;这个绿色图标是<a href="http://www.erealm.cn" target="_blank" rel="noopener">http://www.erealm.cn</a> 页脚元素内的子元素，点击随时返回到顶部。即使窗口滚动，也始终可以看到这个元素在浏览器右下角。  </p>
+<p>代码如下：  </p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">   <span class="selector-class">.back-top</span> &#123;</span><br><span class="line">     <span class="attribute">position</span>: fixed;</span><br><span class="line">     <span class="attribute">font-size</span>: .<span class="number">8em</span>;</span><br><span class="line">     <span class="attribute">color</span>: @white;</span><br><span class="line">     <span class="attribute">bottom</span>: <span class="number">20px</span>;</span><br><span class="line">     <span class="attribute">right</span>: <span class="number">20px</span>;</span><br><span class="line">     <span class="attribute">line-height</span>: <span class="number">25px</span>;</span><br><span class="line">     <span class="attribute">width</span>: <span class="number">25px</span>;</span><br><span class="line">     <span class="attribute">height</span>: <span class="number">25px</span>;</span><br><span class="line">     <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">     <span class="attribute">border</span>:<span class="number">1px</span> solid @white;</span><br><span class="line">     <span class="attribute">text-align</span>: center;</span><br><span class="line">     <span class="attribute">background</span>: @green;</span><br><span class="line">     <span class="attribute">z-index</span>: <span class="number">1000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Inherit"><a href="#Inherit" class="headerlink" title="Inherit"></a>Inherit</h2><p>继承父元素的position值。 </p>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>开源</tag>
+        <tag>CSS</tag>
+        <tag>CSS position</tag>
+        <tag>CSS 布局</tag>
+        <tag>CSS 定位</tag>
+        <tag>web front-end</tag>
+        <tag>web 前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node.js自定义模块与使用</title>
+    <url>/2014/11/17/others/node-module/</url>
+    <content><![CDATA[<p>&emsp;&emsp;模块是Node.js 应用程序的基本组成部分，通过模块化编程可以提高程序功能模块的可复用性，从而构建一个高类聚、低耦合的系统，方便维护与测试。</p>
+<h2 id="Node-js模块"><a href="#Node-js模块" class="headerlink" title="Node.js模块"></a>Node.js模块</h2><p>&emsp;&emsp;在Node.js中，模块分为两类：一类是Node.js提供的模块，称为核心模块；另一类是用户编写的模块，称为文件模块。</p>
+<p>&emsp;&emsp;核心模块在Node.js源代码编译的时候被编译成二进制文件，可以require(‘模块名’)去获取；其中http、fs、net等都是node.js提供的核心模块。在Node.js进程启动时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最快的。</p>
+<p>&emsp;&emsp;文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢。但是在程序中经过第一次使用require方法加载模块后，Node.js对所加载的原生模块或文件模块都进行了缓存，于是在第二次使用require方法加载同样的模块时，是不会有重复开销的。</p>
+<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><p>&emsp;&emsp;在Node.js 应用程序中，文件和模块是一一对应的。一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。<br>在每个模块中，module.export是模块的公开接口，便于使用require 从外部获取模块的接口。</p>
+<p><strong>(1)一个模块中包含多个函数</strong> 时，模块的定义如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//testA.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports. functionA = functionA;</span><br><span class="line"><span class="built_in">module</span>.exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
+
+<p>  或者将module.exports替换为exports 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">exports. functionA = functionA;</span><br><span class="line">exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2)只将一个对象封装到模块中</strong> ，格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// car.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者将module.exports替换为exports 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">car</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports= car;   <span class="comment">// exports= functionA;</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;<strong>module.exports 与exports的区别</strong> ：module.exports是模块的公开接口，每个模块都会自动创建一个module对象，该对象有一个exports属性，初始值是个空对象{}.exports只是module.exports的一个辅助对象，模块最终返回module.exports给模块的调用者，而不是exports。exports所起的作用是收集属性，如果module.exports当前没有任何属性，exports会将这些属性赋给module.exports, 如果module.exports已经有一些属性，那么exports的所有属性会被忽略。</p>
+<h2 id="使用模块"><a href="#使用模块" class="headerlink" title="使用模块"></a>使用模块</h2><p>&emsp;&emsp;在Node.js中使用require方法引入模块，该方法会返回一个对象，它引用的是某个给定文件中的module.exports值。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用原生（核心）模块</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(‘http’);</span><br><span class="line"><span class="comment">//使用自定义模块</span></span><br><span class="line"><span class="keyword">var</span> testA = <span class="built_in">require</span>(<span class="string">'./ testA);//引入了当前目录下的testA.js文件</span></span><br><span class="line"><span class="string">testA. functionB();</span></span><br><span class="line"><span class="string">//......</span></span><br><span class="line"><span class="string">var Car = require('</span>./ car);</span><br><span class="line"><span class="keyword">var</span> car= <span class="keyword">new</span> Car();</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;Node.js通过require方法可以加载的模块文件类型有三种：*.js , *.json,  *.node 。</p>
+<ul>
+<li><code>* .js</code>是文本格式的javascript文件；</li>
+<li><code>* .json</code>是json格式对象，这两者(.js &amp;&amp; .json)加载的时候被视为javascript被动态编译和处理使用；</li>
+<li><code>* .node</code>是预编译好的插件模块；</li>
+</ul>
+<p>Nodejs尝试加载的优先级 js文件 &gt; json文件 &gt; node文件</p>
+<p>require方法根据其传入的参数决定模块的查找方式。</p>
+<ul>
+<li><code>模块以 &#39;/&#39; 开头</code>表示使用文件的绝对路径。例如，require(‘/home/marco/foo.js’) 将加载/home/marco/foo.js 文件。</li>
+<li><code>模块以 &#39;./&#39; 开头</code>表示调用 require() 时使用相对路径。也就是说，为了保证 require(‘./circle’) 能找到，circle.js 必须和 引用模块的js文件在同一目录。</li>
+<li><code>模块不以 &#39;/&#39; 或&#39;./&#39; 开头</code>表示该模块可以是一个“核心模块”，也可是一个从 node_modules 文件夹中加载的模块。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>模块</tag>
+        <tag>Module</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node.js事件解析</title>
+    <url>/2014/11/04/others/node-event/</url>
+    <content><![CDATA[<p>&emsp;&emsp;Node.js 是一个快速构建网络服务及应用的平台，它采用异步式 I/O 与事件驱动的架构设计解决传统系统开发中面临的高并发问题，而理解Node.js中的事件有助于利用Node.js构建高效的系统。</p>
+<h2 id="Node-js事件"><a href="#Node-js事件" class="headerlink" title="Node.js事件"></a>Node.js事件</h2><p>&emsp;&emsp;Node.js里面的许多对象都会分发事件，比如一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。所有这些产生事件的对象都是 <code>events.EventEmitter</code> 的实例。<code>Event模块</code>是一个简单的事件监听器模式的实现，在nodeJs中可以通过<code>require(&#39;events&#39;)</code>引入该模块。该模块包含EventEmitter类, 提供事件绑定、触发等相关方法，Node.js的大部分模块都继承自Event模块。</p>
+<p>&emsp;&emsp;Node.js与Web前端DOM树事件机制不同之处在于不存在冒泡、捕获等行为, 也没有<code>preventDefault(), stopPropagation()</code>等方法。Node.js 在执行的过程中会维护一个事件队列，程序在执行时进入事件循环等待下一个事件到来，每个异步式I/O请求完成后会被推送到事件队列。等到线程进入事件循环以后，才会调用事件队列中的回调函数执行相应的逻辑。</p>
+<h2 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h2><h3 id="EventEmitter介绍"><a href="#EventEmitter介绍" class="headerlink" title="EventEmitter介绍"></a>EventEmitter介绍</h3><p>&emsp;&emsp;events模块只提供了一个对象：<code>events.EventEmitter</code>。EventEmitter的核心就是事件触发与事件监听器功能的封装。EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter支持若干个事件监听器。当事件发生时，注册到这个事件的事件监听器被依次调用，事件参数作 为回调函数参数传递。简单实例如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line"><span class="comment">//注册事件监听器1</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener1'</span>, arg1, arg2);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//注册事件监听器2</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener2'</span>, arg1, arg2);就是</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//触发someEvent事件</span></span><br><span class="line">emitter.emit(<span class="string">'someEvent'</span>, <span class="string">'erealm'</span>, <span class="number">2014</span>);</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>listener1 erealm 2014</p>
+<p>listener2 erealm 2014</p>
+<h3 id="EventEmitter常用API"><a href="#EventEmitter常用API" class="headerlink" title="EventEmitter常用API"></a>EventEmitter常用API</h3><ul>
+<li><code>EventEmitter.on(event, listener)</code> 为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数 listener。</li>
+<li><code>EventEmitter.emit(event, [arg1], [arg2],[...])</code>发射 event 事件，传递若干可选参数到事件监听器的参数表。</li>
+<li><code>EventEmitter.removeListener(event,listener)</code>移除指定事件的某个监听器，listener必须是该事件已经注册过的监听器。</li>
+<li><code>EventEmitter.removeAllListeners([event])</code>移除所有事件的所有监听器，如果指定event，则移除指定事件的所有监听器。</li>
+</ul>
+<h3 id="error事件"><a href="#error事件" class="headerlink" title="error事件"></a>error事件</h3><p>&emsp;&emsp;EventEmitter定义了一个特殊的事件error，它包含了“错误”的语义，我们在遇到异常的时候通常会触发error 事件。当 error 事件发生时，EventEmitter 规定如果没有响应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。建议一般要给分发error事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
+<h3 id="继承EventEmitter"><a href="#继承EventEmitter" class="headerlink" title="继承EventEmitter"></a>继承EventEmitter</h3><p>&emsp;&emsp;在JavaScript中有多种继承方式，典型的方式是使用原型方式实现继承，也可使用util模块，如下实例所示：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;;</span><br><span class="line"><span class="comment">//使用util的inherits方法实现继承</span></span><br><span class="line">util.inherits(MyClass, events.EventEmitter);</span><br><span class="line">MyClass.prototype.ping = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.emit(<span class="string">'response'</span>, <span class="string">'erealm'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> myClass = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClass.on(<span class="string">'response'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(msg);</span><br><span class="line">&#125;);</span><br><span class="line">myClass.ping();</span><br></pre></td></tr></table></figure>
+
+<h2 id="典型实例分析"><a href="#典型实例分析" class="headerlink" title="典型实例分析"></a>典型实例分析</h2><p>&emsp;&emsp;由于fs模块继承EventEmitter,所以在如下所示程序代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line">fs.readFile(<span class="string">'/etc/hosts'</span>, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;fs.readFile的第三个参数是一个函数，我们称为回调函数。进程在执行到fs.readFile的时候，不会等待结果返回，而是直接继续执行后面的语句，直到进入事件循环。当数据库查询结果返回时，会将事件发送到事件队列，等到线程进入事件循环以后，才会调用之前的回调函数继续执行后面的逻辑。</p>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>事件</tag>
+        <tag>EventEmitter</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初涉Grunt心得</title>
+    <url>/2014/11/04/others/grunt/</url>
+    <content><![CDATA[<p>&emsp;&emsp;网站的建立让我逐步学习到以前从未接触过的技术，这里就简单谈谈网站构建时<code>Grunt</code>自动化工具的使用心得。随着网站的开发进行，慢慢认识到<code>Grunt</code>就是一个能在开发中精简流程、提高效率、减少错误率的自动化工具。它能有效的简化庞大复杂系统的维护、打包、发布等流程，从而节省时间。</p>
+<p>&emsp;&emsp;<code>Grunt</code>一个基于<code>Node.js</code>的命令行的前端 <code>Javascript</code> 自动化构建工具。是帮助开发者完成大部分重复性工作的有效工具。例如：<br> &emsp;&emsp;- 压缩文件<br> &emsp;&emsp;- 合并文件<br> &emsp;&emsp;- 简单语法检查<br>&emsp;&emsp;<code>npm</code>是 <code>Node.js</code> 的包管理工具，而<code>Grunt</code>和<code>grunt插件</code> 是基于<code>npm</code> 安装并管理的。Grunt 0.4.x 版本必须配合Node.js 0.8.0以上的版本使用。</p>
+<h3 id="安装CLI"><a href="#安装CLI" class="headerlink" title="安装CLI"></a>安装CLI</h3><p>&emsp;&emsp;因为 <code>grunt</code> 是基于 <code>Node.js</code> 的，所以我们需要安装 <code>Node.js</code> 环境，在 <code>WebStorm</code> 的 <code>Terminal</code> 命令行中运行 <code>npm install -g grunt-cli</code> 将 <code>Grunt</code> 命令行安装到全局环境中。此时， <code>Grunt</code> 命令就被加入到系统路径中了，以后就可以在任何目录下执行此命令了。</p>
+<p>&emsp;&emsp; <code>Grunt CLI</code> 的任务是调用与 <code>Gruntfile</code> 在同一目录中 <code>Grunt</code>,所以安装了 <code>grunt-cli</code> 并不等于安装了 <code>Grunt</code> 。网站中运行 <code>grunt</code> 时它会利用 <code>node</code> 提供的 <code>require()</code> 系统查找本地安装的 <code>Grunt</code>。所以可以在项目的任意子目录中运行grunt。如果找到本地安装的 <code>Grunt</code>， <code>CLI</code> 就将其加载，并传递 <code>Gruntfile</code> 中的配置信息，然后执行所指定的任务。图为网站中 <code>Gruntfile.js</code> 文件。<br> <img alt="图 1" data-src="http://i.imgur.com/giy5QsM.jpg%22%E5%9B%BE1%22" class="lozad"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图 1</code></p>
+<h3 id="安装Grunt"><a href="#安装Grunt" class="headerlink" title="安装Grunt"></a>安装Grunt</h3><p>&emsp;&emsp;首先如图1需要在项目中添加两份文件：<code>package.json</code> 和 <code>Gruntfile.js</code>。 </p>
+<p>1.package.json 文件   </p>
+<ul>
+<li><p><code>package.json</code> 文件作用<br>&emsp;&emsp;<code>package.json</code> 文件被 <code>npm</code> 用于存储项目的元数据，以便将网站发布为 <code>npm</code> 模块。这个文件用来存储 <code>npm</code> 模块的依赖项。文件中列出了项目依赖的 <code>grunt</code> 和 <code>Grunt</code> 插件，放置于 <code>devDependencies</code> 配置段内。下面为网站中 <code>Grunt</code> 和 <code>grunt插件</code> 配置信息：</p>
+  <figure class="highlight"><table><tr><td class="code"><pre><span class="line">"devDependencies": &#123;</span><br><span class="line">  "debug": "~0.7.4",</span><br><span class="line">  "grunt": "~0.4.2",</span><br><span class="line">  "grunt-cli": "~0.1.13",</span><br><span class="line">  "grunt-concurrent": "~0.5.0",</span><br><span class="line">  "grunt-contrib-htmlmin": "~0.2.0",</span><br><span class="line">  "grunt-contrib-imagemin": "^0.8.1",</span><br><span class="line">  "grunt-contrib-jshint": "~0.9.2",</span><br><span class="line">  "grunt-contrib-watch": "~0.5.3",</span><br><span class="line">  "grunt-env": "~0.4.1",</span><br><span class="line">  "grunt-jsbeautifier": "^0.2.7",</span><br><span class="line">  "grunt-lesslint": "~1.1.7",</span><br><span class="line">  "grunt-mocha-cov": "~0.2.1",</span><br><span class="line">  "grunt-nodemon": "~0.2.0",</span><br><span class="line">  "jshint-stylish": "~0.1.5",</span><br><span class="line">  "open": "~0.0.5",</span><br><span class="line">  "should": "~3.1.3"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>package.json</code> 文件的位置及创建方式<br>&emsp;&emsp; <code>package.json</code> 应当放置于项目的根目录中，与Gruntfile在同一目录中，并且应该与项目的源代码一起被提交。在图1 <code>package.json</code> 所在目录中运行 <code>npm install</code> 将依据 <code>package.json</code> 文件中所列出的每个依赖来自动安装适当版本的依赖。</p>
+<ul>
+<li>项目创建 <code>package.json</code> 文件的方式一般有如下三种：<ol>
+<li>grunt-init 模版都会自动创建特定于项目的 <code>package.json</code>文件；</li>
+<li>npm init命令会创建一个基本的 <code>package.json</code> 文件；</li>
+<li>复制下面的案例，并根据需要做扩充： <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"my-project-name"</span>,</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.1.0"</span>,</span><br><span class="line">    <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"grunt"</span>: <span class="string">"~0.4.1"</span>,</span><br><span class="line">    <span class="attr">"grunt-contrib-jshint"</span>: <span class="string">"~0.6.0"</span>,</span><br><span class="line">    <span class="attr">"grunt-contrib-nodeunit"</span>: <span class="string">"~0.2.0"</span>,</span><br><span class="line">    <span class="attr">"grunt-contrib-uglify"</span>: <span class="string">"~0.2.2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><code>package.json</code> 文件中各字段含义   </p>
+<ul>
+<li><p>以下为网站 <code>package.json</code> 文件的配置内容：</p>
+  <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"eRealm"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"Home page for eReaml."</span>,</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">    <span class="attr">"keywords"</span>: [</span><br><span class="line">    <span class="string">"open source"</span>,</span><br><span class="line">    <span class="string">"node.js"</span>,</span><br><span class="line">    <span class="string">"home page"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"homepage"</span>: <span class="string">"http://www.erealm.cn"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: <span class="string">"dangjian"</span>,</span><br><span class="line">    <span class="attr">"repository"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"git"</span>,</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://github.com/eRealm/HomeSite.git"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"config"</span>: &#123;</span><br><span class="line">        <span class="attr">"unsafe-perm"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"bugs"</span>: &#123;</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://github.com/eRealm/HomeSite/issues"</span>,</span><br><span class="line">        <span class="attr">"email"</span>: <span class="string">"ken@ereaml.com.my"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"license"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: &#123;<span class="attr">"express"</span>: <span class="string">"^3.4.8"</span>···&#125;,</span><br><span class="line">    <span class="attr">"devDependencies"</span>: &#123;<span class="attr">"debug"</span>: <span class="string">"~0.7.4"</span>···&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>name</code> 和 <code>version</code>字段是必须的，它们一起组成的标识是唯一的。如果没有就无法安装。    </li>
+<li><code>Description</code>：网站简介，字符串；     </li>
+<li><code>Keywords</code>：关键字，数组、字符串；    </li>
+<li><code>Homepage</code>：网站的url；    </li>
+<li><code>Bugs</code>：网站项目提交问题的url和邮件地址，对解决问题很有帮助；    </li>
+<li><code>License</code>：指定一个许可证，让人知道使用和限制的权利；    </li>
+<li><code>Author</code>：网站开发者；    </li>
+<li><code>Repository</code>：本网站代码存放的地方，这个对希望贡献的人有帮助；    </li>
+<li><code>Config</code>：可以用来配置用于包脚本中的跨版本参数；    </li>
+<li><code>Dependencies</code>：依赖是给一组包名指定版本范围的一个hash，这个版本范围是一个由一个或多个空格分隔的字符串；    </li>
+<li><code>devDependencies</code>：别人在程序中下载并使用我们的模块时，不用去下载并构建网站使用的外部测试或者文档框架；    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>安装grunt插件</p>
+<p> &emsp;&emsp;通过以下命令向已经存在的<code>package.json</code>文件中添加<code>Grunt和grunt</code>插件。此命令不光安装了<code>module</code>，还会自动将其添加到<code>devDependencies</code>配置段中。<br> &emsp;&emsp;<code>npm install &lt;module&gt; --save-dev</code>   </p>
+<p> &emsp;&emsp;所以网站中，再运用下面这条命令将安装<code>Grunt</code>最新版本到项目目录中，并将其添加到<code>devDependencies</code>内：<br> &emsp;&emsp;<code>npm install grunt --save-dev</code></p>
+<p> &emsp;&emsp;同样，<code>grunt</code>插件和其它<code>node</code>模块都可以按相同的方式安装。然后在根目录下执行<code>npm install</code>将相关的文件下载下来：   </p>
+<p><img alt="图2" data-src="http://i.imgur.com/9SwSc7U.png%22%E5%9B%BE2%22" class="lozad"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <code>图 2</code></p>
+</li>
+<li><p>Gruntfile.js 文件   </p>
+<ul>
+<li><p><code>Gruntfile.js</code>文件位置及作用<br>&emsp;&emsp; <code>Gruntfile.js</code> 文件是有效的 <code>JavaScript</code> 文件，放在项网站根目录中，和 <code>package.json</code> 文件在同一目录层级，并和项目源码一起加入源码管理器。 <code>Gruntfile.js</code> 文件用于读取 <code>package</code> 信息、插件加载、注册任务和运行任务。   </p>
+</li>
+<li><p><code>Gruntfile.js</code>由以下几部分构成：  </p>
+<ol>
+<li><code>&quot;wrapper&quot;</code> 函数   <ul>
+<li>网站 <code>Gruntfile</code> 文件的 <code>wrapper</code> 部分的函数如下:  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> pkg = grunt.file.readJSON(<span class="string">'package.json'</span>);</span><br><span class="line"></span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    pkg: pkg,</span><br><span class="line">    asset: <span class="string">'public/asset-'</span>+ pkg.version,</span><br><span class="line">    bower: &#123;</span><br><span class="line">        install: &#123;</span><br><span class="line">        targetDir: <span class="string">"public/vendor"</span>,</span><br><span class="line">        install: <span class="literal">true</span>,</span><br><span class="line">        verbose: <span class="literal">true</span>,</span><br><span class="line">        cleanTargetDir: <span class="literal">true</span>,</span><br><span class="line">        cleanBowerDir: <span class="literal">false</span>,</span><br><span class="line">        bowerOptions: &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>每一份<code>Gruntfile</code> 和 <code>grunt插件</code>都遵循同样的格式，所有的Grunt代码必须放在此函数内。   </li>
+<li>项目的元数据是从 <code>package.json</code> 文件中导入到 <code>Grunt配置</code> 中的， <code>grunt.file.readJSON</code> 方法用于引入 <code>JSON</code> 数据。 <code>grunt-contrib-uglify</code> 插件中的 <code>uglify</code> 任务被配置用于压缩一个源文件以及使用该元数据动态的生成一个 <code>banner</code> 注释。见以下代码。   </li>
+</ul>
+<ol start="2">
+<li><p>项目与任务配置   </p>
+<ul>
+<li><p>如以上 <code>wrapper</code> 函数， <code>Grunt</code> 任务都依赖某些配置数据，这些数据被定义在一个 <code>object</code> 内，并传递给 <code>grunt.initConfig</code> 方法。 <code>grunt.file.readJSON(&#39;package.json&#39;)</code> 将存储在 <code>package.json</code> 文件中的 <code>JSON</code> 元数据引入到 <code>grunt config</code> 中。由于 <code>Gruntfile.js</code> 是 <code>javascript</code> 文件，所以配置信息不只是 <code>JSON</code> 格式，这里也可以使用有效的js代码。   </p>
+</li>
+<li><p>以下为 <code>package.json</code> 文件中的 <code>grunt-contrib-uglify</code> 插件中的 <code>uglify</code> 任务要求它的配置被指定在一个同名属性中。网站使用 <code>uglify</code> 任务的 <code>build</code> 的目标，用于将多个public目录下的js文件压缩为一个目标文件，即 <code>libs.min.js</code> 和 <code>app.min.js</code> 文件。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">uglify: &#123;</span><br><span class="line">    options:&#123;</span><br><span class="line">        mangle: <span class="literal">true</span>,</span><br><span class="line">        banner: <span class="string">'/*! &lt;%= pkg.title || pkg.name %&gt; - v&lt;%= pkg.version + "\\n" %&gt;'</span> +</span><br><span class="line">            <span class="string">'* &lt;%= grunt.template.today("yyyy-mm-dd HH:MM:ss") + "\\n" %&gt;'</span> +</span><br><span class="line">            <span class="string">'* &lt;%= pkg.homepage + "\\n" %&gt;'</span> +</span><br><span class="line">            <span class="string">'* Copyright (c) &lt;%= grunt.template.today("yyyy") %&gt; - &lt;%= pkg.author %&gt; */ &lt;%= "\\n" %&gt;'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    build: &#123;</span><br><span class="line">        files: &#123;</span><br><span class="line">            <span class="string">'public/javascripts/libs.min.js'</span>: [</span><br><span class="line">                <span class="string">'public/javascripts/libs/*.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/jquery.wookmark.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/imagesloaded.pkgd.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/angular-cookies.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/angular-translate.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/angular-translate-loader-url.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/angular-translate-storage-cookie.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/ui-bootstrap-tpls.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/ng-mobile-menu.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/bootstrap.min.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/libs/plugins/moment-with-locales.js'</span></span><br><span class="line"></span><br><span class="line">            ] ,</span><br><span class="line">            <span class="string">'public/javascripts/app.min.js'</span>: [</span><br><span class="line">                <span class="string">'public/javascripts/erealm.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/language.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/clients.js'</span>,</span><br><span class="line">                <span class="string">'public/javascripts/app/*.js'</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>上面代码中 <code>banner</code> 中 <code>&lt;% %&gt;</code> 分隔符指定的模板会在任务从它们的配置中读取相应的数据时将自动扩展扫描。模板会被递归的展开，直到配置中不再存在遗留的模板相关的信息。运行 <code>grunt</code>时， <code>uglify</code> 将通过 <code>banner</code> 中的 <code>pkg.title</code>、 <code>pkg.name</code>、<code>pkg.version</code> 和 <code>pkg.homepage</code> 等匹配加载进来的 <code>package.json</code> 中所有数据来生成文件注释。   </p>
+</li>
+<li><p>当运行一个任务时， <code>Grunt</code> 会自动查找配置对象中的同名属性。多任务可以通过任意命名的目标来定义多个配置。如以下代码中的 <code>jshint</code> 任务有名为 <code>client</code> 和 <code>sever</code> 两个目标，同时指定任务和目标，例如 <code>grunt jshint:client</code> 或者 <code>grunt jshint:sever</code> ，将只会处理指定目标的配置，而运行 <code>grunt jshint</code> 将遍历所有目标并依次处理。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">jshint: &#123;</span><br><span class="line">    options: &#123;</span><br><span class="line">        reporter: <span class="built_in">require</span>(<span class="string">'jshint-stylish'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    client: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            jshintrc: <span class="string">'.jshintrc-client'</span>,</span><br><span class="line">            ignores: [</span><br><span class="line">                <span class="string">'public/javascripts/`/*.min.js'</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        src: [</span><br><span class="line">            <span class="string">'public/javascripts/`/*.js'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    server: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            jshintrc: <span class="string">'.jshintrc-server'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        src: [</span><br><span class="line">            <span class="string">'config/`/*.js'</span>,</span><br><span class="line">            <span class="string">'app/`/*.js'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在一个任务配置中， <code>options</code> 属性可以用来指定覆盖内置属性的默认值。每一个目标中还可以拥有一个专门针对此目标的 <code>options</code> 属性。目标级的 <code>options</code> 将会覆盖任务级的 <code>options</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>加载<code>grunt</code>插件和任务   </p>
+<ul>
+<li>像 <code>grunt-contrib-uglify 、grunt-contrib-copy</code> 等这些常用 <code>grunt插件</code> 被加载了进来。只要在 <code>package.json</code> 文件中被列为依赖的包，并通过 <code>npm install</code> 安装之后，都可以在 <code>Gruntfile</code> 中以简单命令的形式使用。如：  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-copy'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-imagemin'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-jsbeautifier'</span>);</span><br><span class="line"></span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-lesslint'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-jshint'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-autoprefixer'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-filerev'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-nodemon'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-concurrent'</span>);</span><br><span class="line"></span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-clean'</span>);</span><br><span class="line"></span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-cssmin'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-less'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">grunt.loadNpmTasks(<span class="string">'grunt-usemin'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>网站中常用<code>grunt</code>插件功能介绍   </p>
+<p> &emsp;&emsp;以下为网站中加载的<code>grunt</code>插件功能简述：   </p>
+<ul>
+<li><code>grunt-contrib-copy</code>：用于复制文件或目录，复制src中的文件；   </li>
+<li><code>grunt-contrib-imagemin</code>：优化并压缩网页图片；   </li>
+<li><code>grunt-contrib-jshint</code>：用于javascript代码检查，并会给出建议，发布js代码前执行jshint任务，可以避免          - 出现一些低级语法问题；   </li>
+<li><code>grunt-contrib-concat</code>：用于合并任意文件；   </li>
+<li><code>grunt-contrib-clean</code>：用于删除文件或目录；   </li>
+<li><code>grunt-contrib-uglify</code>：用于压缩文件；   </li>
+<li><code>grunt-concurrent</code>：并发执行任务；   </li>
+<li><code>grunt-contrib-cssmin</code>：用于网站css文件压缩；   </li>
+<li><code>grunt-contrib-watch</code>：监听files中文件变动，并自动刷新；   </li>
+<li><code>grunt-usemin</code>：用来替换模板里的链接为更改后的模板文件的样子；   </li>
+<li><code>grunt-contrib-less</code>：网站用到Bootstrap，此插件功能是将css文件压缩成less文件；   </li>
+<li><code>grunt-filerev</code>：对静态资源进行文件重命名；   </li>
+<li><code>grunt-autoprefixer</code>：解析CSS文件并且添加浏览器前缀到CSS规则里；   </li>
+<li><code>grunt-nodemon</code>：用于实时监听app.js文件，实现运行grunt后自动启动浏览器以3000端口打开网页； </li>
+</ul>
+</li>
+<li><p>自定义任务   </p>
+<ul>
+<li>代码中通过定义 <code>default</code> 任务，可以让 <code>Grunt</code> 默认执行一个或多个任务。在网站中，执行 <code>grunt</code> 命令时如果不指定一个任务的话，将会执行 <code>lesslint,jshint,less:debug, concurrent，autoprefixer:debug</code> 任务。这和执行 <code>grunt task</code>或者 <code>grunt default</code> 的效果一样。 <code>default</code> 任务列表数组中可以指定任意数目的任务（可以带参数）。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">grunt.option(<span class="string">'force'</span>, <span class="literal">true</span>);</span><br><span class="line">grunt.registerTask(<span class="string">'prepare'</span>, [<span class="string">'copy:main'</span>, <span class="string">'imagemin'</span>, <span class="string">'copy:images'</span>, <span class="string">'clean:images'</span>,</span><br><span class="line"><span class="string">'jsbeautifier'</span>]);</span><br><span class="line">grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'lesslint'</span>, <span class="string">'jshint'</span>,<span class="string">'less:debug'</span>,<span class="string">'autoprefixer:debug'</span>,</span><br><span class="line"><span class="string">"concurrent"</span>]);</span><br><span class="line">grunt.registerTask(<span class="string">'build'</span>, [<span class="string">'cssmin'</span>, <span class="string">'less:compile'</span>,<span class="string">'autoprefixer:compile'</span>,<span class="string">'uglify'</span>,</span><br><span class="line"><span class="string">'filerev'</span>,<span class="string">'usemin'</span>, <span class="string">'copy:build'</span>, <span class="string">'clean:build'</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>文件格式</p>
+<ul>
+<li><p>由于大多的任务都是执行文件操作， <code>Grunt</code> 有一个强大的抽象层用于声明任务应该操作哪些文件。    </p>
+</li>
+<li><p><code>src-dest(源文件-目标文件)</code> 文件映射的方式有：   </p>
+<ol>
+<li>简洁格式   </li>
+<li>文件对象格式   </li>
+<li>文件数组格式等格式   </li>
+</ol>
+</li>
+<li><p>这些方式均提供了不同程度的描述和控制操作方式。网站采用的是文件数组格式：   </p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy: &#123;</span><br><span class="line">    main: &#123;</span><br><span class="line">        files: [</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/jQuery/dist&apos;,</span><br><span class="line">                src: [&apos;jquery.min.map&apos;,&apos;jquery.min.js&apos;], dest: &quot;public/javascripts/libs&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/angular&apos;,</span><br><span class="line">                src: [&apos;angular.min.js.map&apos;,&apos;angular.min.js&apos;], dest: &quot;public/javascripts/libs&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/bootstrap/dist/css&apos;,</span><br><span class="line">                src: [&apos;bootstrap.min.css&apos;], dest: &quot;public/stylesheets/libs&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/angular-bootstrap&apos;,</span><br><span class="line">                src: [&apos;ui-bootstrap-tpls.min.js&apos;], dest: &quot;public/javascripts/libs/plugins&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/font-awesome/fonts&apos;,</span><br><span class="line">                src: [&apos;`&apos;], dest: &quot;public/stylesheets/fonts&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: true, cwd: &apos;public/vendor/bootstrap/fonts&apos;,</span><br><span class="line">                src: [&apos;`&apos;], dest: &quot;public/stylesheets/fonts&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里让 <code>copy</code> 任务将所有存在于src/目录下的文件合并起来，然后存储在dist目录中，并以项目名来命名。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="相关插件功能配置"><a href="#相关插件功能配置" class="headerlink" title="相关插件功能配置"></a>相关插件功能配置</h3><p>&emsp;&emsp;当所有需要的 <code>grunt</code> 插件加载进来后：     </p>
+<ol>
+<li><p><code>JSHint</code>  </p>
+<ul>
+<li><code>JSHint</code> 是Javascript代码验证工具，这种工具可以检查代码并提供相关的代码改进意见。 <code>JSHint</code> 只需要一个需要检测的文件数组，然后是一个 <code>options</code> 对象，这个对象用于重写 <code>JSHint</code> 提供的默认检测规则。如以下代码， <code>options</code> 对象中修改了 <code>JSHint</code> 默认检测规则，分别使用 <code>.jshintrc-client</code> 和 <code>.jshintrc-sever</code> 插件，检测public/javascript/目录、config/目录和app/目录下的所有 <code>.js</code> 文件并忽略掉该目录下所有 <code>.min.js</code> 文件。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">jshint: &#123;</span><br><span class="line">    options: &#123;</span><br><span class="line">        reporter: <span class="built_in">require</span>(<span class="string">'jshint-stylish'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    client: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            jshintrc: <span class="string">'.jshintrc-client'</span>,</span><br><span class="line">            ignores: [</span><br><span class="line">                <span class="string">'public/javascripts/`/*.min.js'</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        src: [</span><br><span class="line">            <span class="string">'public/javascripts/`/*.js'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    server: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            jshintrc: <span class="string">'.jshintrc-server'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        src: [</span><br><span class="line">            <span class="string">'config/`/*.js'</span>,</span><br><span class="line">            <span class="string">'app/`/*.js'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>watch</code>     </p>
+<ul>
+<li>当它检测到任何 <code>files</code> 里的文件发生变化时，它就会按照顺序执行 <code>tasks</code> 里相应的任务,即刷新。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">    clientHtml: &#123;</span><br><span class="line">        files: [<span class="string">'public/templates/`/*.html'</span>],</span><br><span class="line">        options: &#123;</span><br><span class="line">            livereload: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    clientJS: &#123;</span><br><span class="line">        files: [</span><br><span class="line">            <span class="string">'public/`/*.js'</span>, <span class="string">'!client/app/`/*.min.js'</span></span><br><span class="line">        ],</span><br><span class="line">        tasks: [<span class="string">'newer:jshint:client'</span>],</span><br><span class="line">        options: &#123;</span><br><span class="line">            livereload: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    clientLess: &#123;</span><br><span class="line">        files: [<span class="string">'public/stylesheets/`/*.less'</span>],</span><br><span class="line">        tasks:[<span class="string">'less:debug'</span>,<span class="string">'autoprefixer:debug'</span>],</span><br><span class="line">        options: &#123;</span><br><span class="line">            livereload: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>copy</code>      </p>
+<ul>
+<li><code>copy</code> 任务将public/vendor/jQuery/dist目录下的文件复制到public/javascripts/libs中。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">copy: &#123;</span><br><span class="line">    main: &#123;</span><br><span class="line">        files: [</span><br><span class="line">            &#123;</span><br><span class="line">                expand: <span class="literal">true</span>, <span class="attr">cwd</span>: <span class="string">'public/vendor/jQuery/dist'</span>,</span><br><span class="line">                src: [<span class="string">'jquery.min.map'</span>,<span class="string">'jquery.min.js'</span>], <span class="attr">dest</span>: <span class="string">"public/javascripts/libs"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                expand: <span class="literal">true</span>, <span class="attr">cwd</span>: <span class="string">'public/vendor/angular'</span>,</span><br><span class="line">                src: [<span class="string">'angular.min.js.map'</span>,<span class="string">'angular.min.js'</span>], <span class="attr">dest</span>: <span class="string">"public/javascripts/libs"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>imagemin</code>     </p>
+<ul>
+<li><code>imagemin</code> 任务将public/images目录下的所有 <code>.png、.jpg、.gif</code> 格式图片优化压缩到public/images-buidl/目录下。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">imagemin: &#123;</span><br><span class="line">    dynamic: &#123;</span><br><span class="line">        files: [&#123;</span><br><span class="line">            expand: <span class="literal">true</span>,</span><br><span class="line">            cwd: <span class="string">'public/images'</span>,</span><br><span class="line">            src: [<span class="string">'`/*.&#123;png,jpg,gif&#125;'</span>],</span><br><span class="line">            dest: <span class="string">'public/images-build/'</span></span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>less</code>        </p>
+<ul>
+<li><code>less</code> 任务将 <code>app.css</code> 文件解析为 <code>app.less</code> 文件。  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">less: &#123;</span><br><span class="line">    debug: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            cleancss: <span class="literal">false</span></span><br><span class="line">        &#125;,</span><br><span class="line">        files: &#123;</span><br><span class="line">            <span class="string">'public/stylesheets/app.css'</span>: <span class="string">'public/stylesheets/app.less'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    compile: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            cleancss: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        files: &#123;</span><br><span class="line">            <span class="string">'public/stylesheets/app.min.css'</span>: <span class="string">'public/stylesheets/app.less'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<p>&emsp;&emsp;总之 <code>Grunt</code> 就是为了自动化。对于前端为了明确模块，我们可以会将 <code>JavaScript、CSS</code> 等代码拆解成很多个模块，他们都有独立的一个个文件，但是会导致整个项目文件太多，不利于页面优化。通过 <code>Grunt</code> 工具我们将这些文件压缩合并起来，这样我们就能免去很多手动操作，既保证效率又保证质量，高效完成任务。以上只是通过本网站个人初涉 <code>Grunt</code> 的一个心得，如有错误欢迎指出。</p>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Grunt</tag>
+        <tag>自动化</tag>
+        <tag>package</tag>
+        <tag>gruntfile</tag>
+        <tag>压缩</tag>
+        <tag>合并</tag>
+        <tag>配置</tag>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Express中Route的配置及参数传递</title>
+    <url>/2014/11/03/others/express-route/</url>
+    <content><![CDATA[<p>　　在开发公司HomeSite网站（<em>官网：<a href="http://www.erealm.cn" target="_blank" rel="noopener">www.erealm.cn</a></em>）时，采用的是最近流行的全Javascript的web开发架构MEAN，分别代表的是(M)ongoDB——使用JSON风格来存储数据，使用JS来进行sql查询；(E)xpress——基于Node的Web开发框架；(A)agular——JS的前端开发框架；(N)ode.js——基于V8的运行时环境。</p>
+<p>　　在处理后端逻辑时，用到了基于Node.js的MVC开发框架express，而express又有着其特有的语法特性。本文就在开发HomeSite过程中用到的express中关于route的配置进行基本的语法讲解，旨在为开发的过程做一个梳理和总结。</p>
+<h3 id="路由的配置"><a href="#路由的配置" class="headerlink" title="路由的配置"></a>路由的配置</h3><ul>
+<li><p>在express框架中，根目录下的app.js文件时程序的入口文件，当用户在浏览器输入网址后，程序会执行app.js文件来对程序进行模板引擎设置，路由设置和监听程序端口等。因为在该程序中有大量的路由来实现界面跳转和请求数据，将这些路由都写在app.js文件中未免显得太冗余不好维护，因此将所有的路由写在一个专门的路由配置文件routes.js中。在app.js中用express提供的require函数，取得routes.js文件的模块导出对象，并将变量app作为参数传递给该对象，从而实现了路由的功能。
+　　</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> cluster = <span class="built_in">require</span>(<span class="string">'cluster'</span>),</span><br><span class="line">    express = <span class="built_in">require</span>(<span class="string">'express'</span>),</span><br><span class="line">    hbs = <span class="built_in">require</span>(<span class="string">'express-hbs'</span>),</span><br><span class="line">    config = <span class="built_in">require</span>(<span class="string">'./config'</span>),</span><br><span class="line">    app = express(),</span><br><span class="line">    expressValidator = <span class="built_in">require</span>(<span class="string">'express-validator'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./app/routes'</span>)(app, express);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在routes.js中，<code>app.get()</code>方法是根据HTTP的get协议而将请求的不同URL路由到不同的操作。在HomeSite程序中，app.get()方法主要有两种用法：</p>
+<ol>
+<li><p><strong>根据URL通过回调函数路由到相应的模板引擎。</strong></p>
+<ul>
+<li>例如，若用户在地址栏输入<a href="http://www.erealm.cn/contact,则会根据url中的contact关键字调用回调函数`function(req,res){res.render(&#39;contact&#39;);}`,通过回调函数中的res.render()方法路由到contact.hbs页面。" target="_blank" rel="noopener">www.erealm.cn/contact,则会根据url中的contact关键字调用回调函数`function(req,res){res.render(&#39;contact&#39;);}`,通过回调函数中的res.render()方法路由到contact.hbs页面。</a>  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'index'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/contact'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'contact'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/about'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'about'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/blog'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'blog'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/work'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'work'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/projectplan'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'projectPlan'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>根据URL去调用相应的API接口，取得相应的数据。</strong></p>
+<ul>
+<li><p>在about.hbs页面请求employee的数据时，根据routes.js的配置，将’/app/personnel/‘+language的URL请求路由到了personnel.js接口，通过personnel.js中的readStaff方法将employee的数据取出并返回给about.hbs。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"> getEmployeeInfo:<span class="function"><span class="keyword">function</span>(<span class="params">language</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $http.get(<span class="string">'/app/personnel/'</span> + language);</span><br><span class="line">&#125;</span><br><span class="line">app.get(<span class="string">'/app/personnel/:language'</span>, <span class="built_in">require</span>(<span class="string">'./api/    personnel'</span>).readStaff);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/app/partners/:language'</span>, <span class="built_in">require</span>(<span class="string">'./api/partners'</span>).readPartner);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/app/projects/:language/:projects'</span>, <span class="built_in">require</span>(<span class="string">'./api/projects'</span>).readProjects);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>app.post()方法是<strong>根据HTTP的post协议而将请求的不同URL路由到相应的API接口</strong>。在contact.hbs页面填好message表单信息后，通过/app/message的URL，将其路由到support.js的模块导出对象，通过该对象中的sendMessage方法将message表单中数据取到并完成发送邮件的操作。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.post(<span class="string">'/app/message'</span>, <span class="built_in">require</span>(<span class="string">'./api/support'</span>).sendMessage);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/app/projectplan'</span>, <span class="built_in">require</span>(<span class="string">'./api/projectplan'</span>).sendProject);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="参数的传递"><a href="#参数的传递" class="headerlink" title="参数的传递"></a>参数的传递</h3><p>  在express中进行路由分发的过程中，常常伴随着各种参数的传递。</p>
+<ul>
+<li><p>在HomeSite程序中，基于get协议的参数传递是通过字符串拼接实现的。当在中文（或英文）下访问about.hbs页面时，会将当前语言状态拼接到请求的URL后面。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getEmployeeInfo:<span class="function"><span class="keyword">function</span>(<span class="params">language</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $http.get(<span class="string">'/app/personnel/'</span> + language);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Routes.js在对该请求URL进行转发时，是通过在URL后面添加冒号（:）和当前语言状态，来和请求URL进行匹配，倘若匹配成功，则路由到personnel.js接口，在接口中通过req.params获取传过来的参数，然后取出相应的employee信息返回到about.hbs页面。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">'/app/personnel/:language'</span>, <span class="built_in">require</span>(<span class="string">'./api/personnel'</span>).readStaff);</span><br><span class="line"><span class="keyword">var</span> language = req.params.language;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于post协议进行路由的分发时，其参数的传递不同于get协议中的字符串拼接，而是单独作为参数进行传递的。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">submitMessage: <span class="function"><span class="keyword">function</span>(<span class="params">name, email, message</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $http.post(<span class="string">'/app/message'</span>, &#123;<span class="attr">name</span>: name, <span class="attr">email</span>:email, <span class="attr">message</span>: message&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  上面代码在客户端post了name,email,messsage三条数据，封装为Json格式后通过URL：/app/message将参数post给后端。Routes.js在匹配到URL：:/app/message后，将其路由到support.js接口，在该接口中再通过req.body获取传过来的参数。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name = req.body.name,</span><br><span class="line">    email = req.body.email,</span><br><span class="line">    message = req.body.message;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>路由</tag>
+        <tag>参数</tag>
+        <tag>设置</tag>
+        <tag>express</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我们为什么要开发一个开源的企业网站？</title>
+    <url>/2014/11/02/others/build-open-source-website/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
+<li><p>今年七月份，我和几个小伙伴们合伙建立了一个开发团队，取名为<code>西安瑞木信息技术有限公司</code>，英文名是<code>eRealm</code>。团队专注于Web开发，并提供Web开发的咨询及架构搭建。业务开展如火如荼的同时，团队宣传就提上了日程，作为正规军总不能没有宣传阵地吧。所以迫切需要搭建公司网站出来。</p>
+</li>
+<li><p>确定目标后我们就开始考虑如果构建一个公司企业网站。先是进行业内调查，看了看别人家的公司网站是怎么做的。总体来讲，国外网站的设计和使用的技术总能比国内高很大一截，国内很多公司，甚至是很多软件公司都不注重公司网站的构建，网站千篇一律，没有特色。很多公司网站都是使用Wordpress，然后自定义皮肤。也有一些设计类公司，网站页面做的很漂亮，设计也前卫，但是前端源代码写的一塌糊涂。我们起初的方案也是想使用Wordpress作为基础来设计公司网站，网站UI从已有开源的皮肤基础上修改。这样既能节省开发成本，又能体现独一无二。其实，刚开始也是这么做的，并且已经做出来了第一版了。只是实在是觉得和别人家的网站差别不大，太普通了，并且网站也没有任何体现我们专注于Web开发这一特质。权衡再三之后，决定从头开发一个企业网站出来，使用我们团队擅长的技术重新开发一个网站出来。决定前端使用<code>AngularJS</code>和<code>Bootstrap</code>构建，后端使用<code>node.js</code>和<code>Express</code>构建。经过一个多月的努力，我们的技术团队利用工作之余的时间终于完成的项目的第一版。下面将详细介绍这个项目的基础结构。*</p>
+</li>
+</ul>
+<h3 id="项目整体介绍"><a href="#项目整体介绍" class="headerlink" title="项目整体介绍"></a>项目整体介绍</h3><ul>
+<li><p>技术上，项目前端使用<code>AngularJS</code>和<code>Bootstrap</code>，后端使用<code>node.js</code>和<code>Express</code>。网站自动化构建工具使用<code>grunt</code>。网站整体应用了流行扁平化设计和响应式设计。当然，UI设计是我们团队的弱项，所以很多都是借鉴（<del>抄袭</del>）了别人的设计。网站前端代码基于<code>HTML5</code>，支持Chrome、Safari、Firefox及IE9+，使用IE8浏览器打开网站会自动跳转到引导用户下载现代浏览器的页面中。网站应用了<code>响应式设计</code>，所以在智能手机上也可以愉快地浏览。</p>
+</li>
+<li><p>项目是完全开源的，<code>github</code>上的地址是<a href="https://github.com/erealm/HomeSite" target="_blank" rel="noopener">eRealm</a>，项目演示地址，也是我们公司的主页<a href="http://www.erealm.cn" target="_blank" rel="noopener">eRealm Info &amp; Tech</a>。</p>
+</li>
+</ul>
+<h3 id="代码结构介绍"><a href="#代码结构介绍" class="headerlink" title="代码结构介绍"></a>代码结构介绍</h3><ul>
+<li>推荐使用<code>Webstorm</code>打开项目。打开项目后，代码结构如下图所示：</li>
+</ul>
+<p><img alt="Imgur" data-src="http://i.imgur.com/SjV97nF.png" class="lozad"></p>
+<ul>
+<li>在主体结构中从上到下介绍。<code>app</code>文件夹包含了所有后端代码；<code>build</code>文件夹中包含了最新数据库备份；<code>config</code>包含有网站整体的配置；<code>logs</code>文件夹包含网站后端记录的日志文件；<code>node_modules</code>是包含所有的<code>node.js</code>依赖包（源代码中初始没有此文件夹，运行<code>npm install</code>命令后所有加载的依赖包放置在此文件夹中）；<code>public</code>文件夹包含了所有的前端代码，包括JavaScript、less、图片、Webfont等；<code>.bowerrc</code>中定义了<a href="http://bower.io/" target="_blank" rel="noopener"><code>bower</code></a>管理前端库的下载地址；<code>bower.json</code>则配置了项目需要的前端库；<code>.jshintre-client</code>和<code>.jshintrc-server</code>分别为前后端JavaScript代码规范检查规则；<code>.travis.yml</code>为[travis]（<a href="https://travis-ci.org/）自动编译配置；`app.js`为node.js启动脚本文件；`build.sh`为单独编写的自动发布bash命令；gruntfile.js为[`grunt`](http://gruntjs.com)配置文件；newrelic.js为[`newrelic`](http://newrelic.com)的配置文件，用于监控网站性能；`package.json`包含了所有node.js依赖包配置。" target="_blank" rel="noopener">https://travis-ci.org/）自动编译配置；`app.js`为node.js启动脚本文件；`build.sh`为单独编写的自动发布bash命令；gruntfile.js为[`grunt`](http://gruntjs.com)配置文件；newrelic.js为[`newrelic`](http://newrelic.com)的配置文件，用于监控网站性能；`package.json`包含了所有node.js依赖包配置。</a></li>
+</ul>
+<h3 id="项目后端结构介绍"><a href="#项目后端结构介绍" class="headerlink" title="项目后端结构介绍"></a>项目后端结构介绍</h3><ul>
+<li>项目后端代码架构如下图所示：</li>
+</ul>
+<p><img alt="Imgur" data-src="http://i.imgur.com/PMMGvUy.png" class="lozad"></p>
+<ul>
+<li>主要分为两大部分：<code>app</code>和<code>config</code>。<code>app</code>里面按照职责不同来分类，每个脚本文件对应于不同的模块；<code>api</code>文件夹包含了所有api对应的业务逻辑代码，<code>helper</code>放置一些公用方法，如邮件发送、日志记录、数据库连接等等；<code>templates</code>放置的是静态邮件模板；<code>views</code>是后端页面模板，使用了<code>handlebar</code>模板引擎，其中<code>http</code>中放置系统错误显示页面，<code>layouts</code>放置模板页；<code>routes</code>是<code>express</code>对应的路由配置，所有的页面和API的路由配置都在这个文件中。<code>config</code>文件夹中为系统配置，按照不同环境分为开发和现场两个环境配置，<code>all.js</code>放置共通配置，<code>development.js</code>放置开发环境对应配置而<code>production.js</code>放置线上环境配置。配置内容包括邮件发送、数据库连接及一些第三方API所需的key等等。</li>
+</ul>
+<h3 id="项目前端结构介绍"><a href="#项目前端结构介绍" class="headerlink" title="项目前端结构介绍"></a>项目前端结构介绍</h3><ul>
+<li>项目前端代码结构如下所示：</li>
+</ul>
+<p><img alt="Imgur" data-src="http://i.imgur.com/4WEeYLg.png" class="lozad"></p>
+<ul>
+<li>前端代码全部放置于<code>public</code>文件夹下。<code>data</code>目录包含一些静态json格式数据，后期可能会考虑放到数据库中。<code>helper</code>中是浏览器下载引导页面；<code>images</code>包含了所有项目中用到的图片，我们尽量使用第三方的图片服务器保存图片，一些小图标也尽量使用webfont。<code>JavaScripts</code>文件夹包含所有JavaScript文件，其中<code>app</code>子目录放置业务代码，业务代码都是按照业务不同封装成了不同的<code>angularjs</code> controller；<code>debug</code>子目录放置调试用代码，而<code>libs</code>方式前端JavaScript库，项目中使用得JavaScript库有<code>angularjs</code>、<code>jQuery</code>及一些插件；<code>clients.js</code>是所有ajax请求函数；<code>erealm.js</code>是angularjs的主模块；<code>language.js</code>包含了所有多语言配置，目前支持中英文。<code>stylesheets</code>包含了所有的css样式及webfont，除了第三方库之外，自定义的样式全部使用了<code>less</code>。作为一种惯例，项目中添加了<code>humans.txt</code>文件，表明项目的作者信息。有关humans.txt，可以参考官方网站<a href="http://humanstxt.org" target="_blank" rel="noopener">humans.txt</a>。</li>
+</ul>
+<h3 id="自动化构建工具介绍"><a href="#自动化构建工具介绍" class="headerlink" title="自动化构建工具介绍"></a>自动化构建工具介绍</h3><ul>
+<li><p>项目自动化构建使用<code>grunt</code>。grunt的使用涉及开发、调试、发布阶段。开发阶段使用了图片压缩和前端代码格式美化，使用的工具是<code>imagemin</code>和<code>jsbeautifier</code>，运行<code>grunt prepare</code>命令。调试阶段使用了代码规范检查、less编译、自动添加浏览器前缀、自动加载运行nodejs并打开浏览器、实时监控代码变化并刷新页面等。开发中，使用<code>grunt</code>命令即可，为默认grunt命令。发布阶段包含了JavaScript及css合并压缩，并在文件路径上添加哈希值来避免浏览器缓存问题，同时删除开发环境中使用的代码，使用<code>grunt build</code>命令即可把代码切换为发布环境。</p>
+</li>
+<li><p>具体的使用grunt方法及相关工具的介绍，后期会有专门的技术文章讲解，这里不会详细设计技术细节。</p>
+</li>
+</ul>
+<h3 id="后期持续的改进点"><a href="#后期持续的改进点" class="headerlink" title="后期持续的改进点"></a>后期持续的改进点</h3><ul>
+<li>项目完成的比较仓促，但是我们尽量保持代码的整洁和可维护性，一些编码方式也借鉴当前流行的最佳实践。但理想是美好的，现实总是不会做到那么完美，需要不断的完善。目前存在的问题是后端代码结构不够清晰、整体代码中无用代码还没有来得及移除。框架上期望把<code>jQuery</code>去掉，只使用<code>Angularjs</code>，目前只做到了尽量不用<code>jQuery</code>中的方法。小图标的使用上<code>Bootstrap</code>和<br><code>Font Awesome</code>重复，后期会逐步删除<code>Font Awesome</code>而只使用<code>Bootstrap</code>中带的小图标。目前，最大的问题是项目没有完整的自动化测试，这个后期会逐步添加。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>以上是这个开源项目的整体技术结构介绍。在这个项目中，我们会持续使用最流行的Web技术，希望得到大家的持续关注，如果有开发者能一块贡献一些代码，我们将会非常高兴。我们已经在github.io上构建了一个技术平台来发布Web技术文章，网址是blog.erealm.cn。博客网址也同样开源，使用了<a href="http://jekyllrb.com/" target="_blank" rel="noopener"><code>Jekyll</code></a>构建。<code>Jekyll</code>非常强大，最大的特点是使用markdown格式来发布文章。博客的代码在这里：<a href="https://github.com/erealm/erealm.github.io" target="_blank" rel="noopener">github</a>。</p>
+</li>
+<li><p>我们做这个开源的项目的目的有两个，其一是通过这个项目来展示我们做Web项目的实力，及培养团队技术水平。其二是借助这个项目，能和同行们有个技术上的互动和交流。如果我们的项目能让一些新手们学到一些做Web项目的经验，我们就很知足了。技术是不断革新的，而国内Web技术向来是落后于国外好几年，这个是不争的事实。我们erealm团队乐意为国内Web贡献自己的力量，也欢迎国内同行们和我们交流Web开发经验。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>开源</tag>
+        <tag>node.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浅谈响应式设计</title>
+    <url>/2014/10/30/others/responsive-design/</url>
+    <content><![CDATA[<p>&emsp;&emsp;Hello，今天是2014年10月31日，传说中的万圣节，于是想happy的谈一下这段时间对响应式设计的学习和理解。欢乐码字中。。。。。</p>
+<h3 id="What-amp-Why"><a href="#What-amp-Why" class="headerlink" title="What&amp;Why"></a><code>What&amp;Why</code></h3><p>&emsp;&emsp;响应式网页设计最初是由 Ethan Marcotte 提出的一个概念：为什么一定要为每个用户群各自打造一套设计和开发方案？Web设计应该做到根据不同设备环境自动响应及调整。无论用户正在使用笔记本还是iPad，我们的页面都应该能够自动切换分辨率、图片尺寸及相关脚本功能等，以适应不同设备;换句话说，页面应该有能力去自动响应用户的设备环境。这样，我们就可以不必为不断到来的新设备做专门的版本设计和开发了。当然响应式Web设计不仅仅是关于屏幕分辨率自适应以及自动缩放的图片等等，它更像是一种对于设计的全新思维模式；我们应当向下兼容、移动优先。</p>
+<h3 id="How"><a href="#How" class="headerlink" title="How"></a><code>How</code></h3><ol>
+<li><p>响应式设计要做的第一件事情就是在head标签里指定viewport meta 属性。</p>
+<p> <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;&gt;</code></p>
+<ul>
+<li><p>以上代码指定视口宽度等于设备宽度，初始缩放比例为 1 倍，也就是不缩放。</p>
+</li>
+<li><p>简单说来在手机（iPhone Safari）上访问网页时它默认会对网页进行缩放 ，尽可能多地在屏幕上展示整个页面的内容。而缩放之后的效果可想而知，一个在电脑上正常展示的页面被缩放进手机屏幕（通常是240*320）里面后，很难阅读，所以我们设定页面不会自动缩放。须记住：如果你的网站不是响应式的，请不要使用initial-scale或者user-scalable=no.</p>
+</li>
+</ul>
+</li>
+<li><p>让页面的内容自适应容器的可视部分（viewport）  </p>
+<p> &emsp;&emsp;一个页面需要兼容不同终端，那么有几个个关键点是我们需要去做到响应式的：</p>
+<ul>
+<li><p>响应式布局：我们可以监测页面布局随着不同的浏览环境而产生的变化，如果它们变的过窄过短或是过宽过长，则通过一个子级样式表来继承主样式表的设定，并专门针对某些布局结构进行样式覆写。</p>
+<p>  例如：</p>
+<p>  <img alt="图1" data-src="http://i.imgur.com/bE2cEb8.png" class="lozad"></p>
+<p>  <img alt="图2" data-src="http://i.imgur.com/SCBZw2T.png" class="lozad"></p>
+  <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.our-team</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1.18em</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    .profile &#123;</span><br><span class="line">        <span class="selector-tag">width</span>: 33<span class="selector-class">.3333</span>%;</span><br><span class="line">        <span class="selector-tag">padding</span>: 0 2%;</span><br><span class="line">        <span class="selector-tag">text-align</span>: <span class="selector-tag">center</span>;</span><br><span class="line">        <span class="selector-tag">margin</span>: <span class="selector-class">.5em</span> <span class="selector-tag">auto</span> 2<span class="selector-class">.5em</span>;</span><br><span class="line">        <span class="selector-tag">float</span>: <span class="selector-tag">left</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> only screen and (max-width:<span class="number">1024px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.our-team</span> &#123;</span><br><span class="line">        .profile &#123;</span><br><span class="line">            <span class="selector-tag">width</span>: 50%;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   &emsp;&emsp;这两段代码是不完整的，只截取了问题相关部分，放在about.less中。第一段为部分主样式，第二段的代码的width属性对第一段进行了覆写，其它的属性全部继承。当屏幕分辨率小于580px，即用手机大小的屏幕进行浏览时，我们可以设置宽度为100%，使得一张图片占一行。</p>
+</li>
+<li><p>使用相对单位：响应式设计的一个关键点就是流动性、比例性，而非固定的宽度布局或文字大小，所以我们应尽量使用相对单位。</p>
+  <figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// NO</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.fullWidth</span> &#123;                                                    </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">320px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: auto;</span><br><span class="line">    <span class="attribute">margin-right</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// YES</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.fullWidth</span> &#123;                                                    </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;对于字体来说，CSS中比较常用的指定字体相对大小的单位有百分比，em及CSS3新增的rem，避免指定固定像素的字体大小，可以使我们的字体更有弹性。</p>
+<p>&emsp;&emsp;对于布局来说，使用相对单位可以防止元素呈现在视口中过小或过大（从而产生横向滚动条）。比如：在一个顶级div上设置width:100%，这样不管是320px宽的iPhone，还是342px宽的蓝莓Z10，这个div会恰好铺满整个容器可视部分（viewport）的宽度。此外，相对单位使得浏览器基于用户的缩放（zoom level）渲染内容，而不需要添加水平滚动条。</p>
+</li>
+<li><p>弹性图片：通过max-width: 100%和height：auto实现。</p>
+<p>  如下：</p>
+  <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  &emsp;&emsp;普通的图片是不会自适应屏幕大小的，也就是说图片太宽的话在手持设备等屏幕较小的情况下会有水平滚动条出现。视觉效果可以参考上一个例子的图片。  </p>
+</li>
+<li><p>显示或隐藏内容： </p>
+<ul>
+<li><p><code>display:none;</code></p>
+</li>
+<li><p>这行样式代码在响应式设计中很重要，它用于隐藏某块内容。</p>
+<p><img alt="图3" data-src="http://i.imgur.com/AWcZfns.png" class="lozad"></p>
+<p><img alt="图4" data-src="http://i.imgur.com/rjKmy8Q.png" class="lozad"></p>
+<p>&emsp;&emsp;可以看到，图3中的中英文切换跟菜单栏在图4中没有显示，这里就是当用手机浏览时，我们把有些不合适的内容隐藏了，图3中的菜单栏没有输出，在图4的右上角重新设计了一个适合手机浏览的菜单显示。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CSS3 media queries的使用</p>
+<p> &emsp;&emsp;媒体查询是响应式设计的核心，它是使用CSS根据分辨率宽度的变化来调整页面布局结构，从而使特定的风格应用于小屏，大屏及介于两者之间。对于那些尚不支持media query的浏览器（IE8或是之前的版本），我们要在页面中调用css3-mediaqueries.js。</p>
+ <figure class="highlight css"><table><tr><td class="code"><pre><span class="line">@<span class="keyword">media</span> (query)  &#123;</span><br><span class="line">    <span class="comment">/* CSS used when query matches*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> &emsp;&emsp;尽管我们可以使用很多属性查询，但在响应式设计中，最常用的还是<code>min-width，max-width，min-height，max-height</code> 。</p>
+ <figure class="highlight css"><table><tr><td class="code"><pre><span class="line">@<span class="keyword">media</span> only screen and (max-width:<span class="number">1024px</span>)</span><br><span class="line">&#123;.................&#125;</span><br><span class="line">@<span class="keyword">media</span> only screen and (max-width:<span class="number">768px</span>)</span><br><span class="line">&#123;.................&#125;</span><br><span class="line">@<span class="keyword">media</span> only screen and (max-width:<span class="number">580px</span>)</span><br><span class="line">&#123;.................&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 首先当 <code>width&gt;1024px</code> 时，默认主样式会起作用。</p>
+<ul>
+<li>当<code>width</code>大于768px小于1024px时，<code>max-width:1024px</code>所定义的风格将会起作用，它对主样式进行继承和覆写，从而对页面内容进行渲染</li>
+<li>当width大于580px小于768px时，<code>max-width:768px</code>及<code>max-width:1024px</code>的样式都会起作用，它们之间存在继承和覆写，从而对页面内容进行渲染。</li>
+<li>当width小于580px时，以上三个样式都会起作用，同样根据声明的前后次序，对主样式进行继承和覆写。</li>
+</ul>
+</li>
+<li><p>怎样选择断点（breakpoints）</p>
+<ul>
+<li><p>可以看到，上面的<code>media query</code>代码选取了三个断点来应用不同的风格，580px，768px，及1024px，那么这几个点到底是基于什么选取呢？</p>
+</li>
+<li><p>一般我们刚开始做响应式设计，都是基于设备去选取断点的，通常是按照智能手机（iPhone是320*480），平板（iPad是768*1024），然后就是所有大于1024px的屏幕。但是这样容易出现后期维护问题，现在的设备分辨率各有不同，而且以后会出现神马样的谁也无法预料，所以基于设备去选择断点还是不那么靠谱！那么又该依据神马呢？</p>
+</li>
+<li><p>答案是：基于网站本身的内容。</p>
+</li>
+<li><p>我们可以先从小到大，从手机端开始走起。首先，让网页内容风格适合小屏幕，然后不断地扩大，当我们的内容在达到一个临界点后，视觉效果不符合人们的审美或影响了内容获取时，这就是我们需要的断点，这样可以确保所设的断点数最少。但是我们可能无法在视觉设计的阶段就能覆盖其尺寸区间内容所有状况，这样我们就需要把它和现有的设备相结合确立断点。在这个过程中，如果整个页面只是某一点的内容看起来不协调，我们可以试着改变一下主CSS样式，而不至于为了这一丢丢不美观而加设一个断点，增加不必要的代码。</p>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>开源</tag>
+        <tag>web front-end</tag>
+        <tag>web 前端</tag>
+        <tag>响应式设计</tag>
+        <tag>responsive design</tag>
+      </tags>
+  </entry>
+</search>
