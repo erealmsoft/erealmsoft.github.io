@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>写一个函数把下划线命名转化为小驼峰命名</title>
-    <url>/2019/09/28/purefunc/purefunc-small-hump/</url>
-    <content><![CDATA[<p>如：输入字符串<code>a_bc_de</code>，返回字符串<code>aBcDe</code></p>
-<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num.replace(<span class="regexp">/_(\w)/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">all, letter</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> letter.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>反转一个字符串里面的大小写，其它字符不变</title>
+    <url>/2019/09/28/purefunc/purefunc-reverse-string/</url>
+    <content><![CDATA[<p>如：输入字符串<code>aBcD</code>，返回字符串<code>AbCd</code></p>
+<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A-Z 65-90</span></span><br><span class="line"><span class="comment">// a-z 97-122</span></span><br><span class="line"><span class="comment">//A - a = 32</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseStr</span> (<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i&lt;str.length;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> temp = str.charAt(i);</span><br><span class="line">        <span class="keyword">var</span> code = temp.charCodeAt();</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">'a'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code<span class="number">-32</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'A'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'Z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code+<span class="number">32</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result += temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(parseStr(<span class="string">'aBcD'</span>))</span><br></pre></td></tr></table></figure>
 
-<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">underscore2upper</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> words = str.split(<span class="string">'_'</span>);</span><br><span class="line">    <span class="keyword">let</span> newWords = words.map(<span class="function">(<span class="params">element, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> index === <span class="number">0</span> ? element : element[<span class="number">0</span>].toUpperCase() + element.substring(<span class="number">1</span>, element.length)</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> newWords.join(<span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> charCodeStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> lowerStart = <span class="string">'a'</span>;</span><br><span class="line">    <span class="keyword">const</span> upperStart = <span class="string">'A'</span></span><br><span class="line">    <span class="keyword">const</span> diff = <span class="built_in">Math</span>.abs(lowerStart.charCodeAt(<span class="number">0</span>) - upperStart.charCodeAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> index = <span class="number">0</span>; index &lt; str.length; index++) &#123;</span><br><span class="line">        <span class="keyword">let</span> currentChartCode = str.charCodeAt(index);</span><br><span class="line">        <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">65</span> &amp;&amp; currentChartCode &lt; <span class="number">91</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode + diff;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">97</span> &amp;&amp; currentChartCode &lt; <span class="number">123</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode - diff;</span><br><span class="line">        &#125;</span><br><span class="line">        charCodeStr += <span class="built_in">String</span>.fromCharCode(currentChartCode);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> charCodeStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(reverseCase('abcIasd'))</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.找到_位置，如果_后一位为字母，大写</span></span><br><span class="line"><span class="comment">// b.将多余的_去除</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">camelCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = str.replace(<span class="regexp">/_([a-zA-Z])/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">regValue, groupValue</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> groupValue.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> outStr.replace(<span class="regexp">/_/g</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(camelCase(<span class="string">'_____a_bc_de__________w___'</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.先判断是大写还是小写，再做相应改变</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> str) &#123;</span><br><span class="line">        <span class="keyword">let</span> item = str[key];</span><br><span class="line">        /[a-z]/.test(item) &amp;&amp; (outStr += item.toUpperCase());</span><br><span class="line">        /[A-Z]/.test(item) &amp;&amp; (outStr += item.toLowerCase());</span><br><span class="line">        /[^a-zA-Z]/.test(item) &amp;&amp; (outStr += item);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> outStr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reverseCase(<span class="string">'aBcDeeeeeeeEDS'</span>));</span><br></pre></td></tr></table></figure>
 
-<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item.replace(<span class="regexp">/_([a-zA-Z])/g</span>, (a, b) =&gt; b.toUpperCase())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item</span><br><span class="line">        .split(<span class="string">''</span>)</span><br><span class="line">        .map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> item.charCodeAt(<span class="number">0</span>) &lt; <span class="number">90</span> ? item.toLowerCase() : item.toUpperCase())</span><br><span class="line">        .join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">"_"</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item, i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> item.replace(item[<span class="number">0</span>],item[<span class="number">0</span>].toUpperCase());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f2(<span class="string">"a_bc_de"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">""</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item,i</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> charCode = item.charCodeAt();</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">            <span class="keyword">if</span>(charCode&lt;<span class="number">91</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toLowerCase();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toUpperCase();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f3(<span class="string">"aBcD"</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toString</span>(<span class="params">foo</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> arr = foo.split(<span class="string">'_'</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">		arr[i]=arr[i].charAt(<span class="number">0</span>).toUpperCase()+arr[i].substr(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr.join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeStr</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>(str.split(<span class="string">""</span>)</span><br><span class="line">        .map(</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">index</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">let</span> outStr = index.charCodeAt();</span><br><span class="line">                <span class="keyword">if</span>(outStr &lt; <span class="number">91</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toLowerCase()</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toUpperCase()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ).join(<span class="string">""</span>)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -74,20 +74,20 @@
       </tags>
   </entry>
   <entry>
-    <title>反转一个字符串里面的大小写，其它字符不变</title>
-    <url>/2019/09/28/purefunc/purefunc-reverse-string/</url>
-    <content><![CDATA[<p>如：输入字符串<code>aBcD</code>，返回字符串<code>AbCd</code></p>
-<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A-Z 65-90</span></span><br><span class="line"><span class="comment">// a-z 97-122</span></span><br><span class="line"><span class="comment">//A - a = 32</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseStr</span> (<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i&lt;str.length;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> temp = str.charAt(i);</span><br><span class="line">        <span class="keyword">var</span> code = temp.charCodeAt();</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">'a'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code<span class="number">-32</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'A'</span> &lt;= temp &amp;&amp; temp &lt;= <span class="string">'Z'</span>)&#123;</span><br><span class="line">            temp= <span class="built_in">String</span>.fromCharCode(code+<span class="number">32</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result += temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(parseStr(<span class="string">'aBcD'</span>))</span><br></pre></td></tr></table></figure>
+    <title>写一个函数把下划线命名转化为小驼峰命名</title>
+    <url>/2019/09/28/purefunc/purefunc-small-hump/</url>
+    <content><![CDATA[<p>如：输入字符串<code>a_bc_de</code>，返回字符串<code>aBcDe</code></p>
+<h3 id="Ada"><a href="#Ada" class="headerlink" title="Ada"></a>Ada</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num.replace(<span class="regexp">/_(\w)/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">all, letter</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> letter.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> charCodeStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> lowerStart = <span class="string">'a'</span>;</span><br><span class="line">    <span class="keyword">const</span> upperStart = <span class="string">'A'</span></span><br><span class="line">    <span class="keyword">const</span> diff = <span class="built_in">Math</span>.abs(lowerStart.charCodeAt(<span class="number">0</span>) - upperStart.charCodeAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> index = <span class="number">0</span>; index &lt; str.length; index++) &#123;</span><br><span class="line">        <span class="keyword">let</span> currentChartCode = str.charCodeAt(index);</span><br><span class="line">        <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">65</span> &amp;&amp; currentChartCode &lt; <span class="number">91</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode + diff;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (currentChartCode &gt;= <span class="number">97</span> &amp;&amp; currentChartCode &lt; <span class="number">123</span>) &#123;</span><br><span class="line">            currentChartCode = currentChartCode - diff;</span><br><span class="line">        &#125;</span><br><span class="line">        charCodeStr += <span class="built_in">String</span>.fromCharCode(currentChartCode);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> charCodeStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(reverseCase('abcIasd'))</span></span><br></pre></td></tr></table></figure>
+<h3 id="Beck"><a href="#Beck" class="headerlink" title="Beck"></a>Beck</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">underscore2upper</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> words = str.split(<span class="string">'_'</span>);</span><br><span class="line">    <span class="keyword">let</span> newWords = words.map(<span class="function">(<span class="params">element, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> index === <span class="number">0</span> ? element : element[<span class="number">0</span>].toUpperCase() + element.substring(<span class="number">1</span>, element.length)</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> newWords.join(<span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.先判断是大写还是小写，再做相应改变</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> str) &#123;</span><br><span class="line">        <span class="keyword">let</span> item = str[key];</span><br><span class="line">        /[a-z]/.test(item) &amp;&amp; (outStr += item.toUpperCase());</span><br><span class="line">        /[A-Z]/.test(item) &amp;&amp; (outStr += item.toLowerCase());</span><br><span class="line">        /[^a-zA-Z]/.test(item) &amp;&amp; (outStr += item);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> outStr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reverseCase(<span class="string">'aBcDeeeeeeeEDS'</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="Helen"><a href="#Helen" class="headerlink" title="Helen"></a>Helen</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// a.找到_位置，如果_后一位为字母，大写</span></span><br><span class="line"><span class="comment">// b.将多余的_去除</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">camelCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> outStr = str.replace(<span class="regexp">/_([a-zA-Z])/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">regValue, groupValue</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> groupValue.toUpperCase();</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> outStr.replace(<span class="regexp">/_/g</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(camelCase(<span class="string">'_____a_bc_de__________w___'</span>));</span><br></pre></td></tr></table></figure>
 
-<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item</span><br><span class="line">        .split(<span class="string">''</span>)</span><br><span class="line">        .map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> item.charCodeAt(<span class="number">0</span>) &lt; <span class="number">90</span> ? item.toLowerCase() : item.toUpperCase())</span><br><span class="line">        .join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Irene"><a href="#Irene" class="headerlink" title="Irene"></a>Irene</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item.replace(<span class="regexp">/_([a-zA-Z])/g</span>, (a, b) =&gt; b.toUpperCase())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">""</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item,i</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> charCode = item.charCodeAt();</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">            <span class="keyword">if</span>(charCode&lt;<span class="number">91</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toLowerCase();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> item.toUpperCase();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f3(<span class="string">"aBcD"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Mia"><a href="#Mia" class="headerlink" title="Mia"></a>Mia</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.split(<span class="string">"_"</span>)</span><br><span class="line">        .map(<span class="function"><span class="keyword">function</span>(<span class="params">item, i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> item.replace(item[<span class="number">0</span>],item[<span class="number">0</span>].toUpperCase());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">f2(<span class="string">"a_bc_de"</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeStr</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>(str.split(<span class="string">""</span>)</span><br><span class="line">        .map(</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">index</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">let</span> outStr = index.charCodeAt();</span><br><span class="line">                <span class="keyword">if</span>(outStr &lt; <span class="number">91</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toLowerCase()</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> index.toUpperCase()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ).join(<span class="string">""</span>)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Jack"><a href="#Jack" class="headerlink" title="Jack"></a>Jack</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toString</span>(<span class="params">foo</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> arr = foo.split(<span class="string">'_'</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;arr.length; i++)&#123;</span><br><span class="line">		arr[i]=arr[i].charAt(<span class="number">0</span>).toUpperCase()+arr[i].substr(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr.join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -95,27 +95,6 @@
       </categories>
       <tags>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React中propsTypes类型检测的用法</title>
-    <url>/2019/09/27/react/react-props-type/</url>
-    <content><![CDATA[<h3 id="propsTypes的作用"><a href="#propsTypes的作用" class="headerlink" title="propsTypes的作用"></a>propsTypes的作用</h3><ul>
-<li>在React中，propsType是用来对组件props做类型检查的</li>
-</ul>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ol>
-<li>引入校验模块 <code>prop-types</code></li>
-<li>定义Component，然后给Component上面挂propsType属性</li>
-</ol>
-<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Greeting extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Greeting.propTypes = &#123;</span><br><span class="line">    name: PropTypes.string</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>react</category>
-      </categories>
-      <tags>
-        <tag>props</tag>
-        <tag>类型检测</tag>
       </tags>
   </entry>
   <entry>
@@ -165,6 +144,42 @@
       </tags>
   </entry>
   <entry>
+    <title>React中propsTypes类型检测的用法</title>
+    <url>/2019/09/27/react/react-props-type/</url>
+    <content><![CDATA[<h3 id="propsTypes的作用"><a href="#propsTypes的作用" class="headerlink" title="propsTypes的作用"></a>propsTypes的作用</h3><ul>
+<li>在React中，propsType是用来对组件props做类型检查的</li>
+</ul>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ol>
+<li>引入校验模块 <code>prop-types</code></li>
+<li>定义Component，然后给Component上面挂propsType属性</li>
+</ol>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Greeting extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Greeting.propTypes = &#123;</span><br><span class="line">    name: PropTypes.string</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>props</tag>
+        <tag>类型检测</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>a链接与 router 中 link 有什么区别？</title>
+    <url>/2019/09/26/react/react-router-a-link/</url>
+    <content><![CDATA[<ul>
+<li>a 链接实现页面跳转时整个页面会重新渲染</li>
+<li>link组件实现页面跳转时只会重新渲染数据发生改变的部分，<code>只更新变化的部分从而减少DOM性能消耗</code></li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://blog.csdn.net/sinat_17775997/article/details/66967854" target="_blank" rel="noopener">【react-router】从Link组件和a标签的区别说起，react-router如何实现导航并优化DOM性能？</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+  </entry>
+  <entry>
     <title>为什么React Router v4中使用 switch 关键字</title>
     <url>/2019/09/26/react/react-router-switch/</url>
     <content><![CDATA[<ul>
@@ -210,21 +225,6 @@
 <li><a href="https://reacttraining.com/react-router/" target="_blank" rel="noopener">REACT ROUTER</a></li>
 <li><a href="https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/Switch.md" target="_blank" rel="noopener">React Router Switch(官方代码库的Switch readme)</a></li>
 <li><a href="https://github.com/xitu/gold-miner/blob/master/TODO/all-about-react-router-4.md" target="_blank" rel="noopener">关于 React Router 4 的一切</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>react</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>a链接与 router 中 link 有什么区别？</title>
-    <url>/2019/09/26/react/react-router-a-link/</url>
-    <content><![CDATA[<ul>
-<li>a 链接实现页面跳转时整个页面会重新渲染</li>
-<li>link组件实现页面跳转时只会重新渲染数据发生改变的部分，<code>只更新变化的部分从而减少DOM性能消耗</code></li>
-</ul>
-<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
-<li><a href="https://blog.csdn.net/sinat_17775997/article/details/66967854" target="_blank" rel="noopener">【react-router】从Link组件和a标签的区别说起，react-router如何实现导航并优化DOM性能？</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -383,22 +383,18 @@
       </categories>
   </entry>
   <entry>
-    <title>认识一下Controlled Component 与 Uncontrolled Component</title>
-    <url>/2019/09/23/react/react-controlled-component-and-uncontrolled-component/</url>
-    <content><![CDATA[<h3 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h3><ul>
-<li>React的state为唯一数据源，并且每个state突变都有一个相关的处理函数，这使得修改或验证用户输入变得简单。</li>
+    <title>React 中 Element 与 Component 的区别？</title>
+    <url>/2019/09/23/react/react-element-and-Component/</url>
+    <content><![CDATA[<h3 id="React-中-Element-与-Component分别是什么"><a href="#React-中-Element-与-Component分别是什么" class="headerlink" title="React 中 Element 与 Component分别是什么"></a>React 中 Element 与 Component分别是什么</h3><ul>
+<li>React Element 是 React 实现界面内容的最小单元</li>
+<li>React Component 是由React Element 构成的小的代码片段</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;value: &apos;&apos;&#125;;</span><br><span class="line"></span><br><span class="line">        this.handleChange = this.handleChange.bind(this);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleChange(event) &#123;</span><br><span class="line">        this.setState(&#123;value: event.target.value&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;提交的名字: &apos; + this.state.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    名字:</span><br><span class="line">                    &lt;input type=&quot;text&quot; value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="非受控组件"><a href="#非受控组件" class="headerlink" title="非受控组件"></a>非受控组件</h3><ul>
-<li>将真实数据存储在DOM节点中，所以在使用非受控组件时，有时候反而更容易同时集成React和非React代码</li>
+<h3 id="它们有什么区别"><a href="#它们有什么区别" class="headerlink" title="它们有什么区别"></a>它们有什么区别</h3><ul>
+<li>一个是元素，一个是组件</li>
+<li>Element具体描述了你在屏幕上想看到的内容，而Component则是将这些内容根据不同的逻辑分组得到的代码片段</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">        this.input = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;A name was submitted: &apos; + this.input.current.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    Name:</span><br><span class="line">                    &lt;input type=&quot;text&quot; ref=&#123;this.input&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
-<li><a href="https://segmentfault.com/a/1190000011004617" target="_blank" rel="noopener">受控组件(Controlled Components)和不受控组件</a></li>
-<li><a href="https://reactjs.org/docs/forms.html#controlled-components" target="_blank" rel="noopener">controlled components</a></li>
-<li><a href="https://stackoverflow.com/questions/42522515/what-are-controlled-components-and-uncontrolled-components" target="_blank" rel="noopener">stack over flow</a></li>
+<li><a href="https://stackoverflow.com/questions/30971395/difference-between-react-component-and-react-element" target="_blank" rel="noopener">stack over flow</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -474,18 +470,22 @@
       </tags>
   </entry>
   <entry>
-    <title>React 中 Element 与 Component 的区别？</title>
-    <url>/2019/09/23/react/react-element-and-Component/</url>
-    <content><![CDATA[<h3 id="React-中-Element-与-Component分别是什么"><a href="#React-中-Element-与-Component分别是什么" class="headerlink" title="React 中 Element 与 Component分别是什么"></a>React 中 Element 与 Component分别是什么</h3><ul>
-<li>React Element 是 React 实现界面内容的最小单元</li>
-<li>React Component 是由React Element 构成的小的代码片段</li>
+    <title>认识一下Controlled Component 与 Uncontrolled Component</title>
+    <url>/2019/09/23/react/react-controlled-component-and-uncontrolled-component/</url>
+    <content><![CDATA[<h3 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h3><ul>
+<li>React的state为唯一数据源，并且每个state突变都有一个相关的处理函数，这使得修改或验证用户输入变得简单。</li>
 </ul>
-<h3 id="它们有什么区别"><a href="#它们有什么区别" class="headerlink" title="它们有什么区别"></a>它们有什么区别</h3><ul>
-<li>一个是元素，一个是组件</li>
-<li>Element具体描述了你在屏幕上想看到的内容，而Component则是将这些内容根据不同的逻辑分组得到的代码片段</li>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.state = &#123;value: &apos;&apos;&#125;;</span><br><span class="line"></span><br><span class="line">        this.handleChange = this.handleChange.bind(this);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleChange(event) &#123;</span><br><span class="line">        this.setState(&#123;value: event.target.value&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;提交的名字: &apos; + this.state.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    名字:</span><br><span class="line">                    &lt;input type=&quot;text&quot; value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="非受控组件"><a href="#非受控组件" class="headerlink" title="非受控组件"></a>非受控组件</h3><ul>
+<li>将真实数据存储在DOM节点中，所以在使用非受控组件时，有时候反而更容易同时集成React和非React代码</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class NameForm extends React.Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props);</span><br><span class="line">        this.handleSubmit = this.handleSubmit.bind(this);</span><br><span class="line">        this.input = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleSubmit(event) &#123;</span><br><span class="line">        alert(&apos;A name was submitted: &apos; + this.input.current.value);</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</span><br><span class="line">                &lt;label&gt;</span><br><span class="line">                    Name:</span><br><span class="line">                    &lt;input type=&quot;text&quot; ref=&#123;this.input&#125; /&gt;</span><br><span class="line">                &lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
-<li><a href="https://stackoverflow.com/questions/30971395/difference-between-react-component-and-react-element" target="_blank" rel="noopener">stack over flow</a></li>
+<li><a href="https://segmentfault.com/a/1190000011004617" target="_blank" rel="noopener">受控组件(Controlled Components)和不受控组件</a></li>
+<li><a href="https://reactjs.org/docs/forms.html#controlled-components" target="_blank" rel="noopener">controlled components</a></li>
+<li><a href="https://stackoverflow.com/questions/42522515/what-are-controlled-components-and-uncontrolled-components" target="_blank" rel="noopener">stack over flow</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -493,6 +493,38 @@
       </categories>
       <tags>
         <tag>组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单谈一下React Diff算法</title>
+    <url>/2019/09/20/react/react-diff/</url>
+    <content><![CDATA[<h3 id="在谈React-Diff之前，先看看传统的diff算法"><a href="#在谈React-Diff之前，先看看传统的diff算法" class="headerlink" title="在谈React Diff之前，先看看传统的diff算法"></a>在谈React Diff之前，先看看传统的diff算法</h3><p><img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_1.jpg" class="lozad"></p>
+<ul>
+<li>如果要计算上图两个树形结构的差异并进行转换，传统diff算法会递归每一个节点，以a节点为例，会进行如下比较<br>  <code>a-&gt;e，a-&gt;d，a-&gt;b，a-&gt;c，a-&gt;a</code></li>
+<li>左侧树节点b，c，d，e比较过程与节点a相同，这时算法复杂度能达到O(n^2)，查找完差异后，还需计算最小转换方式，最终达到的复杂度为O(n^3)</li>
+</ul>
+<h3 id="React-Diff策略"><a href="#React-Diff策略" class="headerlink" title="React Diff策略"></a>React Diff策略</h3><ul>
+<li>传统diff算法的复杂度为O(n^3)，显然这是无法满足性能要求的，React通过制定大胆的策略，将复杂度从O(n^3)降低到了O(n)，它的diff策略主要集中在三个点上<ol>
+<li>Web UI中DOM节点跨层级的移动操作特别少，可以忽略不计，<code>所以react实现的diff是同层级比较</code><br> <img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_2.jpg" class="lozad"><ul>
+<li>React只会对相同颜色方框内的DOM节点进行比较，即同一个父节点下的所有子节点。当发现节点已经不存在，则该节点及其子节点会被完全删除掉，不会用于进一步比较。这样只需要对树进行一次遍历，便能完成整个DOM树的比较</li>
+</ul>
+</li>
+<li>拥有相同类的两个组件将会生成类似的树形节点，拥有不同类的两个组件将会生成不同的树形结构</li>
+<li>对于同一层级的一组子节点，它们可以通过唯一id进行区分</li>
+</ol>
+</li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/20346379" target="_blank" rel="noopener">知乎：React 源码剖析系列 － 不可思议的 react diff</a></li>
+<li><a href="https://www.jianshu.com/p/a2cc22779ec8" target="_blank" rel="noopener">React diff算法</a></li>
+<li>英文原文 <a href="https://calendar.perfplanet.com/2013/diff/" target="_blank" rel="noopener">React’s diff algorithm</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -543,38 +575,6 @@
       <tags>
         <tag>组件</tag>
         <tag>Hook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单谈一下React Diff算法</title>
-    <url>/2019/09/20/react/react-diff/</url>
-    <content><![CDATA[<h3 id="在谈React-Diff之前，先看看传统的diff算法"><a href="#在谈React-Diff之前，先看看传统的diff算法" class="headerlink" title="在谈React Diff之前，先看看传统的diff算法"></a>在谈React Diff之前，先看看传统的diff算法</h3><p><img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_1.jpg" class="lozad"></p>
-<ul>
-<li>如果要计算上图两个树形结构的差异并进行转换，传统diff算法会递归每一个节点，以a节点为例，会进行如下比较<br>  <code>a-&gt;e，a-&gt;d，a-&gt;b，a-&gt;c，a-&gt;a</code></li>
-<li>左侧树节点b，c，d，e比较过程与节点a相同，这时算法复杂度能达到O(n^2)，查找完差异后，还需计算最小转换方式，最终达到的复杂度为O(n^3)</li>
-</ul>
-<h3 id="React-Diff策略"><a href="#React-Diff策略" class="headerlink" title="React Diff策略"></a>React Diff策略</h3><ul>
-<li>传统diff算法的复杂度为O(n^3)，显然这是无法满足性能要求的，React通过制定大胆的策略，将复杂度从O(n^3)降低到了O(n)，它的diff策略主要集中在三个点上<ol>
-<li>Web UI中DOM节点跨层级的移动操作特别少，可以忽略不计，<code>所以react实现的diff是同层级比较</code><br> <img alt data-src="//erealmsoft.github.io/2019/09/20/react/react-diff/20190920_2.jpg" class="lozad"><ul>
-<li>React只会对相同颜色方框内的DOM节点进行比较，即同一个父节点下的所有子节点。当发现节点已经不存在，则该节点及其子节点会被完全删除掉，不会用于进一步比较。这样只需要对树进行一次遍历，便能完成整个DOM树的比较</li>
-</ul>
-</li>
-<li>拥有相同类的两个组件将会生成类似的树形节点，拥有不同类的两个组件将会生成不同的树形结构</li>
-<li>对于同一层级的一组子节点，它们可以通过唯一id进行区分</li>
-</ol>
-</li>
-</ul>
-<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/20346379" target="_blank" rel="noopener">知乎：React 源码剖析系列 － 不可思议的 react diff</a></li>
-<li><a href="https://www.jianshu.com/p/a2cc22779ec8" target="_blank" rel="noopener">React diff算法</a></li>
-<li>英文原文 <a href="https://calendar.perfplanet.com/2013/diff/" target="_blank" rel="noopener">React’s diff algorithm</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>react</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -1045,6 +1045,53 @@
       </tags>
   </entry>
   <entry>
+    <title>Node.js自定义模块与使用</title>
+    <url>/2014/11/17/others/node-module/</url>
+    <content><![CDATA[<p>&emsp;&emsp;模块是Node.js 应用程序的基本组成部分，通过模块化编程可以提高程序功能模块的可复用性，从而构建一个高类聚、低耦合的系统，方便维护与测试。</p>
+<h2 id="Node-js模块"><a href="#Node-js模块" class="headerlink" title="Node.js模块"></a>Node.js模块</h2><p>&emsp;&emsp;在Node.js中，模块分为两类：一类是Node.js提供的模块，称为核心模块；另一类是用户编写的模块，称为文件模块。</p>
+<p>&emsp;&emsp;核心模块在Node.js源代码编译的时候被编译成二进制文件，可以require(‘模块名’)去获取；其中http、fs、net等都是node.js提供的核心模块。在Node.js进程启动时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最快的。</p>
+<p>&emsp;&emsp;文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢。但是在程序中经过第一次使用require方法加载模块后，Node.js对所加载的原生模块或文件模块都进行了缓存，于是在第二次使用require方法加载同样的模块时，是不会有重复开销的。</p>
+<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><p>&emsp;&emsp;在Node.js 应用程序中，文件和模块是一一对应的。一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。<br>在每个模块中，module.export是模块的公开接口，便于使用require 从外部获取模块的接口。</p>
+<p><strong>(1)一个模块中包含多个函数</strong> 时，模块的定义如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//testA.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports. functionA = functionA;</span><br><span class="line"><span class="built_in">module</span>.exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
+
+<p>  或者将module.exports替换为exports 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">exports. functionA = functionA;</span><br><span class="line">exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2)只将一个对象封装到模块中</strong> ，格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// car.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者将module.exports替换为exports 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">car</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports= car;   <span class="comment">// exports= functionA;</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;<strong>module.exports 与exports的区别</strong> ：module.exports是模块的公开接口，每个模块都会自动创建一个module对象，该对象有一个exports属性，初始值是个空对象{}.exports只是module.exports的一个辅助对象，模块最终返回module.exports给模块的调用者，而不是exports。exports所起的作用是收集属性，如果module.exports当前没有任何属性，exports会将这些属性赋给module.exports, 如果module.exports已经有一些属性，那么exports的所有属性会被忽略。</p>
+<h2 id="使用模块"><a href="#使用模块" class="headerlink" title="使用模块"></a>使用模块</h2><p>&emsp;&emsp;在Node.js中使用require方法引入模块，该方法会返回一个对象，它引用的是某个给定文件中的module.exports值。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用原生（核心）模块</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(‘http’);</span><br><span class="line"><span class="comment">//使用自定义模块</span></span><br><span class="line"><span class="keyword">var</span> testA = <span class="built_in">require</span>(<span class="string">'./ testA);//引入了当前目录下的testA.js文件</span></span><br><span class="line"><span class="string">testA. functionB();</span></span><br><span class="line"><span class="string">//......</span></span><br><span class="line"><span class="string">var Car = require('</span>./ car);</span><br><span class="line"><span class="keyword">var</span> car= <span class="keyword">new</span> Car();</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;Node.js通过require方法可以加载的模块文件类型有三种：*.js , *.json,  *.node 。</p>
+<ul>
+<li><code>* .js</code>是文本格式的javascript文件；</li>
+<li><code>* .json</code>是json格式对象，这两者(.js &amp;&amp; .json)加载的时候被视为javascript被动态编译和处理使用；</li>
+<li><code>* .node</code>是预编译好的插件模块；</li>
+</ul>
+<p>Nodejs尝试加载的优先级 js文件 &gt; json文件 &gt; node文件</p>
+<p>require方法根据其传入的参数决定模块的查找方式。</p>
+<ul>
+<li><code>模块以 &#39;/&#39; 开头</code>表示使用文件的绝对路径。例如，require(‘/home/marco/foo.js’) 将加载/home/marco/foo.js 文件。</li>
+<li><code>模块以 &#39;./&#39; 开头</code>表示调用 require() 时使用相对路径。也就是说，为了保证 require(‘./circle’) 能找到，circle.js 必须和 引用模块的js文件在同一目录。</li>
+<li><code>模块不以 &#39;/&#39; 或&#39;./&#39; 开头</code>表示该模块可以是一个“核心模块”，也可是一个从 node_modules 文件夹中加载的模块。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>模块</tag>
+        <tag>Module</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>运用Jekyll在Github上搭建个人博客</title>
     <url>/2014/11/17/others/jekyll-in-github/</url>
     <content><![CDATA[<p>&emsp;&emsp;2010年开始，有一些程序员开始在<code>github</code>网站上搭建 <code>blog</code> 。因为github提供无限流量，免费各地访问速度都比较理想，他们对<code>blog</code>拥有绝对管理权，这样不管何时何地，只要向主机提交 <code>commit</code> ，就能发布新文章。   </p>
@@ -1197,89 +1244,6 @@
         <tag>CSS 定位</tag>
         <tag>web front-end</tag>
         <tag>web 前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Node.js自定义模块与使用</title>
-    <url>/2014/11/17/others/node-module/</url>
-    <content><![CDATA[<p>&emsp;&emsp;模块是Node.js 应用程序的基本组成部分，通过模块化编程可以提高程序功能模块的可复用性，从而构建一个高类聚、低耦合的系统，方便维护与测试。</p>
-<h2 id="Node-js模块"><a href="#Node-js模块" class="headerlink" title="Node.js模块"></a>Node.js模块</h2><p>&emsp;&emsp;在Node.js中，模块分为两类：一类是Node.js提供的模块，称为核心模块；另一类是用户编写的模块，称为文件模块。</p>
-<p>&emsp;&emsp;核心模块在Node.js源代码编译的时候被编译成二进制文件，可以require(‘模块名’)去获取；其中http、fs、net等都是node.js提供的核心模块。在Node.js进程启动时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最快的。</p>
-<p>&emsp;&emsp;文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢。但是在程序中经过第一次使用require方法加载模块后，Node.js对所加载的原生模块或文件模块都进行了缓存，于是在第二次使用require方法加载同样的模块时，是不会有重复开销的。</p>
-<h2 id="自定义模块"><a href="#自定义模块" class="headerlink" title="自定义模块"></a>自定义模块</h2><p>&emsp;&emsp;在Node.js 应用程序中，文件和模块是一一对应的。一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。<br>在每个模块中，module.export是模块的公开接口，便于使用require 从外部获取模块的接口。</p>
-<p><strong>(1)一个模块中包含多个函数</strong> 时，模块的定义如下</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//testA.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">functionB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports. functionA = functionA;</span><br><span class="line"><span class="built_in">module</span>.exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
-
-<p>  或者将module.exports替换为exports 如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">exports. functionA = functionA;</span><br><span class="line">exports. functionB = functionB;</span><br></pre></td></tr></table></figure>
-
-<p><strong>(2)只将一个对象封装到模块中</strong> ，格式如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// car.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或者将module.exports替换为exports 如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">car</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports= car;   <span class="comment">// exports= functionA;</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;<strong>module.exports 与exports的区别</strong> ：module.exports是模块的公开接口，每个模块都会自动创建一个module对象，该对象有一个exports属性，初始值是个空对象{}.exports只是module.exports的一个辅助对象，模块最终返回module.exports给模块的调用者，而不是exports。exports所起的作用是收集属性，如果module.exports当前没有任何属性，exports会将这些属性赋给module.exports, 如果module.exports已经有一些属性，那么exports的所有属性会被忽略。</p>
-<h2 id="使用模块"><a href="#使用模块" class="headerlink" title="使用模块"></a>使用模块</h2><p>&emsp;&emsp;在Node.js中使用require方法引入模块，该方法会返回一个对象，它引用的是某个给定文件中的module.exports值。例如：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用原生（核心）模块</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(‘http’);</span><br><span class="line"><span class="comment">//使用自定义模块</span></span><br><span class="line"><span class="keyword">var</span> testA = <span class="built_in">require</span>(<span class="string">'./ testA);//引入了当前目录下的testA.js文件</span></span><br><span class="line"><span class="string">testA. functionB();</span></span><br><span class="line"><span class="string">//......</span></span><br><span class="line"><span class="string">var Car = require('</span>./ car);</span><br><span class="line"><span class="keyword">var</span> car= <span class="keyword">new</span> Car();</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;Node.js通过require方法可以加载的模块文件类型有三种：*.js , *.json,  *.node 。</p>
-<ul>
-<li><code>* .js</code>是文本格式的javascript文件；</li>
-<li><code>* .json</code>是json格式对象，这两者(.js &amp;&amp; .json)加载的时候被视为javascript被动态编译和处理使用；</li>
-<li><code>* .node</code>是预编译好的插件模块；</li>
-</ul>
-<p>Nodejs尝试加载的优先级 js文件 &gt; json文件 &gt; node文件</p>
-<p>require方法根据其传入的参数决定模块的查找方式。</p>
-<ul>
-<li><code>模块以 &#39;/&#39; 开头</code>表示使用文件的绝对路径。例如，require(‘/home/marco/foo.js’) 将加载/home/marco/foo.js 文件。</li>
-<li><code>模块以 &#39;./&#39; 开头</code>表示调用 require() 时使用相对路径。也就是说，为了保证 require(‘./circle’) 能找到，circle.js 必须和 引用模块的js文件在同一目录。</li>
-<li><code>模块不以 &#39;/&#39; 或&#39;./&#39; 开头</code>表示该模块可以是一个“核心模块”，也可是一个从 node_modules 文件夹中加载的模块。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>others</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
-        <tag>模块</tag>
-        <tag>Module</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Node.js事件解析</title>
-    <url>/2014/11/04/others/node-event/</url>
-    <content><![CDATA[<p>&emsp;&emsp;Node.js 是一个快速构建网络服务及应用的平台，它采用异步式 I/O 与事件驱动的架构设计解决传统系统开发中面临的高并发问题，而理解Node.js中的事件有助于利用Node.js构建高效的系统。</p>
-<h2 id="Node-js事件"><a href="#Node-js事件" class="headerlink" title="Node.js事件"></a>Node.js事件</h2><p>&emsp;&emsp;Node.js里面的许多对象都会分发事件，比如一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。所有这些产生事件的对象都是 <code>events.EventEmitter</code> 的实例。<code>Event模块</code>是一个简单的事件监听器模式的实现，在nodeJs中可以通过<code>require(&#39;events&#39;)</code>引入该模块。该模块包含EventEmitter类, 提供事件绑定、触发等相关方法，Node.js的大部分模块都继承自Event模块。</p>
-<p>&emsp;&emsp;Node.js与Web前端DOM树事件机制不同之处在于不存在冒泡、捕获等行为, 也没有<code>preventDefault(), stopPropagation()</code>等方法。Node.js 在执行的过程中会维护一个事件队列，程序在执行时进入事件循环等待下一个事件到来，每个异步式I/O请求完成后会被推送到事件队列。等到线程进入事件循环以后，才会调用事件队列中的回调函数执行相应的逻辑。</p>
-<h2 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h2><h3 id="EventEmitter介绍"><a href="#EventEmitter介绍" class="headerlink" title="EventEmitter介绍"></a>EventEmitter介绍</h3><p>&emsp;&emsp;events模块只提供了一个对象：<code>events.EventEmitter</code>。EventEmitter的核心就是事件触发与事件监听器功能的封装。EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter支持若干个事件监听器。当事件发生时，注册到这个事件的事件监听器被依次调用，事件参数作 为回调函数参数传递。简单实例如下所示：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line"><span class="comment">//注册事件监听器1</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener1'</span>, arg1, arg2);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//注册事件监听器2</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener2'</span>, arg1, arg2);就是</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//触发someEvent事件</span></span><br><span class="line">emitter.emit(<span class="string">'someEvent'</span>, <span class="string">'erealm'</span>, <span class="number">2014</span>);</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>listener1 erealm 2014</p>
-<p>listener2 erealm 2014</p>
-<h3 id="EventEmitter常用API"><a href="#EventEmitter常用API" class="headerlink" title="EventEmitter常用API"></a>EventEmitter常用API</h3><ul>
-<li><code>EventEmitter.on(event, listener)</code> 为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数 listener。</li>
-<li><code>EventEmitter.emit(event, [arg1], [arg2],[...])</code>发射 event 事件，传递若干可选参数到事件监听器的参数表。</li>
-<li><code>EventEmitter.removeListener(event,listener)</code>移除指定事件的某个监听器，listener必须是该事件已经注册过的监听器。</li>
-<li><code>EventEmitter.removeAllListeners([event])</code>移除所有事件的所有监听器，如果指定event，则移除指定事件的所有监听器。</li>
-</ul>
-<h3 id="error事件"><a href="#error事件" class="headerlink" title="error事件"></a>error事件</h3><p>&emsp;&emsp;EventEmitter定义了一个特殊的事件error，它包含了“错误”的语义，我们在遇到异常的时候通常会触发error 事件。当 error 事件发生时，EventEmitter 规定如果没有响应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。建议一般要给分发error事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
-<h3 id="继承EventEmitter"><a href="#继承EventEmitter" class="headerlink" title="继承EventEmitter"></a>继承EventEmitter</h3><p>&emsp;&emsp;在JavaScript中有多种继承方式，典型的方式是使用原型方式实现继承，也可使用util模块，如下实例所示：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;;</span><br><span class="line"><span class="comment">//使用util的inherits方法实现继承</span></span><br><span class="line">util.inherits(MyClass, events.EventEmitter);</span><br><span class="line">MyClass.prototype.ping = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.emit(<span class="string">'response'</span>, <span class="string">'erealm'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> myClass = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClass.on(<span class="string">'response'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(msg);</span><br><span class="line">&#125;);</span><br><span class="line">myClass.ping();</span><br></pre></td></tr></table></figure>
-
-<h2 id="典型实例分析"><a href="#典型实例分析" class="headerlink" title="典型实例分析"></a>典型实例分析</h2><p>&emsp;&emsp;由于fs模块继承EventEmitter,所以在如下所示程序代码</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line">fs.readFile(<span class="string">'/etc/hosts'</span>, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;fs.readFile的第三个参数是一个函数，我们称为回调函数。进程在执行到fs.readFile的时候，不会等待结果返回，而是直接继续执行后面的语句，直到进入事件循环。当数据库查询结果返回时，会将事件发送到事件队列，等到线程进入事件循环以后，才会调用之前的回调函数继续执行后面的逻辑。</p>
-]]></content>
-      <categories>
-        <category>others</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
-        <tag>事件</tag>
-        <tag>EventEmitter</tag>
       </tags>
   </entry>
   <entry>
@@ -1473,6 +1437,42 @@
         <tag>合并</tag>
         <tag>配置</tag>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node.js事件解析</title>
+    <url>/2014/11/04/others/node-event/</url>
+    <content><![CDATA[<p>&emsp;&emsp;Node.js 是一个快速构建网络服务及应用的平台，它采用异步式 I/O 与事件驱动的架构设计解决传统系统开发中面临的高并发问题，而理解Node.js中的事件有助于利用Node.js构建高效的系统。</p>
+<h2 id="Node-js事件"><a href="#Node-js事件" class="headerlink" title="Node.js事件"></a>Node.js事件</h2><p>&emsp;&emsp;Node.js里面的许多对象都会分发事件，比如一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。所有这些产生事件的对象都是 <code>events.EventEmitter</code> 的实例。<code>Event模块</code>是一个简单的事件监听器模式的实现，在nodeJs中可以通过<code>require(&#39;events&#39;)</code>引入该模块。该模块包含EventEmitter类, 提供事件绑定、触发等相关方法，Node.js的大部分模块都继承自Event模块。</p>
+<p>&emsp;&emsp;Node.js与Web前端DOM树事件机制不同之处在于不存在冒泡、捕获等行为, 也没有<code>preventDefault(), stopPropagation()</code>等方法。Node.js 在执行的过程中会维护一个事件队列，程序在执行时进入事件循环等待下一个事件到来，每个异步式I/O请求完成后会被推送到事件队列。等到线程进入事件循环以后，才会调用事件队列中的回调函数执行相应的逻辑。</p>
+<h2 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h2><h3 id="EventEmitter介绍"><a href="#EventEmitter介绍" class="headerlink" title="EventEmitter介绍"></a>EventEmitter介绍</h3><p>&emsp;&emsp;events模块只提供了一个对象：<code>events.EventEmitter</code>。EventEmitter的核心就是事件触发与事件监听器功能的封装。EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter支持若干个事件监听器。当事件发生时，注册到这个事件的事件监听器被依次调用，事件参数作 为回调函数参数传递。简单实例如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line"><span class="comment">//注册事件监听器1</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener1'</span>, arg1, arg2);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//注册事件监听器2</span></span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'listener2'</span>, arg1, arg2);就是</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//触发someEvent事件</span></span><br><span class="line">emitter.emit(<span class="string">'someEvent'</span>, <span class="string">'erealm'</span>, <span class="number">2014</span>);</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>listener1 erealm 2014</p>
+<p>listener2 erealm 2014</p>
+<h3 id="EventEmitter常用API"><a href="#EventEmitter常用API" class="headerlink" title="EventEmitter常用API"></a>EventEmitter常用API</h3><ul>
+<li><code>EventEmitter.on(event, listener)</code> 为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数 listener。</li>
+<li><code>EventEmitter.emit(event, [arg1], [arg2],[...])</code>发射 event 事件，传递若干可选参数到事件监听器的参数表。</li>
+<li><code>EventEmitter.removeListener(event,listener)</code>移除指定事件的某个监听器，listener必须是该事件已经注册过的监听器。</li>
+<li><code>EventEmitter.removeAllListeners([event])</code>移除所有事件的所有监听器，如果指定event，则移除指定事件的所有监听器。</li>
+</ul>
+<h3 id="error事件"><a href="#error事件" class="headerlink" title="error事件"></a>error事件</h3><p>&emsp;&emsp;EventEmitter定义了一个特殊的事件error，它包含了“错误”的语义，我们在遇到异常的时候通常会触发error 事件。当 error 事件发生时，EventEmitter 规定如果没有响应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。建议一般要给分发error事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
+<h3 id="继承EventEmitter"><a href="#继承EventEmitter" class="headerlink" title="继承EventEmitter"></a>继承EventEmitter</h3><p>&emsp;&emsp;在JavaScript中有多种继承方式，典型的方式是使用原型方式实现继承，也可使用util模块，如下实例所示：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;;</span><br><span class="line"><span class="comment">//使用util的inherits方法实现继承</span></span><br><span class="line">util.inherits(MyClass, events.EventEmitter);</span><br><span class="line">MyClass.prototype.ping = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.emit(<span class="string">'response'</span>, <span class="string">'erealm'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> myClass = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClass.on(<span class="string">'response'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(msg);</span><br><span class="line">&#125;);</span><br><span class="line">myClass.ping();</span><br></pre></td></tr></table></figure>
+
+<h2 id="典型实例分析"><a href="#典型实例分析" class="headerlink" title="典型实例分析"></a>典型实例分析</h2><p>&emsp;&emsp;由于fs模块继承EventEmitter,所以在如下所示程序代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line">fs.readFile(<span class="string">'/etc/hosts'</span>, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;fs.readFile的第三个参数是一个函数，我们称为回调函数。进程在执行到fs.readFile的时候，不会等待结果返回，而是直接继续执行后面的语句，直到进入事件循环。当数据库查询结果返回时，会将事件发送到事件队列，等到线程进入事件循环以后，才会调用之前的回调函数继续执行后面的逻辑。</p>
+]]></content>
+      <categories>
+        <category>others</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>事件</tag>
+        <tag>EventEmitter</tag>
       </tags>
   </entry>
   <entry>
